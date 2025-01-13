@@ -4,7 +4,7 @@ Developer Names: Phillip Tran
 
 Date of project start: January 13, 2025
 
-This project is an optical character recognition tool. It can detect lowercase, uppercase, and digits in Latin script.
+This project is an optical character recognition tool for detecting Latin alphabet characters.
 
 The folders and files for this project are as follows:
 
