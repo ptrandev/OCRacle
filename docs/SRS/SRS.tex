@@ -128,7 +128,7 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
+\title{Software Requirements Specification for \progname: Latin Alphabet Character Recognition} 
 \author{\authname}
 \date{\today}
 	
@@ -147,17 +147,16 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+January 27, 2025 & 1.0 & Initial document creation \\
 \bottomrule
 \end{tabularx}
 
 ~\\
-\plt{This template is intended for use by CAS 741.  For CAS 741 the template
-should be used exactly as given, except the Reflection Appendix can be deleted.
-For the capstone course it is a source of ideas, but shouldn't be followed
-exactly.  The exception is the reflection appendix.  All capstone SRS documents
-should have a reflection appendix.}
+% \plt{This template is intended for use by CAS 741.  For CAS 741 the template
+% should be used exactly as given, except the Reflection Appendix can be deleted.
+% For the capstone course it is a source of ideas, but shouldn't be followed
+% exactly.  The exception is the reflection appendix.  All capstone SRS documents
+% should have a reflection appendix.}
 
 ~\newpage
 
@@ -284,7 +283,8 @@ which heat is transferred in
   commands.}
 
 \plt{This template document assumes that a single program is being documented.
-  If you are documenting a family of models, you should start with a commonality
+  If you are documenting a family of models, you should start with a comm
+  onality
   analysis.  A separate template is provided for this.  For program
   families you should look at \cite{Smith2006, SmithMcCutchanAndCarette2017}.
   Single family member programs are often programs based on a single physical
@@ -337,23 +337,44 @@ which heat is transferred in
 
 \section{Introduction}
 
-\plt{The introduction section is written to introduce the problem.  It starts
-  general and focuses on the problem domain. The general advice is to start with
-a paragraph or two that describes the problem, followed by a ``roadmap''
-paragraph.  A roadmap orients the reader by telling them what sub-sections to
-expect in the Introduction section.}
+Researchers analyzing physical print documents such as newspapers, books, and
+letters often need a means of digitizing the text in these documents. This
+enables them to search and analyze the text data more efficiently. Especially in
+the case of historical documents, digitizing the text can help preserve the
+information contained in these documents.
+
+Optical Character Recognition (OCR) is a technology that allows for the
+extraction of text information from scanned documents, images, and other optical
+formats where text may be present. This digitalization process enables
+researchers to use computer programs to find trends and patterns in the
+digitized text.
+
+The following section describes the purpose of the document, the scope of
+requirements, characteristics of the intended reader, and the organizational
+roadmap of the document.
+
+% \plt{The introduction section is written to introduce the problem.  It starts
+%   general and focuses on the problem domain. The general advice is to start with
+% a paragraph or two that describes the problem, followed by a ``roadmap''
+% paragraph.  A roadmap orients the reader by telling them what sub-sections to
+% expect in the Introduction section.}
 
 \subsection{Purpose of Document}
 
-\plt{This section summarizes the purpose of the SRS document.  It does not focus
-  on the problem itself.  The problem is described in the ``Problem
-  Description'' section (Section~\ref{Sec_pd}).  The purpose is for the document
-  in the context of the project itself, not in the context of this course.
-  Although the ``purpose'' of the document is to get a grade, you should not
-  mention this.  Instead, ``fake it'' as if this is a real project.  The purpose
-  section will be similar between projects.  The purpose of the document is the
-  purpose of the SRS, including communication, planning for the design stage,
-  etc.}
+This document serves as a software requirements specification for the OCRacle
+project. This includes the general system description, problem description,
+solution characteristics, and requirements. This document will be used a
+reference for building the solution.
+
+% \plt{This section summarizes the purpose of the SRS document.  It does not focus
+%   on the problem itself.  The problem is described in the ``Problem
+%   Description'' section (Section~\ref{Sec_pd}).  The purpose is for the document
+%   in the context of the project itself, not in the context of this course.
+%   Although the ``purpose'' of the document is to get a grade, you should not
+%   mention this.  Instead, ``fake it'' as if this is a real project.  The purpose
+%   section will be similar between projects.  The purpose of the document is the
+%   purpose of the SRS, including communication, planning for the design stage,
+%   etc.}
 
 \subsection{Scope of Requirements} 
 
@@ -376,20 +397,23 @@ expect in the Introduction section.}
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-\plt{This section summarizes the skills and knowledge of the readers of the
-  SRS.  It does NOT have the same purpose as the ``User Characteristics''
-  section (Section~\ref{SecUserCharacteristics}).  The intended readers are the
-  people that will read, review and maintain the SRS.  They are the people that
-  will conceivably design the software that is intended to meet the
-  requirements.  The user, on the other hand, is the person that uses the
-  software that is built.  They may never read this SRS document.  Of course,
-  the same person could be a ``user'' and an ``intended reader.''}
+The intended reader of this document should have an undergraduate level
+understanding of data science, machine learning, and linear algebra.
 
-\plt{The intended reader characteristics should be written as unambiguously and
-  as specifically as possible.  Rather than say, the user should have an
-  understanding of physics, say what kind of physics and at what level.  For
-  instance, is high school physics adequate, or should the reader have had a
-  graduate course on advanced quantum mechanics?}
+% \plt{This section summarizes the skills and knowledge of the readers of the
+%   SRS.  It does NOT have the same purpose as the ``User Characteristics''
+%   section (Section~\ref{SecUserCharacteristics}).  The intended readers are the
+%   people that will read, review and maintain the SRS.  They are the people that
+%   will conceivably design the software that is intended to meet the
+%   requirements.  The user, on the other hand, is the person that uses the
+%   software that is built.  They may never read this SRS document.  Of course,
+%   the same person could be a ``user'' and an ``intended reader.''}
+
+% \plt{The intended reader characteristics should be written as unambiguously and
+%   as specifically as possible.  Rather than say, the user should have an
+%   understanding of physics, say what kind of physics and at what level.  For
+%   instance, is high school physics adequate, or should the reader have had a
+%   graduate course on advanced quantum mechanics?}
 
 \subsection{Organization of Document}
 
@@ -415,21 +439,21 @@ characteristics and lists the system constraints.  \plt{This text can likely be
 
 \subsection{System Context}
 
-\plt{Your system context will include a figure that shows the abstract view of
-  the software.  Often in a scientific context, the program can be viewed
-  abstractly following the design pattern of Inputs $\rightarrow$ Calculations
-  $\rightarrow$ Outputs.  The system context will therefore often follow this
-  pattern.  The user provides inputs, the system does the calculations, and then
-  provides the outputs to the user.  The figure should not show all of the
-  inputs, just an abstract view of the main categories of inputs (like material
-  properties, geometry, etc.).  Likewise, the outputs should be presented from
-  an abstract point of view.  In some cases the diagram will show other external
-  entities, besides the user.  For instance, when the software product is a
-  library, the user will be another software program, not an actual end user.
-  If there are system constraints that the software must work with external
-  libraries, these libraries can also be shown on the System Context diagram.
-  They should only be named with a specific library name if this is required by
-  the system constraint.}
+% \plt{Your system context will include a figure that shows the abstract view of
+%   the software.  Often in a scientific context, the program can be viewed
+%   abstractly following the design pattern of Inputs $\rightarrow$ Calculations
+%   $\rightarrow$ Outputs.  The system context will therefore often follow this
+%   pattern.  The user provides inputs, the system does the calculations, and then
+%   provides the outputs to the user.  The figure should not show all of the
+%   inputs, just an abstract view of the main categories of inputs (like material
+%   properties, geometry, etc.).  Likewise, the outputs should be presented from
+%   an abstract point of view.  In some cases the diagram will show other external
+%   entities, besides the user.  For instance, when the software product is a
+%   library, the user will be another software program, not an actual end user.
+%   If there are system constraints that the software must work with external
+%   libraries, these libraries can also be shown on the System Context diagram.
+%   They should only be named with a specific library name if this is required by
+%   the system constraint.}
 
 \begin{figure}[h!]
 \begin{center}
@@ -501,8 +525,9 @@ the instance models.  \plt{Add any project specific details that are relevant
 
 \subsection{Problem Description} \label{Sec_pd}
 
-\progname{} is intended to solve ... \plt{What problem does your program solve?
-The description here should be in the problem space, not the solution space.}
+\progname{} is intended to solve the problem of extracting text information from
+a scanned document, image, and other optical formats where text may be present,
+such that this textual data can be used for further analysis.
 
 \subsubsection{Terminology and  Definitions}
 
@@ -566,23 +591,23 @@ includes the following elements:
 
 \subsubsection{Goal Statements}
 
-\plt{The goal statements refine the ``Problem Description''
-  (Section~\ref{Sec_pd}).  A goal is a functional objective the system under
-  consideration should achieve. Goals provide criteria for sufficient
-  completeness of a requirements specification and for requirements
-  pertinence. Goals will be refined in Section “Instanced Models”
-  (Section~\ref{sec_instance}). Large and complex goals should be decomposed
-  into smaller sub-goals.  The goals are written abstractly, with a minimal
-  amount of technical language.  They should be understandable by non-domain
-  experts.}
+% \plt{The goal statements refine the ``Problem Description''
+%   (Section~\ref{Sec_pd}).  A goal is a functional objective the system under
+%   consideration should achieve. Goals provide criteria for sufficient
+%   completeness of a requirements specification and for requirements
+%   pertinence. Goals will be refined in Section “Instanced Models”
+%   (Section~\ref{sec_instance}). Large and complex goals should be decomposed
+%   into smaller sub-goals.  The goals are written abstractly, with a minimal
+%   amount of technical language.  They should be understandable by non-domain
+%   experts.}
 
 \noindent Given the \plt{inputs}, the goal statements are:
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] \plt{One
-    sentence description of the goal.  There may be more than one.  Each Goal
-    should have a meaningful label.}
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Exceed the total character recognition accuracy of the previous OAR project.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Given a black and white image containing a single Latin alphabet character, predict the character.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Given a black and white image containing a single Latin alphabet character, produce the confidence level for the prediction.
 
 \end{itemize}
 
@@ -673,12 +698,11 @@ change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:]
-  \plt{Short description of each assumption.  Each assumption
-    should have a meaningful label.  Use cross-references to identify the
-    appropriate traceability to TM, GD, DD etc., using commands like dref, ddref
-    etc.  Each assumption should be atomic - that is, there should not be an
-    explicit (or implicit) ``and'' in the text of an assumption.}
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The training dataset  contains an equal distribution of each Latin alphabet character.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The training dataset will contain only uppercase letters.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The training dataset contains correct labels for each of the Latin alphabet character images. 
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The training dataset images contain only one Latin alphabet character.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] All input images undergo preprocessing such that they are in black and white and oriented in an upright manner.
 
 \end{itemize}
 
@@ -907,11 +931,11 @@ models. \plt{Modify the examples below for your problem, and add additional
 
 \subsubsection{Instance Models} \label{sec_instance}    
 
-\plt{The motivation for this section is to reduce the problem defined in
-  ``Physical System Description'' (Section~\ref{sec_phySystDescrip}) to one
-  expressed in mathematical terms. The IMs are built by refining the TMs and/or
-  GDs.  This section should remain abstract.  The SRS should specify the
-  requirements without considering the implementation.}
+% \plt{The motivation for this section is to reduce the problem defined in
+%   ``Physical System Description'' (Section~\ref{sec_phySystDescrip}) to one
+%   expressed in mathematical terms. The IMs are built by refining the TMs and/or
+%   GDs.  This section should remain abstract.  The SRS should specify the
+%   requirements without considering the implementation.}
 
 This section transforms the problem defined in Section~\ref{Sec_pd} into 
 one which is expressed in mathematical terms. It uses concrete symbols defined 
@@ -935,7 +959,7 @@ The goals \plt{reference your goals} are solved by \plt{reference your instance
   \rowcolor[gray]{0.9}
   Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
   \hline
-  Label& \bf Energy balance on water to find $T_W$\\
+  Label& \bf ADAM for Minimizing Loss Function \\
   \hline
   Input&$m_W$, $C_W$, $h_C$, $A_C$, $h_P$, $A_P$, $t_\text{final}$, $T_C$, 
   $T_\text{init}$, $T_P(t)$ from \iref{epcm}\\
@@ -1047,8 +1071,8 @@ A correct solution must exhibit \plt{fill in the details}.  \plt{These
 
 \section{Requirements}
 
-\plt{The requirements refine the goal statement.  They will make heavy use of
-  references to the instance models.}
+% \plt{The requirements refine the goal statement.  They will make heavy use of
+%   references to the instance models.}
 
 This section provides the functional requirements, the business tasks that the
 software is expected to complete, and the nonfunctional requirements, the
@@ -1058,80 +1082,111 @@ qualities that the software is expected to exhibit.
 
 \noindent \begin{itemize}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] \plt{Requirements
-    for the inputs that are supplied by the user.  This information has to be
-    explicit.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] The program accepts
+an image from the user in JPEG or PNG format.
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] \plt{It isn't
-    always required, but often echoing the inputs as part of the output is a
-    good idea.}
+% \plt{Requirements
+%     for the inputs that are supplied by the user.  This information has to be
+%     explicit.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] \plt{Calculation
-    related requirements.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] The input
+image is processed such that it can be used for classification by the program.
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
-  \plt{Verification related requirements.}
+% \plt{It isn't
+%     always required, but often echoing the inputs as part of the output is a
+%     good idea.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] \plt{Output related
-    requirements.}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] The program can
+classify the input image into one of 26 Latin alphabet characters.
+
+
+% \plt{Calculation
+%     related requirements.}
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] The program
+will output the confidence level of the prediction.
+
+  % \plt{Verification related requirements.}
+
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] The program outputs
+the classification with the confidence level to the user.
+
+% \plt{Output related
+%     requirements.}
 
 \end{itemize}
 
-\plt{Every IM should map to at least one requirement, but not every requirement
-  has to map to a corresponding IM.}
+% \plt{Every IM should map to at least one requirement, but not every requirement
+%   has to map to a corresponding IM.}
 
 \subsection{Nonfunctional Requirements}
 
-\plt{List your nonfunctional requirements.  You may consider using a fit
-  criterion to make them verifiable.}
-\plt{The goal is for the nonfunctional requirements to be unambiguous, abstract
-  and verifiable.  This isn't easy to show succinctly, so a good strategy may be
-to give a ``high level'' view of the requirement, but allow for the details to
-be covered in the Verification and Validation document.}
-\plt{An absolute requirement on a quality of the system is rarely needed.  For
-  instance, an accuracy of 0.0101 \% is likely fine, even if the requirement is
-  for 0.01 \% accuracy.  Therefore, the emphasis will often be more on
-  describing now well the quality is achieved, through experimentation, and
-  possibly theory, rather than meeting some bar that was defined a priori.}
-\plt{You do not need an entry for correctness in your NFRs.  The purpose of the
-  SRS is to record the requirements that need to be satisfied for correctness.
-  Any statement of correctness would just be redundant. Rather than discuss
-  correctness, you can characterize how far away from the correct (true)
-  solution you are allowed to be.  This is discussed under accuracy.}
+% \plt{List your nonfunctional requirements.  You may consider using a fit
+%   criterion to make them verifiable.}
+% \plt{The goal is for the nonfunctional requirements to be unambiguous, abstract
+%   and verifiable.  This isn't easy to show succinctly, so a good strategy may be
+% to give a ``high level'' view of the requirement, but allow for the details to
+% be covered in the Verification and Validation document.}
+% \plt{An absolute requirement on a quality of the system is rarely needed.  For
+%   instance, an accuracy of 0.0101 \% is likely fine, even if the requirement is
+%   for 0.01 \% accuracy.  Therefore, the emphasis will often be more on
+%   describing now well the quality is achieved, through experimentation, and
+%   possibly theory, rather than meeting some bar that was defined a priori.}
+% \plt{You do not need an entry for correctness in your NFRs.  The purpose of the
+%   SRS is to record the requirements that need to be satisfied for correctness.
+%   Any statement of correctness would just be redundant. Rather than discuss
+%   correctness, you can characterize how far away from the correct (true)
+%   solution you are allowed to be.  This is discussed under accuracy.}
 
 \noindent \begin{itemize}
 
 \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
-  \textbf{Accuracy} \plt{Characterize the accuracy by giving the context/use for
-    the software.  Maybe something like, ``The accuracy of the computed
-    solutions should meet the level needed for $<$engineering or scientific
-    application$>$.  The level of accuracy achieved by \progname{} shall be
-    described following the procedure given in Section~X of the Verification and
-    Validation Plan.''  A link to the VnV plan would be a nice extra.}
+  \textbf{Accuracy} The accuracy of the the software shall exceed the previous
+  OAR project. This will be verified by comparing the confusion matrix of both
+  projects.
+  
+  % \plt{Characterize the accuracy by giving the context/use for
+  %   the software.  Maybe something like, ``The accuracy of the computed
+  %   solutions should meet the level needed for $<$engineering or scientific
+  %   application$>$.  The level of accuracy achieved by \progname{} shall be
+  %   described following the procedure given in Section~X of the Verification and
+  %   Validation Plan.''  A link to the VnV plan would be a nice extra.}
 
 \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability}
-  \plt{Characterize the usability by giving the context/use for the software.
-    You should likely reference the user characteristics section.  The level of
-    usability achieved by the software shall be described following the
-    procedure given in Section~X of the Verification and Validation Plan.  A
-    link to the VnV plan would be a nice extra.}
+  A user with a basic understand of the commandline should be able to setup and
+  run the program exclusively using the included user manual.
+
+  % \plt{Characterize the usability by giving the context/use for the software.
+  %   You should likely reference the user characteristics section.  The level of
+  %   usability achieved by the software shall be described following the
+  %   procedure given in Section~X of the Verification and Validation Plan.  A
+  %   link to the VnV plan would be a nice extra.}
 
 \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Maintainability}:]
-  \textbf{Maintainability} \plt{The effort required to make any of the likely
-    changes listed for \progname{} should be less than FRACTION of the original
-    development time.  FRACTION is then a symbolic constant that can be defined
-    at the end of the report.}
+  \textbf{Maintainability} 
+  The code should be highly modular, such that each processing step can be easily
+  understood and re-implemented without disrupting the other previous and
+  following processing steps.
+
+  % \plt{The effort required to make any of the likely
+  %   changes listed for \progname{} should be less than FRACTION of the original
+  %   development time.  FRACTION is then a symbolic constant that can be defined
+  %   at the end of the report.}
 
 \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Portability}:]
-  \textbf{Portability} \plt{This NFR is easier to write than the others.  The
-    systems that \progname{} should run on should be listed here.  When possible
-    the specific versions of the potential operating environments should be
-    given.  To make the NFR verifiable a statement could be made that the tests
-    from a given section of the VnV plan can be successfully run on all of the
-    possible operating environments.}
+  \textbf{Portability} The program will be compatible with Windows, MacOS, and
+  Linux operation systems. Any modern computers capable of running the operating
+  systems mentioned above should be able to run the program.
 
-\item Other NFRs that might be discussed include verifiability,
-  understandability and reusability.
+  % \plt{This NFR is easier to write than the others.  The
+  %   systems that \progname{} should run on should be listed here.  When possible
+  %   the specific versions of the potential operating environments should be
+  %   given.  To make the NFR verifiable a statement could be made that the tests
+  %   from a given section of the VnV plan can be successfully run on all of the
+  %   possible operating environments.}
+
+% \item Other NFRs that might be discussed include verifiability,
+%   understandability and reusability.
 
 \end{itemize}
 
@@ -1365,15 +1420,5 @@ Their values are defined in this section for easy maintenance.}
   requirement could be more abstract
 \end{itemize}
 }
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.  
-
-\input{../SRS_Reflection.tex}
 
 \end{document}
