@@ -77,6 +77,9 @@
 \newcounter{lcnum} %Likely change number
 \newcommand{\lthelcnum}{LC\thelcnum}
 \newcommand{\lcref}[1]{LC\ref{#1}}
+\newcounter{ucnum} %Unlikely change number
+\newcommand{\ltheucnum}{UC\theucnum}
+\newcommand{\ucref}[1]{UC\ref{#1}}
 
 \usepackage{fullpage}
 
@@ -166,11 +169,15 @@ This section records information for easy reference.
 
 \subsection{Table of Units}
 
-Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed
-as the unit system.  In addition to the basic units, several derived units are
-used as described below.  For each unit, the symbol is given followed by a
-description of the unit and the SI name.
+This document does not use SI (Syst\`{e}me International d'Unit\'{e}s) as the
+unit system because the problem domain is not a physical system.
 ~\newline
+
+% Throughout this document SI (Syst\`{e}me International d'Unit\'{e}s) is employed
+% as the unit system.  In addition to the basic units, several derived units are
+% used as described below.  For each unit, the symbol is given followed by a
+% description of the unit and the SI name.
+% ~\newline
 
 \renewcommand{\arraystretch}{1.2}
 %\begin{table}[ht]
@@ -178,34 +185,29 @@ description of the unit and the SI name.
     \toprule		
     \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
     \midrule 
-    \si{\metre} & length & metre\\
-    \si{\kilogram} & mass	& kilogram\\
-    \si{\second} & time & second\\
-    \si{\celsius} & temperature & centigrade\\
-    \si{\joule} & energy & joule\\
-    \si{\watt} & power & watt (W = \si{\joule\per\second})\\
+    px & pixel & N/A \\
     \bottomrule
   \end{tabular}
   %	\caption{Provide a caption}
 %\end{table}
 
-\plt{Only include the units that your SRS actually uses.}
+% \plt{Only include the units that your SRS actually uses.}
 
-\plt{Derived units, like newtons, pascal, etc, should show their derivation
-    (the units they are derived from) if their constituent units are in the
-    table of units (that is, if the units they are derived from are used in the
-    document).  For instance, the derivation of pascals as
-    $\si{\pascal}=\si{\newton\per\square\meter}$ is shown if newtons and m are
-    both in the table.  The derivations of newtons would not be shown if kg and
-    s are not both in the table.}
+% \plt{Derived units, like newtons, pascal, etc, should show their derivation
+%     (the units they are derived from) if their constituent units are in the
+%     table of units (that is, if the units they are derived from are used in the
+%     document).  For instance, the derivation of pascals as
+%     $\si{\pascal}=\si{\newton\per\square\meter}$ is shown if newtons and m are
+%     both in the table.  The derivations of newtons would not be shown if kg and
+%     s are not both in the table.}
 
-\plt{The symbol for units named after people use capital letters, but the name
-  of the unit itself uses lower case.  For instance, pascals use the symbol Pa,
-  watts use the symbol W, teslas use the symbol T, newtons use the symbol N,
-  etc.  The one exception to this is degree Celsius.  Details on writing metric
-  units can be found on the 
-  \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
-  {NIST} web-page.}
+% \plt{The symbol for units named after people use capital letters, but the name
+%   of the unit itself uses lower case.  For instance, pascals use the symbol Pa,
+%   watts use the symbol W, teslas use the symbol T, newtons use the symbol N,
+%   etc.  The one exception to this is degree Celsius.  Details on writing metric
+%   units can be found on the 
+%   \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
+%   {NIST} web-page.}
 
 \subsection{Table of Symbols}
 
@@ -219,7 +221,7 @@ systems.  The symbols are listed in alphabetical order.
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
 \textbf{symbol} & \textbf{unit} & \textbf{description}\\
 \midrule 
-$A_C$ & \si[per-mode=symbol] {\square\metre} & coil surface area
+$M_{n \times m}$ & ${pixel^2}$ & Matrix representing input image of n rows and m columns
 \\
 $A_\text{in}$ & \si[per-mode=symbol] {\square\metre} & surface area over 
 which heat is transferred in
@@ -245,12 +247,12 @@ which heat is transferred in
   PS & Physical System Description\\
   R & Requirement\\
   SRS & Software Requirements Specification\\
-  \progname{} & Optical Character Recognition-acle\\
+  \progname{} & Name of the Project\\
   TM & Theoretical Model\\
   \bottomrule
 \end{tabular}\\
 
-\plt{Add any other abbreviations or acronyms that you add}
+% \plt{Add any other abbreviations or acronyms that you add}
 
 \subsection{Mathematical Notation}
 
@@ -435,16 +437,7 @@ requirements.
 
 This section provides general information about the system.  It identifies the
 interfaces between the system and its environment, describes the user
-characteristics and lists the system constraints.  \plt{This text can likely be
-  borrowed verbatim.}
-
-\plt{The purpose of this section is to provide general information about the
-  system so the specific requirements in the next section will be easier to
-  understand. The general system description section is designed to be
-  changeable independent of changes to the functional requirements documented in
-  the specific system description. The general system description provides a
-  context for a family of related models.  The general description can stay the
-  same, while specific details are changed between family members.}
+characteristics and lists the system constraints.
 
 \subsection{System Context}
 
@@ -464,12 +457,41 @@ characteristics and lists the system constraints.  \plt{This text can likely be
 %   They should only be named with a specific library name if this is required by
 %   the system constraint.}
 
+We can take two perspectives on the system context. The first is the technical
+user, who interfaces with the OCRacle program to produce a model that can
+predict the character in an image. The second is the end user, who uses the
+OCRacle model to predict the character in an input image.
+
 \begin{figure}[h!]
-\begin{center}
- \includegraphics[width=0.6\textwidth]{SystemContextFigure}
-\caption{System Context}
-\label{Fig_SystemContext} 
-\end{center}
+  \begin{center}
+    \includegraphics[page=2, width=0.6\textwidth]{SystemContextFigure}
+    \caption{System Context of End User}
+    \label{Fig_SystemContext2} 
+  \end{center}
+\end{figure}
+
+
+\begin{itemize}
+  \item Technical User Responsibilities:
+  \begin{itemize}
+  \item Provide an image dataset to train the model following A\ref{A_EMNIST}, A\ref{A_Uppercase}, A\ref{A_Character}, A\ref{A_Labels}, and A\ref{A_Preprocessing}.
+  \item Run the program on a compatible platform.
+  \item Interface with the program.
+  \end{itemize}
+  \item \progname{} Responsibilities:
+  \begin{itemize}
+  \item Detect incompatible input.
+  \item Train the model on the image dataset provided by the user.
+  \item Output a trained model that can predict the character in an image.
+  \end{itemize}
+  \end{itemize}
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[page=1, width=0.6\textwidth]{SystemContextFigure}
+    \caption{System Context of Technical User}
+    \label{Fig_SystemContext1} 
+  \end{center}
 \end{figure}
 
 % \plt{For each of the entities in the system context diagram its responsibilities
@@ -483,9 +505,9 @@ characteristics and lists the system constraints.  \plt{This text can likely be
 %   stays away from the detail of listing every required properties.}
 
 \begin{itemize}
-\item User Responsibilities:
+\item End User Responsibilities:
 \begin{itemize}
-\item Provide an image containing a single Latin alphabet character.
+\item Provide an image following A\ref{A_Preprocessing}.
 \item Run the program on a compatible platform.
 \item Interface with the program.
 \end{itemize}
@@ -493,7 +515,7 @@ characteristics and lists the system constraints.  \plt{This text can likely be
 \begin{itemize}
 \item Detect incompatible input.
 \item Provide an interface to view the predicted character.
-\item Provide an interface to view the confidence score of the prediction.
+\item Provide an interface to view the probability vector.
 \end{itemize}
 \end{itemize}
 
@@ -508,8 +530,11 @@ characteristics and lists the system constraints.  \plt{This text can likely be
 
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
-An end user of \progname{} has a basic understanding of the command line in
-order to setup the program.
+Both the technical user and the end user of \progname{} should have an a basic
+understanding of the command line in order to setup the program. The provided
+user manual should be approachable for users of this skill level and allow them
+to train and use the model effectively, even if they are not familiar with the
+technical details of the program.
 
 % \plt{This section summarizes the knowledge/skills expected of the user.
 %   Measuring usability, which is often a required non-function requirement,
@@ -522,19 +547,16 @@ order to setup the program.
 
 \subsection{System Constraints}
 
-\plt{System constraints differ from other type of requirements because they
-  limit the developers' options in the system design and they identify how the
-  eventual system must fit into the world. This is the only place in the SRS
-  where design decisions can be specified.  That is, the quality requirement for
-  abstraction is relaxed here.  However, system constraints should only be
-  included if they are truly required.}
+The system will operate solely on greyscale images of Latin uppercase characters
+and will not be able to predict characters in images containing multiple
+characters.
 
 \section{Specific System Description}
 
 This section first presents the problem description, which gives a high-level
-view of the problem to be solved.  This is followed by the solution characteristics
-specification, which presents the assumptions, theories, definitions and finally
-the instance models.
+view of the problem to be solved.  This is followed by the solution
+characteristics specification, which presents the assumptions, theories,
+definitions and finally the instance models.
 
 % \plt{Add any project specific details that are relevant for the section overview.}
 
@@ -620,9 +642,11 @@ includes the following elements:
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Exceed the total character recognition accuracy of the previous OAR project.
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Given an image containing a single Latin alphabet character, predict the character.
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_meaningfulLabel}:] Given an image containing a single Latin alphabet character, produce the confidence score for the prediction.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_predict}:] Given an image
+containing a single Latin alphabet character, predict the character.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_probability}:] Given an
+image containing a single Latin alphabet character, produce a probability vector
+representing the likelihood of each character.
 
 \end{itemize}
 
@@ -679,18 +703,6 @@ Subsection~\ref{sec_instance}.  The information to understand the meaning of the
 instance models and their derivation is also presented, so that the instance
 models can be verified.
 
-\subsubsection{Types}
-
-\plt{This section is optional. Defining types can make the document easier to
-understand.}
-
-\subsubsection{Scope Decisions}
-
-\plt{This section is optional.}
-\subsubsection{Modelling Decisions}
-
-\plt{This section is optional.}
-
 \subsubsection{Assumptions} \label{sec_assumpt}
 
 % \plt{The assumptions are a refinement of the scope.  The scope is general, where
@@ -713,11 +725,11 @@ change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The model will be trained on the EMNIST dataset.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The training dataset will only contain images of Latin uppercase characters.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The training dataset will have one character per image.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] The training dataset contains correct labels for each character represented in the image.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_meaningfulLabel}:] All input images from the user undergo preprocessing such that they are in greyscale and oriented in an upright manner.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_EMNIST}:] The model will be trained on the EMNIST dataset.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Uppercase}:] The training dataset will only contain images of Latin uppercase characters.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Character}:] The training dataset will have one character per image.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Labels}:] The training dataset contains correct labels for each character represented in the image.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Preprocessing}:] All input images from the user undergo preprocessing such that they are in greyscale and oriented in an upright manner.
 
 \end{itemize}
 
@@ -1060,12 +1072,18 @@ Table~\ref{TblSpecParams}.
 \subsubsection{Properties of a Correct Solution} \label{sec_CorrectSolution}
 
 \noindent
-A correct solution must exhibit \plt{fill in the details}.  \plt{These
-  properties are in addition to the stated requirements.  There is no need to
-  repeat the requirements here.  These additional properties may not exist for
-  every problem.  Examples include conservation laws (like conservation of
-  energy or mass) and known constraints on outputs, which are usually summarized
-  in tabular form.  A sample table is shown in Table~\ref{TblOutputVar}}
+A correct solution from the model must exhibit the following properties:
+
+1. The most likely prediction must be the uppercase Latin alphabet character
+{A...Z}.
+2. The resulting probability vector must sum to 1.
+
+% \plt{These
+%   properties are in addition to the stated requirements.  There is no need to
+%   repeat the requirements here.  These additional properties may not exist for
+%   every problem.  Examples include conservation laws (like conservation of
+%   energy or mass) and known constraints on outputs, which are usually summarized
+%   in tabular form.  A sample table is shown in Table~\ref{TblOutputVar}}
 
 \begin{table}[!h]
 \caption{Output Variables} \label{TblOutputVar}
@@ -1157,8 +1175,8 @@ the classification with the confidence score to the user.
 
 \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
   \textbf{Accuracy} The accuracy of the the software shall exceed the previous
-  OAR project. This will be verified by comparing the confusion matrix of both
-  projects.
+  OAR project. Since the OAR project provides a confusion matrix, the accuracy
+  of OCRacle shall be measured by the same metric. \cite{Ceranic2024}
   
   % \plt{Characterize the accuracy by giving the context/use for
   %   the software.  Maybe something like, ``The accuracy of the computed
@@ -1215,8 +1233,13 @@ typical values.}
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the likely changes, with a reference to the related assumption (aref), as appropriate.}
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Language}:] The program may be
+modified to work non-Latin alphabet characters instead. For instance, Chinese
+character recognition may become the focus of the program.
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Lowercase}:] The program may be
+extended to recognize lowercase Latin alphabet characters
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Punctuation}:] The program may be
+extended to recognize Latin alphabet punctuation characters.
 
 \end{itemize}
 
@@ -1224,9 +1247,8 @@ typical values.}
 
 \noindent \begin{itemize}
 
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_meaningfulLabel}:] \plt{Give
-    the unlikely changes.  The design can assume that the changes listed will
-    not occur.}
+\item[UC\refstepcounter{ucnum}\theucnum\label{UC_Words}:] The program will not
+be expanded to recognize full words using Latin alphabet characters.
 
 \end{itemize}
 
@@ -1370,24 +1392,16 @@ instance models, requirements, and data constraints on each other.
 % 	\end{center}
 % \end{figure}
 
-\section{Development Plan}
-
-\plt{This section is optional.  It is used to explain the plan for developing
-  the software.  In particular, this section gives a list of the order in which
-  the requirements will be implemented.  In the context of a course  this is
-  where you can indicate which requirements will be implemented as part of the
-  course, and which will be ``faked'' as future work.  This section can be
-  organized as a prioritized list of requirements, or it could should the
-  requirements that will be implemented for ``phase 1'', ``phase 2'', etc.}
-
 \section{Values of Auxiliary Constants}
 
-\plt{Show the values of the symbolic parameters introduced in the report.}
+There are no auxiliary constants for this project.
 
-\plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.}
+% \plt{Show the values of the symbolic parameters introduced in the report.}
 
-\plt{The value of FRACTION, for the Maintainability NFR would be given here.}
+% \plt{The definition of the requirements will likely call for SYMBOLIC\_CONSTANTS.
+% Their values are defined in this section for easy maintenance.}
+
+% \plt{The value of FRACTION, for the Maintainability NFR would be given here.}
 
 \newpage
 
