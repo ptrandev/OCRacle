@@ -681,47 +681,47 @@ representing the likelihood of each character.
 
 \subsection{Solution Characteristics Specification}
 
-\plt{This section specifies the information in the solution domain of the system
-  to be developed. This section is intended to express what is required in
-  such a way that analysts and stakeholders get a clear picture, and the
-  latter will accept it. The purpose of this section is to reduce the problem
-  into one expressed in mathematical terms. Mathematical expertise is used to
-  extract the essentials from the underlying physical description of the
-  problem, and to collect and substantiate all physical data pertinent to the
-  problem.}
+This section specifies the information in the solution domain of the system
+to be developed. This section is intended to express what is required in
+such a way that analysts and stakeholders get a clear picture, and the
+latter will accept it. The purpose of this section is to reduce the problem
+into one expressed in mathematical terms. Mathematical expertise is used to
+extract the essentials from the underlying physical description of the
+problem, and to collect and substantiate all physical data pertinent to the
+problem.
 
-\plt{This section presents the solution characteristics by successively refining
-  models.  It starts with the abstract/general Theoretical Models (TMs) and
-  refines them to the concrete/specific Instance Models (IMs).  If necessary
-  there are intermediate refinements to General Definitions (GDs).  All of these
-  refinements can potentially use Assumptions (A) and Data Definitions (DD).
-  TMs are refined to create new models, that are called GMs or IMs. DDs are not
-  refined; they are just used. GDs and IMs are derived, or refined, from other
-  models. DDs are not derived; they are just given. TMs are also just given, but
-  they are refined, not used.  If a potential DD includes a derivation, then
-  that means it is refining other models, which would make it a GD or an IM.}
+% \plt{This section presents the solution characteristics by successively refining
+%   models.  It starts with the abstract/general Theoretical Models (TMs) and
+%   refines them to the concrete/specific Instance Models (IMs).  If necessary
+%   there are intermediate refinements to General Definitions (GDs).  All of these
+%   refinements can potentially use Assumptions (A) and Data Definitions (DD).
+%   TMs are refined to create new models, that are called GMs or IMs. DDs are not
+%   refined; they are just used. GDs and IMs are derived, or refined, from other
+%   models. DDs are not derived; they are just given. TMs are also just given, but
+%   they are refined, not used.  If a potential DD includes a derivation, then
+%   that means it is refining other models, which would make it a GD or an IM.}
 
-\plt{The above makes a distinction between ``refined'' and ``used.'' A model is
-  refined to another model if it is changed by the refinement. When we change a
-  general 3D equation to a 2D equation, we are making a refinement, by applying
-  the assumption that the third dimension does not matter. If we use a
-  definition, like the definition of density, we aren't refining, or changing
-  that definition, we are just using it.}
+% \plt{The above makes a distinction between ``refined'' and ``used.'' A model is
+%   refined to another model if it is changed by the refinement. When we change a
+%   general 3D equation to a 2D equation, we are making a refinement, by applying
+%   the assumption that the third dimension does not matter. If we use a
+%   definition, like the definition of density, we aren't refining, or changing
+%   that definition, we are just using it.}
 
-\plt{The same information can be a TM in one problem and a DD in another.  It is
-  about how the information is used.  In one problem the definition of
-  acceleration can be a TM, in another it would be a DD.}
+% \plt{The same information can be a TM in one problem and a DD in another.  It is
+%   about how the information is used.  In one problem the definition of
+%   acceleration can be a TM, in another it would be a DD.}
 
-\plt{There is repetition between the information given in the different chunks
-  (TM, GDs etc) with other information in the document.  For instance, the
-  meaning of the symbols, the units etc are repeated.  This is so that the
-  chunks can stand on their own when being read by a reviewer/user.  It also
-  facilitates reuse of the models in a different context.}
+% \plt{There is repetition between the information given in the different chunks
+%   (TM, GDs etc) with other information in the document.  For instance, the
+%   meaning of the symbols, the units etc are repeated.  This is so that the
+%   chunks can stand on their own when being read by a reviewer/user.  It also
+%   facilitates reuse of the models in a different context.}
 
-\noindent \plt{The relationships between the parts of the document are show in
-  the following figure.  In this diagram ``may ref'' has the same role as
-  ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-  reference (use) Assumptions.}
+The relationships between the parts of the document are show in
+the following figure.  In this diagram ``may ref'' has the same role as
+``uses'' above.  The figure adds ``Likely Changes,'' which are able to
+reference (use) Assumptions.
 
 \begin{figure}[H]
   \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
@@ -754,13 +754,12 @@ change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_EMNIST}:] The model will be trained on the EMNIST dataset.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Uppercase}:] The training dataset will only contain images of Latin uppercase characters.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Character}:] The training dataset will have one character per image.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Labels}:] The training dataset contains correct labels for each character represented in the image.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_EMNIST}:] The model will be trained on the EMNIST dataset where each image is 28x28 pixels as required by IM\ref{IM_Training}.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_LatinUppercase}:] The input images and training images will contain only uppercase Latin alphabet characters as required by IM\ref{IM_Training} and IM\ref{IM_CharacterPrediction}.
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Preprocessing}:] All
 input images from the user undergo preprocessing such that they are in the same
-format as the training data, where TM\ref{TM:BI} and TM\ref{TM:N} are applied.
+format as the training data, where TM\ref{TM:BI} and TM\ref{TM:N} are applied in
+IM\ref{IM_PreProcessing}.
 
 \end{itemize}
 
@@ -848,7 +847,90 @@ None.
 }
 % #8 Referenced by
 {
-  A\ref{A_Preprocessing}
+  A\ref{A_Preprocessing}, IM\ref{IM:Preprocessing}
+}
+% #9 Preconditions
+{
+None
+}
+% #1 derivation - not applicable by default
+{}
+
+\noindent
+\deftheory
+% #2 refname of theory
+{TM:ADAM}
+% #3 label
+{ADAM Optimization}
+% #4 equation
+{
+  ~\newline
+  $m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t$\\
+  $v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2$\\
+  $\hat{m}_t = \frac{m_t}{1 - \beta_1^t}$\\
+  $\hat{v}_t = \frac{v_t}{1 - \beta_2^t}$\\
+  $\theta_t = \theta_{t-1} - \alpha \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}$
+}
+% #5 description
+{
+  ADAM Optimization is used to train machine learning models. ADAM stands for
+  Adaptive Moment Estimation, which means that the algorithm adapts the learning
+  rate during training.
+  The algorithm uses the first and second moments ($m_t$ and $v_t$) of the
+  gradients ($g_t$) to update the parameters $\theta_t$. The hyperparameters
+  $\beta_1$, $\beta_2$, $\alpha$, and $\epsilon$ control the behavior of the
+  algorithm. $\beta_1$ and $\beta_2$ control the exponential decay rates of the
+  first and second moments, $\alpha$ is the learning rate, and $\epsilon$ is a
+  small value to prevent division by zero.
+}
+% #6 Notes
+{
+None.
+}
+% #7 Source
+{
+  \url{https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/}
+}
+% #8 Referenced by
+{
+  IM\ref{IM:Train}, DD\ref{DD_LearningRate}, DD\ref{DD_Parameters}, DD\ref{DD_Gradients}
+}
+% #9 Preconditions
+{
+None
+}
+% #1 derivation - not applicable by default
+{}
+
+\noindent
+\deftheory
+% #2 refname of theory
+{TM:CELF}
+% #3 label
+{Cross-Entropy Loss Function}
+% #4 equation
+{
+  $L(y, \hat{y}) = -\sum_{i} y_i \log(\hat{y}_i)$
+}
+% #5 description
+{
+  The cross-entropy loss function is used to measure the difference between the
+  predicted probability distribution $\hat{y}$ and the true probability
+  distribution $y$. A greater loss is incurred when the predicted probability
+  distribution is further from the true distribution. Heavier penalties occur
+  when it is nearly equally likely for the true label to be more than one class.
+}
+% #6 Notes
+{
+None.
+}
+% #7 Source
+{
+  \url{https://en.wikipedia.org/wiki/Cross-entropy}
+}
+% #8 Referenced by
+{
+  A\ref{A_Preprocessing}, IM\ref{IM:Train}, DD\ref{DD_ProbabilityDistribution}, DD\ref{DD_Label}
 }
 % #9 Preconditions
 {
@@ -870,18 +952,18 @@ None
 
 \subsubsection{General Definitions}\label{sec_gendef}
 
-\plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
-  other GDs.  The GDs are less abstract than the TMs.  Generally the reduction
-  in abstraction is possible through invoking (using/referencing) Assumptions.
-  For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
-  GD could take the general law and apply it to get a 1D equation.}
+% \plt{General Definitions (GDs) are a refinement of one or more TMs, and/or of
+%   other GDs.  The GDs are less abstract than the TMs.  Generally the reduction
+%   in abstraction is possible through invoking (using/referencing) Assumptions.
+%   For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
+%   GD could take the general law and apply it to get a 1D equation.}
 
 This section collects the laws and equations that will be used in building the
 instance models.
 
-\plt{Some projects may not have any content for this section, but the section
-  heading should be kept.}  \plt{Modify the examples below for your problem, and
-  add additional definitions as appropriate.}
+% \plt{Some projects may not have any content for this section, but the section
+%   heading should be kept.}  \plt{Modify the examples below for your problem, and
+%   add additional definitions as appropriate.}
 
 ~\newline
 
@@ -891,41 +973,106 @@ instance models.
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 \hline
 \rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{NL}\\
+Number& GD\refstepcounter{defnum}\thedefnum \label{GD_ReLU}\\
 \hline
-Label &\bf Newton's law of cooling \\
+Label &\bf Rectified Linear Unit (ReLU)\\
 \hline
-% Units&$MLt^{-3}T^0$\\
-% \hline
-SI Units&\si{\watt\per\square\metre}\\
+SI Units& N/A\\
 \hline
-Equation&$ q(t) = h \Delta T(t)$  \\
+Equation&$f(x) = \max(0, x)$\\
 \hline
 Description &
-Newton's law of cooling describes convective cooling from a surface.  The law is
-stated as: the rate of heat loss from a body is proportional to the difference
-in temperatures between the body and its surroundings.
-\\
-& $q(t)$ is the thermal flux (\si{\watt\per\square\metre}).\\
-& $h$ is the heat transfer coefficient, assumed independent of $T$ (\aref{A_hcoeff})
-	(\si{\watt\per\square\metre\per\celsius}).\\
-&$\Delta T(t)$= $T(t) - T_{\text{env}}(t)$ is the time-dependent thermal gradient
-between the environment and the object (\si{\celsius}).
+The function returns 0 if $x$ is negative. Otherwise, the function will return
+$x$. This function is used in neural networks as an activation function. An
+activation function determines the output of a node in a neural network.
 \\
 \hline
-  Source & Citation here \\
-  \hline
-  Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
-  \hline
+Source & \cite{Bai2022}\\
+\hline
+Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
+\hline
+\end{tabular}
+\end{minipage}
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& GD\refstepcounter{defnum}\thedefnum \label{GD_SM}\\
+\hline
+Label &\bf Softmax\\
+\hline
+SI Units& N/A\\
+\hline
+Equation& $f(x)_i = \frac{e^{x_i}}{\sum_{j=1}^{n} e^{x_j}}$\\
+\hline
+Description &
+The softmax function takes in a vector of $n$ real numbers and returns a vector
+of the same length. The exponential function is applied to each element of the
+input vector, and the resulting vector is divided by the sum of the exponential
+values. This achieves a probability distribution over the input vector.
+\\
+\hline
+Source & \cite{GaoAndPavel2018}\\
+\hline
+Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
+\hline
 \end{tabular}
 \end{minipage}\\
 
-\subsubsection*{Detailed derivation of simplified rate of change of temperature}
 
-\plt{This may be necessary when the necessary information does not fit in the
-  description field.}
-\plt{Derivations are important for justifying a given GD.  You want it to be
-  clear where the equation came from.}
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& GD\refstepcounter{defnum}\thedefnum \label{GD_CNN}\\
+\hline
+Label &\bf Convolutional Neural Network (CNN)\\
+\hline
+SI Units& N/A\\
+\hline
+Equation&
+\begin{equation*}
+\begin{aligned}
+&\text{Convolutional Layer:} \\
+&z = w \ast x + b \\
+&a = \text{ReLU}(z) \\
+&\text{Pooling Layer:} \\
+&\text{Max Pooling: } a = \max(a) \\
+&\text{Softmax Layer:} \\
+&\hat{y} = \text{Softmax}(a)
+\end{aligned}
+\end{equation*}
+\\
+\hline
+Description &
+A Convolutional Neural Network (CNN) is a type of neural network that is
+typically used for image classification tasks such as OCR. The network consists
+of convolutional layers, pooling layers, and softmax layers. The convolutional
+layer applies a filter to the input image, the pooling layer reduces the
+dimensionality of the image, and the softmax layer produces a probability
+distribution over the classes.
+\\
+\hline
+Source & \cite{LeCun1998}\\
+\hline
+Ref.\ By & IM\ref{IM_Training}, IM\ref{IM_CharacterPrediction}\\
+\hline
+\end{tabular}
+\end{minipage}\\
+
+% \subsubsection*{Detailed derivation of simplified rate of change of temperature}
+
+% \plt{This may be necessary when the necessary information does not fit in the
+%   description field.}
+% \plt{Derivations are important for justifying a given GD.  You want it to be
+%   clear where the equation came from.}
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
@@ -950,33 +1097,208 @@ models. The dimension of each quantity is also given.  \plt{Modify the examples
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 \hline
 \rowcolor[gray]{0.9}
-Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil}\\
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_InputImage}\\
 \hline
-Label& \bf Heat flux out of coil\\
+Label& \bf Input Image\\
 \hline
-Symbol &$q_C$\\
+Symbol &$I_{n \times m}$\\
 \hline
-% Units& $Mt^{-3}$\\
-% \hline
-  SI Units & \si{\watt\per\square\metre}\\
+  SI Units & N/A\\
   \hline
-  Equation&$q_C(t) = h_C (T_C - T_W(t))$, over area $A_C$\\
+  Equation& N/A\\
   \hline
   Description & 
-                $T_C$ is the temperature of the coil (\si{\celsius}).  $T_W$ is the temperature of the water (\si{\celsius}).  
-                The heat flux out of the coil, $q_C$ (\si{\watt\per\square\metre}), is found by
-                assuming that Newton's Law 
-                of Cooling applies (\aref{A_Newt_coil}).  This law (\dref{NL}) is used on the surface of
-                the coil, which has area $A_C$ (\si{\square\metre}) and heat 
-                transfer coefficient $h_C$
-                (\si{\watt\per\square\metre\per\celsius}).  This equation
-                assumes that the temperature of the coil is constant over time (\aref{A_tcoil}) and that it does not vary along the length
-                of the coil (\aref{A_tlcoil}).
+  $I$ is a 2D array of pixel values representing an image. The image has $n$
+  rows and $m$ columns. Each pixel value is an integer between 0 and 255.
+  \\
+  \hline
+  Sources& N/A \\
+  \hline
+  Ref.\ By & IM\ref{IM_PreProcessing}, TM\ref{TM:BI}, TM\ref{TM:N}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_TrainingImage}\\
+\hline
+Label& \bf Training Image\\
+\hline
+Symbol &$I_{n \times m}$\\
+\hline
+  SI Units & N/A\\
+  \hline
+  Equation& N/A\\
+  \hline
+  Description & 
+  $T$ is a 2D array of pixel values representing an image. The image has $n$
+  rows and $m$ columns. Each pixel value is either 0 for black or 1 for white.
+  \\
+  \hline
+  Sources& N/A \\
+  \hline
+  Ref.\ By & IM\ref{IM_Training}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_LearningRate}\\
+\hline
+Label& \bf Learning Rate\\
+\hline
+Symbol &$\alpha$\\
+\hline
+  SI Units & N/A\\
+  \hline
+  Equation& N/A\\
+  \hline
+  Description & 
+  $\alpha$ is a hyperparameter that controls how much the model weights are
+  updated during training. With a small learning rate, the model will learn
+  slowly, but with a large learning rate, the model may never find the optimal
+  solution.
   \\
   \hline
   Sources& Citation here \\
   \hline
-  Ref.\ By & \iref{ewat}\\
+  Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:ADAM}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_Parameters}\\
+\hline
+Label& \bf Parameters\\
+\hline
+Symbol &$\theta_t$\\
+\hline
+  SI Units & N/A\\
+  \hline
+  Equation& N/A\\
+  \hline
+  Description & 
+  $\theta_t$ is a vector of parameters that the model uses to make predictions.
+  The parameters are updated during training to minimize the loss function.
+  The $t$ subscript indicates the parameters at time step $t$.
+  \\
+  \hline
+  Sources& Citation here \\
+  \hline
+  Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:ADAM}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_Gradient}\\
+\hline
+Label& \bf Gradient\\
+\hline
+Symbol &$g_t$\\
+\hline
+  SI Units & N/A\\
+  \hline
+  Equation& N/A\\
+  \hline
+  Description & 
+  $g_t$ is a vector of the gradients of the loss function with respect to the
+  parameters. The gradients are used to update the parameters during training.
+  The $t$ subscript indicates the gradients at time step $t$.
+  \\
+  \hline
+  Sources& Citation here \\
+  \hline
+  Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:ADAM}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_ProbabilityDistribution}\\
+\hline
+Label& \bf Probability Distribution\\
+\hline
+Symbol & $\hat{y}_i$\\
+\hline
+  SI Units & N/A\\
+  \hline
+  Equation& N/A\\
+  \hline
+  Description & In cross-entropy loss, the model outputs a probability distribution
+  $\hat{y}$ over the possible classes. The probability distribution is used to
+  calculate the loss function.
+  \\
+  \hline
+  Sources& Citation here \\
+  \hline
+  Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:CELF}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+\hline
+\rowcolor[gray]{0.9}
+Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{DD_TrueLabel}\\
+\hline
+Label& \bf True Label\\
+\hline
+Symbol &$y_i$\\
+\hline
+  SI Units & N/A\\
+  \hline
+  Equation& N/A\\
+  \hline
+  Description & 
+  $y_i$ is the true label of the input image. The true label is used to calculate
+  the loss function.
+  \\
+  \hline
+  Sources& Citation here \\
+  \hline
+  Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:CELF}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1000,25 +1322,25 @@ Symbol &$q_C$\\
 % models. \plt{Modify the examples below for your problem, and add additional
 %   definitions as appropriate.}
 
-~\newline
+% ~\newline
 
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-  \hline
-  \rowcolor[gray]{0.9}
-  Type Name & Name for Type\\
-  \hline
-  Type Def & mathematical definition of the type\\
-  \hline
-  Description & description here
-  \\
-  \hline
-  Sources & Citation here, if the type is borrowed from another source\\
-  \hline
-\end{tabular}
-\end{minipage}\\
+% \noindent
+% \begin{minipage}{\textwidth}
+% \renewcommand*{\arraystretch}{1.5}
+% \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+%   \hline
+%   \rowcolor[gray]{0.9}
+%   Type Name & Name for Type\\
+%   \hline
+%   Type Def & mathematical definition of the type\\
+%   \hline
+%   Description & description here
+%   \\
+%   \hline
+%   Sources & Citation here, if the type is borrowed from another source\\
+%   \hline
+% \end{tabular}
+% \end{minipage}\\
 
 \subsubsection{Instance Models} \label{sec_instance}    
 
@@ -1033,10 +1355,9 @@ one which is expressed in mathematical terms. It uses concrete symbols defined
 in Section~\ref{sec_datadef} to replace the abstract symbols in the models 
 identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef}.
 
-The goals \plt{reference your goals} are solved by \plt{reference your instance
-  models}.  \plt{other details, with cross-references where appropriate.}
-\plt{Modify the examples below for your problem, and add additional models as
-  appropriate.}
+The goal GS\ref{G_train} is achieved by IM\ref{IM_Training}, and the goals
+GS\ref{G_predict} and GS\ref{G_probability} are achieved by
+IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
 
 ~\newline
 
@@ -1048,42 +1369,98 @@ The goals \plt{reference your goals} are solved by \plt{reference your instance
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
   \hline
   \rowcolor[gray]{0.9}
-  Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
+  Number& IM\refstepcounter{instnum}\theinstnum \label{IM_Training}\\
   \hline
-  Label& \bf ADAM for Minimizing Loss Function \\
+  Label& \bf ADAM Optimization with Cross-Entropy Loss\\
   \hline
-  Input&$m_W$, $C_W$, $h_C$, $A_C$, $h_P$, $A_P$, $t_\text{final}$, $T_C$, 
-  $T_\text{init}$, $T_P(t)$ from \iref{epcm}\\
-  & The input is constrained so that $T_\text{init} \leq T_C$ (\aref{A_charge})\\
+  Input & Training dataset $T_{n \times m}$, learning rate $\alpha$, parameters
+  $\theta_{t-1}$, gradients $g_{t-1}$, moments $m_{t-1}$, $v_{t-1}$
+  hyperparameters $\beta_1$, $\beta_2$, $\epsilon$, true labels $y_i$, predicted
+  probability distribution $\hat{y}_i$\\
   \hline
-  Output&$T_W(t)$, $0\leq t \leq t_\text{final}$, such that\\
-  &$\frac{dT_W}{dt} = \frac{1}{\tau_W}[(T_C - T_W(t)) + {\eta}(T_P(t) - T_W(t))]$,\\
-  &$T_W(0) = T_P(0) = T_\text{init}$ (\aref{A_InitTemp}) and $T_P(t)$ from \iref{epcm} \\
+  Output & Trained parameters $\theta_t$\\
   \hline
-  Description&$T_W$ is the water temperature (\si{\celsius}).\\
-  &$T_P$ is the PCM temperature (\si{\celsius}).\\
-  &$T_C$ is the coil temperature (\si{\celsius}).\\
-  &$\tau_W = \frac{m_W C_W}{h_C A_C}$ is a constant (\si{\second}).\\
-  &$\eta = \frac{h_P A_P}{h_C A_C}$ is a constant (dimensionless).\\
-  & The above equation applies as long as the water is in liquid form,
-  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
-  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
+  Description &
+  Given the training dataset, the parameters, the gradients,
+  and the moments from the previous time step, the ADAM optimization algorithm
+  updates the parameters to minimize the loss function. The hyperparameters
+  $\beta_1$, $\beta_2$, $\alpha$, and $\epsilon$ control the behavior of the
+  algorithm.
+
+  The cross-entropy loss function is integrated into ADAM optimization to
+  measure the difference between the predicted probability distribution and the
+  true labels. The gradients of the loss function are used to update the
+  parameters.
   \\
   \hline
-  Sources& Citation here \\
+  Sources& N/A \\
   \hline
   Ref.\ By & \iref{epcm}\\
   \hline
 \end{tabular}
 \end{minipage}\\
 
-%~\newline
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+  \hline
+  \rowcolor[gray]{0.9}
+  Number& IM\refstepcounter{instnum}\theinstnum \label{IM_PreProcessing}\\
+  \hline
+  Label& \bf Pre-processing of Input Image\\
+  \hline
+  Input&  $I_{n \times m}$ from \ddref{DD_InputImage}\\
+  \hline
+  Output& $T_{28 \times 28}$\\
+  \hline
+  Description&$T_W$ is the pre-processed image of $I$. The image is resized to
+  28x28 pixels using TM\ref{TM:BI}, and the pixel values are normalized to the
+  range [0, 1] using TM\ref{TM:N}.
+  \\
+  \hline
+  Sources& N/A\\
+  \hline
+  Ref.\ By & \iref{epcm}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
 
-\subsubsection*{Derivation of ...}
+~\newline
 
-\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
-  where the derivation cannot be described under the Description field, it will
-  be necessary to include this subsection.}
+\noindent
+\begin{minipage}{\textwidth}
+\renewcommand*{\arraystretch}{1.5}
+\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+  \hline
+  \rowcolor[gray]{0.9}
+  Number& IM\refstepcounter{instnum}\theinstnum \label{IM_CharacterPrediction}\\
+  \hline
+  Label& \bf Character Prediction Model\\
+  \hline
+  Input&  $T_{28 \times 28}$ from IM\ref{IM_PreProcessing}\\
+  \hline
+  Output& $P_{1 \times 26}$, $P_{pred}$\\
+  \hline
+  Description&$P$ is the probability vector output by the model, where $P_i$
+  represents the likelihood of character $i$. $P_{pred}$ is the character with
+  the highest probability in $P$.
+  \\
+  \hline
+  Sources& N/A\\
+  \hline
+  Ref.\ By & \iref{epcm}\\
+  \hline
+\end{tabular}
+\end{minipage}\\
+
+~\newline
+
+% \subsubsection*{Derivation of ...}
+
+% \plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
+%   where the derivation cannot be described under the Description field, it will
+%   be necessary to include this subsection.}
 
 \subsubsection{Input Data Constraints} \label{sec_DataConstraints}    
 
