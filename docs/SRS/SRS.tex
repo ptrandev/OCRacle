@@ -758,50 +758,49 @@ change [LC], in which the respective assumption is used.
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Uppercase}:] The training dataset will only contain images of Latin uppercase characters.
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Character}:] The training dataset will have one character per image.
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Labels}:] The training dataset contains correct labels for each character represented in the image.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Preprocessing}:] All input images from the user undergo preprocessing such that they are in the same format as the training data.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Preprocessing}:] All
+input images from the user undergo preprocessing such that they are in the same
+format as the training data, where TM\ref{TM:BI} and TM\ref{TM:N} are applied.
 
 \end{itemize}
 
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
-\plt{Theoretical models are sets of abstract mathematical equations or axioms
-  for solving the problem described in Section ``Physical System Description''
-  (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
-  physical laws, constitutive equations, relevant conversion factors, etc.}
+% \plt{Theoretical models are sets of abstract mathematical equations or axioms
+%   for solving the problem described in Section ``Physical System Description''
+%   (Section~\ref{sec_phySystDescrip}). Examples of theoretical models are
+%   physical laws, constitutive equations, relevant conversion factors, etc.}
 
-\plt{Optionally the theory section could be divided into subsections to provide
-more structure and improve understandability and reusability.  Potential
-subsections include the following: Context theories, background theories, helper
-theories, generic theories, problem specific theories, final theories and
-rationale theories.}
+% \plt{Optionally the theory section could be divided into subsections to provide
+% more structure and improve understandability and reusability.  Potential
+% subsections include the following: Context theories, background theories, helper
+% theories, generic theories, problem specific theories, final theories and
+% rationale theories.}
 
 This section focuses on the general equations and laws that \progname{} is based
-on.  \plt{Modify the examples below for your problem, and add additional models
-  as appropriate.}
+on. 
+
+% \plt{Modify the examples below for your problem, and add additional models
+%   as appropriate.}
 
 ~\newline
 
 \noindent
 \deftheory
 % #2 refname of theory
-{TM:COE}
+{TM:BI}
 % #3 label
-{Conservation of thermal energy}
+{Bicubic Interpolation}
 % #4 equation
 {
-  $-{\bf \nabla \cdot q} + g$ = $\rho C \frac{\partial T}{\partial t}$
+  $f(x, y) = \sum_{i=0}^{3} \sum_{j=0}^{3} a_{ij} x^i y^j$
 }
 % #5 description
 {
-  The above equation gives the conservation of energy for transient heat transfer in a material
-  of specific heat capacity $C$ (\si{\joule\per\kilogram\per\celsius}) and density $\rho$ 
-  (\si{\kilogram\per\cubic\metre}), where $\bf q$ is the thermal flux vector (\si{\watt\per\square\metre}),
-  $g$ is the volumetric heat generation
-  (\si{\watt\per\cubic\metre}), $T$ is the temperature
-  (\si{\celsius}),  $t$ is time (\si{\second}), and $\nabla$ is
-  the gradient operator.  For this equation to apply, other forms
-  of energy, such as mechanical energy, are assumed to be negligible in the
-  system (\aref{A_OnlyThermalEnergy}).  In general, the material properties ($\rho$ and $C$) depend on temperature.
+  Bicubic interpolation is a method of interpolating data points on a 2D grid.
+  The method uses a 4x4 grid of data points to estimate the value of a point
+  within the grid. This is useful for downsampling an image from a higher
+  resolution (e.g. 128x128) to a lower resolution (e.g. 28x28).
 }
 % #6 Notes
 {
@@ -809,11 +808,11 @@ None.
 }
 % #7 Source
 {
-  \url{http://www.efunda.com/formulae/heat_transfer/conduction/overview_cond.cfm}
+  \url{https://en.wikipedia.org/wiki/Bicubic_interpolation}
 }
 % #8 Referenced by
 {
-  \dref{ROCT}
+  A\ref{A_Preprocessing}
 }
 % #9 Preconditions
 {
@@ -822,14 +821,50 @@ None
 % #1 derivation - not applicable by default
 {}
 
-\plt{``Ref.\ By'' is used repeatedly with the different types of information.
-  This stands for Referenced By.  It means that the models, definitions and
-  assumptions listed reference the current model, definition or assumption.
-  This information is given for traceability.  Ref. By provides a pointer in the
-  opposite direction to what we commonly do.  You still need to have a reference
-  in the other direction pointing to the current model, definition or
-  assumption.  As an example, if TM1 is referenced by GD2, that means that GD2 will
-  explicitly include a reference to TM1.}
+\noindent
+\deftheory
+% #2 refname of theory
+{TM:N}
+% #3 label
+{Normalization}
+% #4 equation
+{
+  $f(x) = \frac{x - \min(x)}{\max(x) - \min(x)}$
+}
+% #5 description
+{
+  Normalization is a method of scaling data to a fixed range. This is useful for
+  ensuring that the input data to a machine learning model is within a certain
+  range. For instance, the pixel values of an image are typically normalized to
+  the range [0, 1], where 0 represents black and 1 represents white.
+}
+% #6 Notes
+{
+None.
+}
+% #7 Source
+{
+  \url{https://en.wikipedia.org/wiki/Normalization_(image_processing)}
+}
+% #8 Referenced by
+{
+  A\ref{A_Preprocessing}
+}
+% #9 Preconditions
+{
+None
+}
+% #1 derivation - not applicable by default
+{}
+
+% \plt{``Ref.\ By'' is used repeatedly with the different types of information.
+%   This stands for Referenced By.  It means that the models, definitions and
+%   assumptions listed reference the current model, definition or assumption.
+%   This information is given for traceability.  Ref. By provides a pointer in the
+%   opposite direction to what we commonly do.  You still need to have a reference
+%   in the other direction pointing to the current model, definition or
+%   assumption.  As an example, if TM1 is referenced by GD2, that means that GD2 will
+%   explicitly include a reference to TM1.}
 
 ~\newline
 
@@ -1075,9 +1110,9 @@ Table~\ref{TblSpecParams}.
   \textbf{Var} & \textbf{Physical Constraints} & \textbf{Software Constraints} &
                              \textbf{Typical Value} & \textbf{Uncertainty}\\
   \midrule 
-  $I_{n \times m} $ & N/A & $0 \leq I_{ij} \leq 255$ & N/A & N/A
+  $I_{n \times m} $ & N/A & $0 \leq I_{ij} \leq 255**$ & N/A & N/A
   \\
-  $T_{28 \times 28}$* & N/A & $0 \leq I_{ij} \leq 255$ & N/A & N/A
+  $T_{28 \times 28}$* & N/A & $0 \leq I_{ij} \leq 1$ & N/A & N/A
   \\
   \bottomrule
 \end{longtable*}
@@ -1087,6 +1122,8 @@ Table~\ref{TblSpecParams}.
 \begin{description}
 \item[(*)] The training images are restricted to a 28x28 pixel format because
 the EMNIST dataset is in this format.
+\item[(**)] The pixel values are restricted to the range [0, 255] because they
+are typically represented as 8-bit integers.
 \end{description}
 
 \begin{table}[!h]
@@ -1096,9 +1133,9 @@ the EMNIST dataset is in this format.
   \toprule
   \textbf{Var} & \textbf{Value} \\
   \midrule 
-  $n_{min}$ & 1 \\
+  $n_{min}$ & 28 \\
   $n_{max}$ & 2048 \\
-  $m_{min}$ & 1 \\
+  $m_{min}$ & 28 \\
   $m_{max}$ & 2048 \\
   \bottomrule
 \end{longtable*}
