@@ -230,6 +230,27 @@ $P_{pred}$ & N/A & The character predicted by the model.
 $T_{28 \times 28}$ & ${pixel^2}$ & Matrix representing a 28x28 pixel image from
 the training data provided by the technical user
 \\
+$\alpha$ & N/A & Learning rate for the model
+\\
+$\theta$ & N/A & Vector representing the weights of the model
+\\
+$t$ & N/A & In the context of the Adam optimization algorithm, the time step
+\\
+$g_t$ & N/A & The gradient of the cost function with respect to the weights at
+time t
+\\
+$\hat{y}_i$ & N/A & The predicted probability of character i
+\\
+$y_i$ & N/A & The actual probability of character i
+\\
+$\epsilon$ & N/A & Small value to prevent division by zero
+\\
+$m_t$ & N/A & In the context of the Adam optimization algorithm, the first
+moment estimate at time t
+\\
+$v_t$ & N/A & In the context of the Adam optimization algorithm, the second
+moment estimate at time t
+\\
 \bottomrule
 \end{longtable*}
 
@@ -536,7 +557,7 @@ OCRacle model to predict the character in an input image.
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
 Both the technical user and the end user of \progname{} should have an a basic
-understanding of the command line in order to setup the program. The provided
+understanding of the command line to setup the program. The provided
 user manual should be approachable for users of this skill level and allow them
 to train and use the model effectively, even if they are not familiar with the
 technical details of the program.
@@ -1375,7 +1396,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Label& \bf ADAM Optimization with Cross-Entropy Loss\\
   \hline
-  Input & Training dataset $T_{n \times m}$, learning rate $\alpha$, parameters
+  Input & Training dataset $T_{28 \times 28}$, learning rate $\alpha$, parameters
   $\theta_{t-1}$, gradients $g_{t-1}$, moments $m_{t-1}$, $v_{t-1}$
   hyperparameters $\beta_1$, $\beta_2$, $\epsilon$, true labels $y_i$, predicted
   probability distribution $\hat{y}_i$\\
@@ -1416,7 +1437,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Output& $T_{28 \times 28}$\\
   \hline
-  Description&$T_W$ is the pre-processed image of $I$. The image is resized to
+  Description&$T$ is the pre-processed image of $I$. The image is resized to
   28x28 pixels using TM\ref{TM:BI}, and the pixel values are normalized to the
   range [0, 1] using TM\ref{TM:N}.
   \\
@@ -1684,9 +1705,17 @@ IM\ref{IM_CharacterPrediction}.
 
 \subsection{Rationale}
 
-\plt{Provide a rationale for the decisions made in the documentation.  Rationale
-should be provided for scope decisions, modelling decisions, assumptions and
-typical values.}
+% \plt{Provide a rationale for the decisions made in the documentation.  Rationale
+% should be provided for scope decisions, modelling decisions, assumptions and
+% typical values.}
+
+A\ref{A_EMNIST} is necessary to provide a dataset for training the model. To
+constrain the scope of the project, A\ref{A_LatinUppercase} restricts which
+characters the program will focus on recognizing. This also makes comparing the 
+accuracy of OCRacle to the OAR project more meaningful as NRF\ref{NFR_Accuracy}
+outlines. Lastly, A\ref{A_Preprocessing} is necessary to ensure that the input
+image is in a format that the model can use for classification.
+
 
 \section{Likely Changes}    
 
