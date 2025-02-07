@@ -889,7 +889,7 @@ None.
 }
 % #7 Source
 {
-  \url{https://machinelearningmastery.com/adam-optimization-algorithm-for-deep-learning/}
+  \cite{KigmaAndBa2014}
 }
 % #8 Referenced by
 {
@@ -926,7 +926,7 @@ None.
 }
 % #7 Source
 {
-  \url{https://en.wikipedia.org/wiki/Cross-entropy}
+  \cite{Mao2023}
 }
 % #8 Referenced by
 {
@@ -1076,18 +1076,20 @@ Ref.\ By & IM\ref{IM_Training}, IM\ref{IM_CharacterPrediction}\\
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
-\plt{The Data Definitions are definitions of symbols and equations that are
-  given for the problem.  They are not derived; they are simply used by other
-  models.  For instance, if a problem depends on density, there may be a data
-  definition for the equation defining density.  The DDs are given information
-  that you can use in your other modules.}
+% \plt{The Data Definitions are definitions of symbols and equations that are
+%   given for the problem.  They are not derived; they are simply used by other
+%   models.  For instance, if a problem depends on density, there may be a data
+%   definition for the equation defining density.  The DDs are given information
+%   that you can use in your other modules.}
 
-\plt{All Data Definitions should be used (referenced) by at least one other
-  model.}
+% \plt{All Data Definitions should be used (referenced) by at least one other
+%   model.}
 
 This section collects and defines all the data needed to build the instance
-models. The dimension of each quantity is also given.  \plt{Modify the examples
-  below for your problem, and add additional definitions as appropriate.}
+models. The dimension of each quantity is also given. 
+
+% \plt{Modify the examples
+%   below for your problem, and add additional definitions as appropriate.}
 
 ~\newline
 
@@ -1174,7 +1176,7 @@ Symbol &$\alpha$\\
   solution.
   \\
   \hline
-  Sources& Citation here \\
+  Sources& \cite{KigmaAndBa2014} \\
   \hline
   Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:ADAM}\\
   \hline
@@ -1205,7 +1207,7 @@ Symbol &$\theta_t$\\
   The $t$ subscript indicates the parameters at time step $t$.
   \\
   \hline
-  Sources& Citation here \\
+  Sources& \cite{KigmaAndBa2014} \\
   \hline
   Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:ADAM}\\
   \hline
@@ -1236,7 +1238,7 @@ Symbol &$g_t$\\
   The $t$ subscript indicates the gradients at time step $t$.
   \\
   \hline
-  Sources& Citation here \\
+  Sources& \cite{KigmaAndBa2014} \\
   \hline
   Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:ADAM}\\
   \hline
@@ -1266,7 +1268,7 @@ Symbol & $\hat{y}_i$\\
   calculate the loss function.
   \\
   \hline
-  Sources& Citation here \\
+  Sources& \cite{Mao2023} \\
   \hline
   Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:CELF}\\
   \hline
@@ -1296,7 +1298,7 @@ Symbol &$y_i$\\
   the loss function.
   \\
   \hline
-  Sources& Citation here \\
+  Sources& \cite{Mao2023} \\
   \hline
   Ref.\ By & IM\ref{IM_Training}, TM\ref{TM:CELF}\\
   \hline
@@ -1393,9 +1395,9 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   parameters.
   \\
   \hline
-  Sources& N/A \\
+  Sources& \cite{KigmaAndBa2014}, \cite{Mao2023} \\
   \hline
-  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_LatinUppercase}\\
+  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_LatinUppercase}, R\ref{R_Output}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1419,9 +1421,9 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   range [0, 1] using TM\ref{TM:N}.
   \\
   \hline
-  Sources& N/A \\
+  Sources& N/A\\
   \hline
-  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_Preprocessing}\\
+  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_Preprocessing}, R\ref{R_OutputInputs}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1449,7 +1451,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Sources& N/A\\
   \hline
-  Ref.\ By & A\ref{A_LatinUppercase}\\
+  Ref.\ By & A\ref{A_LatinUppercase}, R\ref{R_VerifyOutput}, R\ref{R_Calculate}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1576,14 +1578,16 @@ an image from the user in JPEG or PNG format.
 %     explicit.}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] The input
-image is processed such that it can be used for classification by the program.
+image is processed such that it can be used for classification by the program as
+described in IM\ref{IM_Training}.
 
 % \plt{It isn't
 %     always required, but often echoing the inputs as part of the output is a
 %     good idea.}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] The \progname{}
-project produces a model that predicts the character in an input image.
+project produces a model that predicts the character in an input image as per
+IM\ref{IM_CharacterPrediction}.
 
 
 % \plt{Calculation
@@ -1591,12 +1595,13 @@ project produces a model that predicts the character in an input image.
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] The model
 produced by the program outputs a probability vector to verify the prediction in
-a human readable-format.
+a human readable-format as per IM\ref{IM_CharacterPrediction}.
 
   % \plt{Verification related requirements.}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] The program outputs
-the most likely character prediction in a human-readable format.
+the most likely character prediction in a human-readable format as per
+IM\ref{IM_CharacterPrediction}.
 
 % \plt{Output related
 %     requirements.}
