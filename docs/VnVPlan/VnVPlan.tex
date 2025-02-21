@@ -76,7 +76,7 @@ February 20, 2025 & 1.0 & Initial Creation\\
   MG & Module Guide\\
   MIS & Module Interface Specification\\
   PEP 8 & Python Enhancement Proposal 8, the Python style guide\\
-  GHA & GHA\\
+  GHA & GitHub Actions\\
   \bottomrule
 \end{tabular}\\
 
@@ -340,128 +340,345 @@ out of scope for this project.
 
 \section{System Tests}
 
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
+This section outlines the system tests that will be used to verify the \progname{}
+program. The tests will be divided into functional and nonfunctional tests.
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+THis section contains the tests that verify the functional requirements outlined
+in the SRS document.
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+\subsubsection{Input Processing Tests}
 
-\subsubsection{Area of Testing1}
+These tests cover R1 and R2 from the SRS document. These requirements state that
+the program must accept images in JPEG and PNG format and that the program must
+be able to pre-process these images for classification.
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+\paragraph{JPEG and PNG Format Acceptance}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{T1: JPEG Format Acceptance\\}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
+Control: Automatic
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+Initial State: The OCRacle system is running and awaiting input.
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Input: An image in JPEG format containing a single uppercase Latin character.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Output: The system accepts the image without error and processes it for
+classification.
 
-How test will be performed: 
+Test Case Derivation: Based on R1, the program must accept images in JPEG format
+for processing.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\item{T2: PNG Format Acceptance\\}
+
+Control: Automatic
+
+Initial State: The OCRacle system is running and awaiting input.
+
+Input: An image in PNG format containing a single uppercase Latin character.
+
+Output: The system accepts the image without error and processes it for
+classification.
+
+Test Case Derivation: Based on R1, the program must accept images in PNG format
+for processing.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\item{T3: Non-Supported Format Rejection \\}
+
+Control: Automatic
+
+Initial State: The OCRacle system is running and awaiting input.
+
+Input: An image in an unsupported format, which is any image format other than
+JPEG or PNG.
+
+Output: The system rejects the image and displays an error message.
+
+Test Case Derivation: Based on R1, the program must reject images in unsupported
+formats.
+
+How test will be performed: This automatic test will be run on GHA.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\paragraph{Image Pre-Processing}
 
-...
+\begin{enumerate}
+
+\item{T4: Image Pre-Processing\\}
+
+Control: Automatic
+
+Initial State: The OCRacle system is running and awaiting input.
+
+Input: A valid image containing a single uppercase Latin character.
+
+Output: The system pre-processes the image for classification, as described in
+IM1 from the SRS document.
+
+Test Case Derivation: Based on R2, the program must pre-process images for
+classification. The system will compare the output from the test with a known
+correct output to ensure that the pre-processing is correct.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\end{enumerate}
+
+\subsubsection{Character Prediction Tests}
+
+As specified in the SRS document, the program must be able to predict a single
+uppercase Latin character from an image. These tests will verify that the program
+can correctly predict characters from images.
+
+\paragraph{Single Character Prediction}
+
+\begin{enumerate}
+
+\item{T5: Character Prediction\\}
+
+Control: Automatic
+
+Initial State: The OCRacle model is trained and ready to predict.
+
+Input: A 28x28 pixel image containing a single uppercase Latin character.
+
+Output: The predicted character, which should match the character in the image.
+
+Test Case Derivation: Based on R3, the program should correctly predict single
+characters from prepared images. We will use a dataset of known images and their
+correct label to verify the correctness of the prediction.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\end{enumerate}
+
+\subsubsection{Probability Vector Output Tests}
+
+These tests ensure that the program outputs a correctly formatted probability
+vector. The probability vector should contain the probability of each character
+in the alphabet, and the sum of the probabilities should be 1.
+
+\paragraph{Probability Vector Validity}
+
+\begin{enumerate}
+
+\item{T6: Probability Vector Sum\\}
+
+Control: Automatic
+
+Initial State: The OCRacle model is trained and ready to predict.
+
+Input: A 28x28 pixel image containing a single uppercase Latin character.
+
+Output: A probability vector where the sum of the probabilities is 1.
+
+Test Case Derivation: Based on R4, the program must output a probability vector
+that sums to 1.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\item{T7: Probability Vector Length\\}
+Control: Automatic
+
+Initial State: The OCRacle model is trained and ready to predict.
+
+Input: A 28x28 pixel image containing a single uppercase Latin character.
+
+Output: A probability vector where the length is equal to the number of
+characters in the alphabet, which is 26.
+
+Test Case Derivation: Based on R4, the program must output a probability vector
+where the length is equal to the number of characters in the alphabet.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\end{enumerate}
+
+\subsubsection{Human-Readable Format Tests}
+
+These tests ensure that the program outputs the predicted character in a
+human-readable format.
+
+\paragraph{Readable Character Output}
+
+\begin{enumerate}
+
+\item{T8: Readable Character Output\\}
+
+Control: Automatic
+
+Initial State: The OCRacle system is ready to display results.
+
+Input: A correctly formatted input image.
+
+Output: The predicted character is displayed in a human-readable format.
+
+Test Case Derivation: Based on R5, the program must display character
+predictions in a readable format. We check to see if the UI displays the
+same character that the model predicted.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
+This section outlines the tests that will be used to verify the nonfunctional
+requirements outlined in the SRS document. This includes tests for accuracy,
+usability, maintainability, and portability.
 
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
+\subsubsection{Accuracy Testing}
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
+These tests ensure that the program is accurate in its predictions. It also
+compares the program's accuracy to the accuracy of the OAR predecessor to
+ensure that the program is an improvement.
 
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+\paragraph{Accuracy Measurement}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{T9: Accuracy Measurement\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Dynamic, Automated
 					
-Initial State: 
+Initial State: The OCRacle system is trained and ready for testing. The previous
+OAR project's accuracy metrics are available for comparison. This is an
+extension of T5, which tests the program's ability to predict characters.
 					
-Input/Condition: 
+Input/Condition: A set of test images from the EMNIST dataset that differ from
+the training set.
 					
-Output/Result: 
+Output/Result: The system outputs a confusion matrix and overall accuracy
+percentage. Report the relative error compared to previous benchmarks.
 					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+How test will be performed: To support NFR1, the test will be run on GHA. The
+system will predict the characters in the test images and compare the
+predictions to the known correct labels. The confusion matrix and overall
+accuracy percentage will be calculated and compared to the OAR predecessor's
+accuracy metrics, which have been previously calculated.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Usability Testing}
 
-...
+\paragraph{User Manual Usability Test}
+
+\begin{enumerate}
+
+\item{T10: User Manual Usability Test\\}
+
+Type: Dynamic, Manual
+					
+Initial State: The user manual is prepared and available. The codebase is
+available for setup and execution.
+					
+Input/Condition: A group of test users with basic command line skills, from the
+VnV team.
+					
+Output/Result: Feedback on ease of use, clarity of instructions, and any
+difficulties encountered. The survey will be included in the Appendix.
+					
+How test will be performed: To support NFR2, users will follow the user manual
+to set up and run the OCRacle program. Any issues encountered by the users will
+be documented via GitHub issues.
+
+\end{enumerate}
+
+\subsubsection{Maintainability Testing}
+
+\paragraph{Code Review for Modularity}
+
+\begin{enumerate}
+
+\item{T11: Ruff Linter Usability Test\\}
+
+Type: Static, Automatic
+
+Initial State: The ruff linter is set up and ready to run.
+
+Input/Condition: The codebase of the OCRacle project.
+
+Output/Result: A report on code quality, identifying any issues that need to be
+addressed. Issues that can automatically be fixed will be
+fixed. Any issues that cannot be automatically fixed will be documented via
+failure of the test.
+
+How test will be performed: To support NFR3, the test will be run on GHA. The
+linter will check the codebase for any issues.
+
+\item{T12: Code Review for Modularity\\}
+
+Type: Static, Manual
+					
+Initial State: The source code is complete and available for review.
+					
+Input/Condition: The codebase of the OCRacle project.
+					
+Output/Result: A report on code modularity, identifying code sections that are
+not easily modifiable or understandable.
+					
+How test will be performed: To support NFR3, the VnV team will review the
+codebase and identify sections that are not easily modifiable or understandable.
+Any issues will be document via GitHub issues.
+
+\end{enumerate}
+
+\subsubsection{Portability Testing}
+
+\paragraph{Cross-Platform Compatibility Test}
+
+\begin{enumerate}
+
+\item{T13: Cross-Platform Compatibility Test\\}
+
+Type: Dynamic, Automatic
+					
+Initial State: The OCRacle system is installed in a Docker environment, which
+provides cross-platform compatibility.
+					
+Input/Condition: The program and its dependencies are set up on a Docker
+environment.
+					
+Output/Result: Confirmation that the program runs correctly on the Docker
+environment.
+					
+How test will be performed: To support NFR4, the test will be run on GHA, which
+is a dockerized environment. As long as all tests pass, the program is
+considered to be cross-platform compatible.
+
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Test Case} & \textbf{R1} & \textbf{R2} & \textbf{R3} & \textbf{R4} & \textbf{R5} & \textbf{NFR1} & \textbf{NFR2} & \textbf{NFR3} & \textbf{NFR4} \\ \hline
+T1 & X &   &   &   &   &   &   &   &   \\ \hline
+T2 & X &   &   &   &   &   &   &   &   \\ \hline
+T3 & X &   &   &   &   &   &   &   &   \\ \hline
+T4 &   & X &   &   &   &   &   &   &   \\ \hline
+T5 &   &   & X &   &   &   &   &   &   \\ \hline
+T6 &   &   &   & X &   &   &   &   &   \\ \hline
+T7 &   &   &   & X &   &   &   &   &   \\ \hline
+T8 &   &   &   &   & X &   &   &   &   \\ \hline
+T9 &   &   &   &   &   & X &   &   &   \\ \hline
+T10 &  &   &   &   &   &   & X &   &   \\ \hline
+T11 &  &   &   &   &   &   &   & X &   \\ \hline
+T12 &  &   &   &   &   &   &   & X &   \\ \hline
+T13 &  &   &   &   &   &   &   &   & X \\ \hline
+\end{tabular}
+\caption{Test Cases to Requirements Matrix}
+\label{tab:test-requirements-matrix}
+\end{table}
 
 \section{Unit Test Description}
 
