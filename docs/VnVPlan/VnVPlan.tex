@@ -27,28 +27,27 @@
 
 \section*{Revision History}
 
-\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\begin{tabularx}{\textwidth}{p{4cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+February 20, 2025 & 1.0 & Initial Creation\\
 \bottomrule
 \end{tabularx}
 
-~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
+% ~\\
+% \wss{The intention of the VnV plan is to increase confidence in the software.
+% However, this does not mean listing every verification and validation technique
+% that has ever been devised.  The VnV plan should also be a \textbf{feasible}
+% plan. Execution of the plan should be possible with the time and team available.
+% If the full plan cannot be completed during the time available, it can either be
+% modified to ``fake it'', or a better solution is to add a section describing
+% what work has been completed and what work is still planned for the future.}
 
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
+% \wss{The VnV plan is typically started after the requirements stage, but before
+% the design stage.  This means that the sections related to unit testing cannot
+% initially be completed.  The sections will be filled in after the design stage
+% is complete.  the final version of the VnV plan should have all sections filled
+% in.}
 
 \newpage
 
@@ -70,292 +69,621 @@ in.}
   \textbf{symbol} & \textbf{description}\\
   \midrule 
   T & Test\\
+  OCR & Optical Character Recognition\\
+  OAR & Optical Alphabet Recognition, the predecessor to this program\\
+  SRS & Software Requirements Specification\\
+  VnV & Verification and Validation\\
+  MG & Module Guide\\
+  MIS & Module Interface Specification\\
+  PEP 8 & Python Enhancement Proposal 8, the Python style guide\\
+  GHA & GitHub Actions\\
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
+% \wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
+%   \citep{SRS} tables, if appropriate}
 
-\wss{Remove this section if it isn't needed}
+% \wss{Remove this section if it isn't needed}
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+This document outlines the verification and validation plan for the \progname{}
+program. This document will outline the testing procedures that will be used to
+ensure that the software meets the requirements outlined in the SRS document.
 
 \section{General Information}
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+The \progname{} program is being tested. \progname{} is an OCR program that classifies
+a single handwritten uppercase Latin alphabet character in an image. The project
+provides a trained model to complete this task as well as a user interface to
+feed an image into the model and display the model's predicted character.
+
+% \wss{Say what software is being tested.  Give its name and a brief overview of
+%   its general functions.}
 
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+The main objective of this project is to build confidence in the software
+correctness. This will be done by testing the software to ensure that it meets
+the requirements outlined in the SRS document. This includes testing the accuracy
+of the software as compared to the OAR predecessor. Validation of the software's
+maintainability will also be conducted.
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+For the purposes of this project, the validation of the program's usability
+will not be heavily tested. This is because the program's user interface will be
+kept as simple as possible to focus on the OCR functionality.
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+The project may rely on external libraries for image manipulation or matrix
+operations. The validation of these libraries will not be tested.
+
+% \wss{State what is intended to be accomplished.  The objective will be around
+%   the qualities that are most important for your project.  You might have
+%   something like: ``build confidence in the software correctness,''
+%   ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
+%   just those that are most important.}
+
+% \wss{You should also list the objectives that are out of scope.  You don't have 
+% the resources to do everything, so what will you be leaving out.  For instance, 
+% if you are not going to verify the quality of usability, state this.  It is also 
+% worthwhile to justify why the objectives are left out.}
+
+% \wss{The objectives are important because they highlight that you are aware of 
+% limitations in your resources for verification and validation.  You can't do everything, 
+% so what are you going to prioritize?  As an example, if your system depends on an 
+% external library, you can explicitly state that you will assume that external library 
+% has already been verified by its implementation team.}
 
 \subsection{Challenge Level and Extras}
 
-\wss{State the challenge level (advanced, general, basic) for your project.
-Your challenge level should exactly match what is included in your problem
-statement.  This should be the challenge level agreed on between you and the
-course instructor.  You can use a pull request to update your challenge level
-(in TeamComposition.csv or Repos.csv) if your plan changes as a result of the
-VnV planning exercise.}
+The challenge level for this project is general. Although this project has been
+done before, implementing the software with higher accuracy than the previous
+implementation is a challenge.
 
-\wss{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your extras (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+For the extra task, I will be including a user manual. This will help users
+understand how to use the program and what to expect from it.
+
+% \wss{State the challenge level (advanced, general, basic) for your project.
+% Your challenge level should exactly match what is included in your problem
+% statement.  This should be the challenge level agreed on between you and the
+% course instructor.  You can use a pull request to update your challenge level
+% (in TeamComposition.csv or Repos.csv) if your plan changes as a result of the
+% VnV planning exercise.}
+
+% \wss{Summarize the extras (if any) that were tackled by this project.  Extras
+% can include usability testing, code walkthroughs, user documentation, formal
+% proof, GenderMag personas, Design Thinking, etc.  Extras should have already
+% been approved by the course instructor as included in your problem statement.
+% You can use a pull request to update your extras (in TeamComposition.csv or
+% Repos.csv) if your plan changes as a result of the VnV planning exercise.}
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
+% \wss{Reference relevant documentation.  This will definitely include your SRS
+%   and your other project documents (design documents, like MG, MIS, etc).  You
+%   can include these even before they are written, since by the time the project
+%   is done, they will be written.  You can create BibTeX entries for your
+%   documents and within those entries include a hyperlink to the documents.}
 
-\citet{SRS}
+  \begin{itemize}
+    \item SRS Document \cite{SRS}: Outlines the requirements for the \progname{}
+    program. This VnV plan will be based on the requirements outlined in this
+    document.
+    \item MG Document: Outlines the modules that compose the \progname{} program.
+    The VnV plan will be based on the modules outlined in this document.
+    \item MIS Document: Outlines the interfaces of the modules that compose the
+    \progname{} program. The VnV plan will be based on the interfaces outlined in
+    this document.
+  \end{itemize}
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
+% \wss{Don't just list the other documents.  You should explain why they are relevant and 
+% how they relate to your VnV efforts.}
 
 \section{Plan}
 
-\wss{Introduce this section.  You can provide a roadmap of the sections to
-  come.}
+This section outlines the multiple stages of the verification and validation
+process. First, the VnV team will be introduced. Then the verification plans for
+the SRS, design, VnV plan, and implementation will be outlined. Finally, a brief
+overview of automated testing and verification tools will be provided. 
+
+% \wss{Introduce this section.  You can provide a roadmap of the sections to
+%   come.}
 
 \subsection{Verification and Validation Team}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+% \wss{Your teammates.  Maybe your supervisor.
+%   You should do more than list names.  You should say what each person's role is
+%   for the project's verification.  A table is a good way to summarize this information.}
+
+The following personnel will be involved in the verification and validation of
+the \progname{} program:
+
+\begin{itemize}
+  \item \authname: The author of the program. Will be responsible for the
+  verification and validation of the \progname{} program. This includes the creation
+  of the VnV plan, the implementation of the tests, and the analysis of the
+  results.
+  \item Dr.~Spencer Smith: The project overseer. Will be responsible for the
+  verification and validation of the \progname{} program. This includes the review
+  of the VnV plan, the review of the tests, and the review of the results.
+  \item Hussein Saad: The domain expert. Will be responsible for the
+  verification and validation of the \progname{} program. This includes the review
+  of the VnV plan, the review of the tests, and the review of the results.
+\end{itemize}
 
 \subsection{SRS Verification Plan}
 
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
+To validate the SRS, the domain expert and overseer have been assigned a
+GitHub issues to review the document. The author will be responsible for
+addressing any comments made by the reviewers. As the project progresses
+the SRS document may be modified, and the reviewers will be assigned a new
+GitHub issue to review the changes.
 
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}
-
-\wss{Maybe create an SRS checklist?}
+To ensure that the SRS document is complete, correct, and consistent, the
+reviewers can rely on the SRS checklist \cite{SRSChecklist}.
 
 \subsection{Design Verification Plan}
 
-\wss{Plans for design verification}
+The design of the \progname{} program will be verified by the domain expert and
+overseer using the MG checklist \cite{MGChecklist} and MIS checklist \cite{MISChecklist}.
 
-\wss{The review will include reviews by your classmates}
+Reviewers will focus on ensuring that the modules and interfaces are correctly
+defined for the \progname{} program given the requirements outlined in the SRS
+document.
 
-\wss{Create a checklists?}
+
+% \wss{Plans for design verification}
+
+% \wss{The review will include reviews by your classmates}
+
+% \wss{Create a checklists?}
 
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+The VnV plan will be reviewed by the domain expert and overseer using the 
+VnV plan checklist \cite{VnVChecklist}. The author will be responsible for
+addressing any comments made by the reviewers. As the project progresses the
+VnV plan may be modified, and the reviewers will be assigned a new GitHub issue
+to review the changes.
 
-\wss{The review will include reviews by your classmates}
+Reviewers will focus on ensuring that test cases adequately cover any edge cases
+and are representative of the requirements outlined in the SRS document.
 
-\wss{Create a checklists?}
+% \wss{The verification and validation plan is an artifact that should also be
+% verified.  Techniques for this include review and mutation testing.}
+
+% \wss{The review will include reviews by your classmates}
+
+% \wss{Create a checklists?}
 
 \subsection{Implementation Verification Plan}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
+As described in Section \ref{sec:AutomatedTesting}, the \progname{} program will
+be tested using an automated test suite. Code quality and static type checking
+will also be enforced using automated tools. To ensure that these automated
+tests are correct, the VnV team will review the tests and the test results. The
+VnV team will also review the code quality and static type checking results.
 
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
+Manual testing in the form of code walkthroughs will also be used to ensure that
+the code is achieving the desired functionality. The VnV team will review the
+code walkthroughs to ensure that the code is correct.
 
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
+% \wss{You should at least point to the tests listed in this document and the unit
+%   testing plan.}
+
+% \wss{In this section you would also give any details of any plans for static
+%   verification of the implementation.  Potential techniques include code
+%   walkthroughs, code inspection, static analyzers, etc.}
+
+% \wss{The final class presentation in CAS 741 could be used as a code
+% walkthrough.  There is also a possibility of using the final presentation (in
+% CAS741) for a partial usability survey.}
 
 \subsection{Automated Testing and Verification Tools}
+\label{sec:AutomatedTesting}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
+GHA will be used to automate the testing of the \progname{} program. For
+each pull request, the tests will be run. The tests will include unit tests,
+functional tests, and nonfunctional tests. The tests will be created using the
+Python unittest framework, which is included in the Python standard library. The
+tests will be run using the pytest framework, which is included in the Python
+standard library. The tests will consist of predetermined inputs and expected
+outputs. The tests will be run on GHA. If any of the tests fail, the
+pull request will be rejected.
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
+To enforce code quality, the ruff linter and code formatter will be used to
+ensure that the code follows the PEP 8 style guide and is formatted correctly.
+In addition to this tool, the mypy static type checker will be used to ensure
+that the code is correctly typed. For each pull request, the linter, code
+formatter, and static type checker will be run on GHA. If any of
+these tools fail, the pull request will be rejected.
 
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+
+% \wss{What tools are you using for automated testing.  Likely a unit testing
+%   framework and maybe a profiling tool, like ValGrind.  Other possible tools
+%   include a static analyzer, make, continuous integration tools, test coverage
+%   tools, etc.  Explain your plans for summarizing code coverage metrics.
+%   Linters are another important class of tools.  For the programming language
+%   you select, you should look at the available linters.  There may also be tools
+%   that verify that coding standards have been respected, like flake9 for
+%   Python.}
+
+% \wss{If you have already done this in the development plan, you can point to
+% that document.}
+
+% \wss{The details of this section will likely evolve as you get closer to the
+%   implementation.}
 
 \subsection{Software Validation Plan}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
+There are no plans for software validation at this time, since it is considered
+out of scope for this project. The main focus of the project is not user
+acceptance, but rather the accuracy of the OCR functionality.
 
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
+% \wss{If there is any external data that can be used for validation, you should
+%   point to it here.  If there are no plans for validation, you should state that
+%   here.}
 
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
+% \wss{You might want to use review sessions with the stakeholder to check that
+% the requirements document captures the right requirements.  Maybe task based
+% inspection?}
 
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
+% \wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
+% be used as an opportunity to validate the requirements.  You should plan on 
+% demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
+% The feedback from your supervisor will be very useful for improving your project.}
 
-\wss{This section might reference back to the SRS verification section.}
+% \wss{For teams without an external supervisor, user testing can serve the same purpose 
+% as a Rev 0 demo for the supervisor.}
+
+% \wss{This section might reference back to the SRS verification section.}
 
 \section{System Tests}
 
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
+This section outlines the system tests that will be used to verify the \progname{}
+program. The tests will be divided into functional and nonfunctional tests.
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+This section contains the tests that verify the functional requirements outlined
+in the SRS document.
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+\subsubsection{Input Processing Tests}
 
-\subsubsection{Area of Testing1}
+These tests cover R1 and R2 from the SRS document. These requirements state that
+the program must accept images in JPEG and PNG format and that the program must
+be able to pre-process these images for classification.
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+\paragraph{JPEG and PNG Format Acceptance}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{T1: JPEG Format Acceptance\\}
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
+Control: Automatic
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
+Initial State: The \progname{} system is ready for input.
 
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
+Input: A single uppercase Latin alphabet character in JPEG format.
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Output: The system processes the image without errors.
 
-How test will be performed: 
+Test Case Derivation: Based on R1, the program must accept images in JPEG
+format.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\item{T2: PNG Format Acceptance\\}
+
+Control: Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input: A single uppercase Latin alphabet character in PNG format.
+
+Output: The sytem processes the image without errors.
+
+Test Case Derivation: Based on R1, the program must accept images in PNG format.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\item{T3: Non-Supported Format Rejection \\}
+
+Control: Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input: An file in any format other than JPEG or PNG.
+
+Output: The system rejects the file, displaying an appropriate error message.
+
+Test Case Derivation: Based on R1, the program must reject files that are in
+formats other than JPEG or PNG.
+
+How test will be performed: This automatic test will be run on GHA.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\paragraph{Image Pre-Processing}
 
-...
+\begin{enumerate}
+
+\item{T4: Image Pre-Processing\\}
+
+Control: Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input: A valid image containing a single uppercase Latin alphabet character.
+
+Output: As described in IM1, the system pre-processed the image for the
+classification task.
+
+Test Case Derivation: Based on R2, the program must pre-process images for
+classification. The system will compare the output from the test with a known
+correct output to ensure that the pre-processing is correct.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\end{enumerate}
+
+\subsubsection{Character Prediction Tests}
+
+As specified in the SRS document, the program must be able to predict a single
+uppercase Latin character from an image. These tests will verify that the program
+can correctly predict characters from images, which covers R3.
+
+\paragraph{Single Character Prediction}
+
+\begin{enumerate}
+
+\item{T5: Character Prediction\\}
+
+Control: Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input: An image containing a single uppercase Latin alphabet character.
+
+Output: The predicted character, which should match the character in the image.
+The predicted character corresponds to the character with the highest
+probability in the probability vector.
+
+Test Case Derivation: Based on R3, the program should correctly predict single
+characters from prepared images. We will use a dataset of known images and their
+correct label to verify the correctness of the prediction.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\end{enumerate}
+
+\subsubsection{Probability Vector Output Tests}
+
+These tests ensure that the program outputs a correctly formatted probability
+vector. The probability vector should contain the probability of each character
+in the alphabet, and the sum of the probabilities should be 1. These tests
+cover R4.
+
+\paragraph{Probability Vector Validity}
+
+\begin{enumerate}
+
+\item{T6: Probability Vector Sum\\}
+
+Control: Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input: An image containing a single uppercase Latin alphabet character.
+
+Output: A probability vector where the sum of the probabilities is 1.
+
+Test Case Derivation: Based on R4, the program must output a probability vector
+that sums to 1.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\item{T7: Probability Vector Length\\}
+Control: Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input: An image containing a single uppercase Latin alphabet character.
+
+Output: A probability vector where the length is equal to the number of
+characters in the alphabet, which is 26.
+
+Test Case Derivation: Based on R4, the program must output a probability vector
+where the length is the number of possible classification labels.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\end{enumerate}
+
+\subsubsection{Human-Readable Format Tests}
+
+These tests ensure that the program outputs the predicted character in a
+human-readable format. This covers R5.
+
+\paragraph{Readable Character Output}
+
+\begin{enumerate}
+
+\item{T8: Readable Character Output\\}
+
+Control: Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input: An image containing a single uppercase Latin alphabet character.
+
+Output: The predicted character is displayed in a human-readable format.
+
+Test Case Derivation: Based on R5, the program must display character
+predictions in a readable format. We check to see if the UI displays the
+same character that the model predicted.
+
+How test will be performed: The automatic test will be run on GHA.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
+This section outlines the tests that will be used to verify the nonfunctional
+requirements outlined in the SRS document. This includes tests for accuracy,
+usability, maintainability, and portability.
 
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
+\subsubsection{Accuracy Testing}
 
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
+These tests ensure that the program is accurate in its predictions. It also
+compares the program's accuracy to the accuracy of the OAR predecessor to
+ensure that the program is an improvement.
 
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
+\paragraph{Accuracy Measurement}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{T9: Accuracy Measurement\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Dynamic, Automated
 					
-Initial State: 
+Initial State: The \progname{} system is ready for input. The previous
+OAR project's accuracy metrics are available for comparison. This is an
+extension of T5, which tests the program's ability to predict characters.
 					
-Input/Condition: 
+Input/Condition: A subset of images from the EMNIST dataset, which should be
+different from the training set.
 					
-Output/Result: 
+Output/Result: A confusion matrix and overall accuracy percentage. These results
+are compared to OAR to determine if \progname{} performs better.
 					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+How test will be performed: To support NFR1, the test will be run on GHA. The
+system will predict the characters in the test images and compare the
+predictions to the known correct labels. The confusion matrix and overall
+accuracy percentage will be calculated and compared to the OAR predecessor's
+accuracy metrics, which have been previously calculated.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Usability Testing}
 
-...
+\paragraph{User Manual Usability Test}
+
+\begin{enumerate}
+
+\item{T10: User Manual Usability Test\\}
+
+Type: Dynamic, Manual
+					
+Initial State: The codebase and user manual are available.
+					
+Input/Condition: A group of test users with basic command line skills, from the
+VnV team.
+					
+Output/Result: Feedback on ease of use, clarity of instructions, and any
+difficulties encountered.
+					
+How test will be performed: To support NFR2, users will follow the user manual
+to set up and run the OCRacle program. Any issues encountered by the users will
+be documented via GitHub issues.
+
+\end{enumerate}
+
+\subsubsection{Maintainability Testing}
+
+\paragraph{Code Review for Modularity}
+
+\begin{enumerate}
+
+\item{T11: Ruff Linter Usability Test\\}
+
+Type: Static, Automatic
+
+Initial State: The ruff linter is set up and ready to run.
+
+Input/Condition: The codebase of the \progname{} project.
+
+Output/Result: A report on code quality, identifying any issues that need to be
+addressed. Issues that can automatically be fixed will be
+fixed. Any issues that cannot be automatically fixed will be documented via
+failure of the test.
+
+How test will be performed: To support NFR3, the test will be run on GHA. The
+linter will check the codebase for any issues.
+
+\item{T12: Code Review for Modularity\\}
+
+Type: Static, Manual
+					
+Initial State: The codebase is available.
+					
+Input/Condition: The codebase of the \progname{} project.
+					
+Output/Result: A report on code modularity, identifying code sections that are
+not easily modifiable or understandable.
+					
+How test will be performed: To support NFR3, the VnV team will review the
+codebase and identify sections that are not easily modifiable or understandable.
+Any issues will be document via GitHub issues.
+
+\end{enumerate}
+
+\subsubsection{Portability Testing}
+
+\paragraph{Cross-Platform Compatibility Test}
+
+\begin{enumerate}
+
+\item{T13: Cross-Platform Compatibility Test\\}
+
+Type: Dynamic, Automatic
+					
+Initial State: The OCRacle system is installed in a Docker environment, which
+provides cross-platform compatibility.
+					
+Input/Condition: The program and its dependencies are set up on a Docker
+environment.
+					
+Output/Result: Confirmation that the program runs correctly on the Docker
+environment.
+					
+How test will be performed: To support NFR4, the test will be run on GHA, which
+is a dockerized environment. As long as all tests pass, the program is
+considered to be cross-platform compatible.
+
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+The following table outlines the traceability between the test cases and the
+requirements outlined in the SRS document.
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Test Case} & \textbf{R1} & \textbf{R2} & \textbf{R3} & \textbf{R4} & \textbf{R5} & \textbf{NFR1} & \textbf{NFR2} & \textbf{NFR3} & \textbf{NFR4} \\ \hline
+T1 & X &   &   &   &   &   &   &   &   \\ \hline
+T2 & X &   &   &   &   &   &   &   &   \\ \hline
+T3 & X &   &   &   &   &   &   &   &   \\ \hline
+T4 &   & X &   &   &   &   &   &   &   \\ \hline
+T5 &   &   & X &   &   &   &   &   &   \\ \hline
+T6 &   &   &   & X &   &   &   &   &   \\ \hline
+T7 &   &   &   & X &   &   &   &   &   \\ \hline
+T8 &   &   &   &   & X &   &   &   &   \\ \hline
+T9 &   &   &   &   &   & X &   &   &   \\ \hline
+T10 &  &   &   &   &   &   & X &   &   \\ \hline
+T11 &  &   &   &   &   &   &   & X &   \\ \hline
+T12 &  &   &   &   &   &   &   & X &   \\ \hline
+T13 &  &   &   &   &   &   &   &   & X \\ \hline
+\end{tabular}
+\caption{Test Cases to Requirements Matrix}
+\label{tab:test-requirements-matrix}
+\end{table}
 
 \section{Unit Test Description}
 
@@ -500,28 +828,5 @@ Their values are defined in this section for easy maintenance.
 \subsection{Usability Survey Questions?}
 
 \wss{This is a section that would be appropriate for some projects.}
-
-\newpage{}
-\section*{Appendix --- Reflection}
-
-\wss{This section is not required for CAS 741}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Lifelong Learning.
-
-\begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item What knowledge and skills will the team collectively need to acquire to
-  successfully complete the verification and validation of your project?
-  Examples of possible knowledge and skills include dynamic testing knowledge,
-  static testing knowledge, specific tool usage, Valgrind etc.  You should look to
-  identify at least one item for each team member.
-  \item For each of the knowledge areas and skills identified in the previous
-  question, what are at least two approaches to acquiring the knowledge or
-  mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
-\end{enumerate}
 
 \end{document}
