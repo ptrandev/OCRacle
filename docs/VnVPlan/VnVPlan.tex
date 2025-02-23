@@ -100,7 +100,7 @@ ensure that the software meets the requirements outlined in the SRS document.
 The \progname{} program is being tested. \progname{} is an OCR program that classifies
 a single handwritten uppercase Latin alphabet character in an image. The project
 provides a trained model to complete this task as well as a user interface to
-feed an image into the model and display the results.
+feed an image into the model and display the model's predicted character.
 
 % \wss{Say what software is being tested.  Give its name and a brief overview of
 %   its general functions.}
@@ -110,11 +110,12 @@ feed an image into the model and display the results.
 The main objective of this project is to build confidence in the software
 correctness. This will be done by testing the software to ensure that it meets
 the requirements outlined in the SRS document. This includes testing the accuracy
-of the software as compared to the OAR predecessor.
+of the software as compared to the OAR predecessor. Validation of the software's
+maintainability will also be conducted.
 
 For the purposes of this project, the validation of the program's usability
-will not be tested. This is because the program's user interface will be kept
-as simple as possible to focus on the OCR functionality.
+will not be heavily tested. This is because the program's user interface will be
+kept as simple as possible to focus on the OCR functionality.
 
 The project may rely on external libraries for image manipulation or matrix
 operations. The validation of these libraries will not be tested.
@@ -168,7 +169,7 @@ understand how to use the program and what to expect from it.
 %   documents and within those entries include a hyperlink to the documents.}
 
   \begin{itemize}
-    \item \cite{SRS} SRS Document: Outlines the requirements for the \progname{}
+    \item SRS Document \cite{SRS}: Outlines the requirements for the \progname{}
     program. This VnV plan will be based on the requirements outlined in this
     document.
     \item MG Document: Outlines the modules that compose the \progname{} program.
@@ -205,7 +206,7 @@ the \progname{} program:
   verification and validation of the \progname{} program. This includes the creation
   of the VnV plan, the implementation of the tests, and the analysis of the
   results.
-  \item Dr.~Spencer Smith: The supervisor. Will be responsible for the
+  \item Dr.~Spencer Smith: The project overseer. Will be responsible for the
   verification and validation of the \progname{} program. This includes the review
   of the VnV plan, the review of the tests, and the review of the results.
   \item Hussein Saad: The domain expert. Will be responsible for the
@@ -215,7 +216,7 @@ the \progname{} program:
 
 \subsection{SRS Verification Plan}
 
-To validate the SRS, the domain expert and supervisor have been assigned a
+To validate the SRS, the domain expert and overseer have been assigned a
 GitHub issues to review the document. The author will be responsible for
 addressing any comments made by the reviewers. As the project progresses
 the SRS document may be modified, and the reviewers will be assigned a new
@@ -227,10 +228,11 @@ reviewers can rely on the SRS checklist \cite{SRSChecklist}.
 \subsection{Design Verification Plan}
 
 The design of the \progname{} program will be verified by the domain expert and
-supervisor using the MG checklist \cite{MGChecklist} and MIS checklist \cite{MISChecklist}.
+overseer using the MG checklist \cite{MGChecklist} and MIS checklist \cite{MISChecklist}.
 
 Reviewers will focus on ensuring that the modules and interfaces are correctly
 defined for the \progname{} program given the requirements outlined in the SRS
+document.
 
 
 % \wss{Plans for design verification}
@@ -241,7 +243,7 @@ defined for the \progname{} program given the requirements outlined in the SRS
 
 \subsection{Verification and Validation Plan Verification Plan}
 
-The VnV plan will be reviewed by the domain expert and supervisor using the 
+The VnV plan will be reviewed by the domain expert and overseer using the 
 VnV plan checklist \cite{VnVChecklist}. The author will be responsible for
 addressing any comments made by the reviewers. As the project progresses the
 VnV plan may be modified, and the reviewers will be assigned a new GitHub issue
@@ -318,7 +320,8 @@ these tools fail, the pull request will be rejected.
 \subsection{Software Validation Plan}
 
 There are no plans for software validation at this time, since it is considered
-out of scope for this project.
+out of scope for this project. The main focus of the project is not user
+acceptance, but rather the accuracy of the OCR functionality.
 
 % \wss{If there is any external data that can be used for validation, you should
 %   point to it here.  If there are no plans for validation, you should state that
@@ -345,7 +348,7 @@ program. The tests will be divided into functional and nonfunctional tests.
 
 \subsection{Tests for Functional Requirements}
 
-THis section contains the tests that verify the functional requirements outlined
+This section contains the tests that verify the functional requirements outlined
 in the SRS document.
 
 \subsubsection{Input Processing Tests}
@@ -435,7 +438,7 @@ How test will be performed: This automatic test will be run on GHA.
 
 As specified in the SRS document, the program must be able to predict a single
 uppercase Latin character from an image. These tests will verify that the program
-can correctly predict characters from images.
+can correctly predict characters from images, which covers R3.
 
 \paragraph{Single Character Prediction}
 
@@ -463,7 +466,8 @@ How test will be performed: The automatic test will be run on GHA.
 
 These tests ensure that the program outputs a correctly formatted probability
 vector. The probability vector should contain the probability of each character
-in the alphabet, and the sum of the probabilities should be 1.
+in the alphabet, and the sum of the probabilities should be 1. These tests
+cover R4.
 
 \paragraph{Probability Vector Validity}
 
@@ -504,7 +508,7 @@ How test will be performed: The automatic test will be run on GHA.
 \subsubsection{Human-Readable Format Tests}
 
 These tests ensure that the program outputs the predicted character in a
-human-readable format.
+human-readable format. This covers R5.
 
 \paragraph{Readable Character Output}
 
@@ -552,11 +556,11 @@ Initial State: The OCRacle system is trained and ready for testing. The previous
 OAR project's accuracy metrics are available for comparison. This is an
 extension of T5, which tests the program's ability to predict characters.
 					
-Input/Condition: A set of test images from the EMNIST dataset that differ from
-the training set.
+Input/Condition: A subset of images from the EMNIST dataset, which should be
+different from the training set.
 					
 Output/Result: The system outputs a confusion matrix and overall accuracy
-percentage. Report the relative error compared to previous benchmarks.
+percentage. Provide the relative error compared to OAR.
 					
 How test will be performed: To support NFR1, the test will be run on GHA. The
 system will predict the characters in the test images and compare the
@@ -583,7 +587,7 @@ Input/Condition: A group of test users with basic command line skills, from the
 VnV team.
 					
 Output/Result: Feedback on ease of use, clarity of instructions, and any
-difficulties encountered. The survey will be included in the Appendix.
+difficulties encountered.
 					
 How test will be performed: To support NFR2, users will follow the user manual
 to set up and run the OCRacle program. Any issues encountered by the users will
@@ -656,6 +660,10 @@ considered to be cross-platform compatible.
 \end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
+
+The following table outlines the traceability between the test cases and the
+requirements outlined in the SRS document.
+
 
 \begin{table}[h]
 \centering
