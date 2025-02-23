@@ -365,15 +365,14 @@ be able to pre-process these images for classification.
 
 Control: Automatic
 
-Initial State: The OCRacle system is running and awaiting input.
+Initial State: The \progname{} system is ready for input.
 
-Input: An image in JPEG format containing a single uppercase Latin character.
+Input: A single uppercase Latin alphabet character in JPEG format.
 
-Output: The system accepts the image without error and processes it for
-classification.
+Output: The system processes the image without errors.
 
-Test Case Derivation: Based on R1, the program must accept images in JPEG format
-for processing.
+Test Case Derivation: Based on R1, the program must accept images in JPEG
+format.
 
 How test will be performed: This automatic test will be run on GHA.
 
@@ -381,15 +380,13 @@ How test will be performed: This automatic test will be run on GHA.
 
 Control: Automatic
 
-Initial State: The OCRacle system is running and awaiting input.
+Initial State: The \progname{} system is ready for input.
 
-Input: An image in PNG format containing a single uppercase Latin character.
+Input: A single uppercase Latin alphabet character in PNG format.
 
-Output: The system accepts the image without error and processes it for
-classification.
+Output: The sytem processes the image without errors.
 
-Test Case Derivation: Based on R1, the program must accept images in PNG format
-for processing.
+Test Case Derivation: Based on R1, the program must accept images in PNG format.
 
 How test will be performed: This automatic test will be run on GHA.
 
@@ -397,15 +394,14 @@ How test will be performed: This automatic test will be run on GHA.
 
 Control: Automatic
 
-Initial State: The OCRacle system is running and awaiting input.
+Initial State: The \progname{} system is ready for input.
 
-Input: An image in an unsupported format, which is any image format other than
-JPEG or PNG.
+Input: An file in any format other than JPEG or PNG.
 
-Output: The system rejects the image and displays an error message.
+Output: The system rejects the file, displaying an appropriate error message.
 
-Test Case Derivation: Based on R1, the program must reject images in unsupported
-formats.
+Test Case Derivation: Based on R1, the program must reject files that are in
+formats other than JPEG or PNG.
 
 How test will be performed: This automatic test will be run on GHA.
 
@@ -419,12 +415,12 @@ How test will be performed: This automatic test will be run on GHA.
 
 Control: Automatic
 
-Initial State: The OCRacle system is running and awaiting input.
+Initial State: The \progname{} system is ready for input.
 
-Input: A valid image containing a single uppercase Latin character.
+Input: A valid image containing a single uppercase Latin alphabet character.
 
-Output: The system pre-processes the image for classification, as described in
-IM1 from the SRS document.
+Output: As described in IM1, the system pre-processed the image for the
+classification task.
 
 Test Case Derivation: Based on R2, the program must pre-process images for
 classification. The system will compare the output from the test with a known
@@ -448,11 +444,13 @@ can correctly predict characters from images, which covers R3.
 
 Control: Automatic
 
-Initial State: The OCRacle model is trained and ready to predict.
+Initial State: The \progname{} system is ready for input.
 
-Input: A 28x28 pixel image containing a single uppercase Latin character.
+Input: An image containing a single uppercase Latin alphabet character.
 
 Output: The predicted character, which should match the character in the image.
+The predicted character corresponds to the character with the highest
+probability in the probability vector.
 
 Test Case Derivation: Based on R3, the program should correctly predict single
 characters from prepared images. We will use a dataset of known images and their
@@ -477,9 +475,9 @@ cover R4.
 
 Control: Automatic
 
-Initial State: The OCRacle model is trained and ready to predict.
+Initial State: The \progname{} system is ready for input.
 
-Input: A 28x28 pixel image containing a single uppercase Latin character.
+Input: An image containing a single uppercase Latin alphabet character.
 
 Output: A probability vector where the sum of the probabilities is 1.
 
@@ -491,15 +489,15 @@ How test will be performed: The automatic test will be run on GHA.
 \item{T7: Probability Vector Length\\}
 Control: Automatic
 
-Initial State: The OCRacle model is trained and ready to predict.
+Initial State: The \progname{} system is ready for input.
 
-Input: A 28x28 pixel image containing a single uppercase Latin character.
+Input: An image containing a single uppercase Latin alphabet character.
 
 Output: A probability vector where the length is equal to the number of
 characters in the alphabet, which is 26.
 
 Test Case Derivation: Based on R4, the program must output a probability vector
-where the length is equal to the number of characters in the alphabet.
+where the length is the number of possible classification labels.
 
 How test will be performed: The automatic test will be run on GHA.
 
@@ -518,9 +516,9 @@ human-readable format. This covers R5.
 
 Control: Automatic
 
-Initial State: The OCRacle system is ready to display results.
+Initial State: The \progname{} system is ready for input.
 
-Input: A correctly formatted input image.
+Input: An image containing a single uppercase Latin alphabet character.
 
 Output: The predicted character is displayed in a human-readable format.
 
@@ -552,15 +550,15 @@ ensure that the program is an improvement.
 
 Type: Dynamic, Automated
 					
-Initial State: The OCRacle system is trained and ready for testing. The previous
+Initial State: The \progname{} system is ready for input. The previous
 OAR project's accuracy metrics are available for comparison. This is an
 extension of T5, which tests the program's ability to predict characters.
 					
 Input/Condition: A subset of images from the EMNIST dataset, which should be
 different from the training set.
 					
-Output/Result: The system outputs a confusion matrix and overall accuracy
-percentage. Provide the relative error compared to OAR.
+Output/Result: A confusion matrix and overall accuracy percentage. These results
+are compared to OAR to determine if \progname{} performs better.
 					
 How test will be performed: To support NFR1, the test will be run on GHA. The
 system will predict the characters in the test images and compare the
@@ -580,8 +578,7 @@ accuracy metrics, which have been previously calculated.
 
 Type: Dynamic, Manual
 					
-Initial State: The user manual is prepared and available. The codebase is
-available for setup and execution.
+Initial State: The codebase and user manual are available.
 					
 Input/Condition: A group of test users with basic command line skills, from the
 VnV team.
@@ -621,7 +618,7 @@ linter will check the codebase for any issues.
 
 Type: Static, Manual
 					
-Initial State: The source code is complete and available for review.
+Initial State: The codebase is available.
 					
 Input/Condition: The codebase of the OCRacle project.
 					
