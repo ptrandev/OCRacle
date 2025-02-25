@@ -369,7 +369,7 @@ Initial State: The \progname{} system is ready for input.
 
 Input: A single uppercase Latin alphabet character in JPEG format.
 
-Output: The system processes the image without errors.
+Output: The system accepts the image as an input without errors.
 
 Test Case Derivation: Based on R1, the program must accept images in JPEG
 format.
@@ -384,7 +384,7 @@ Initial State: The \progname{} system is ready for input.
 
 Input: A single uppercase Latin alphabet character in PNG format.
 
-Output: The sytem processes the image without errors.
+Output: The system accepts the mage as an input without errors.
 
 Test Case Derivation: Based on R1, the program must accept images in PNG format.
 
@@ -420,7 +420,7 @@ Initial State: The \progname{} system is ready for input.
 Input: A valid image containing a single uppercase Latin alphabet character.
 
 Output: As described in IM1, the system pre-processed the image for the
-classification task.
+classification task in the specified manner.
 
 Test Case Derivation: Based on R2, the program must pre-process images for
 classification. The system will compare the output from the test with a known
@@ -584,7 +584,7 @@ Input/Condition: A group of test users with basic command line skills, from the
 VnV team.
 					
 Output/Result: Feedback on ease of use, clarity of instructions, and any
-difficulties encountered.
+difficulties encountered by the users.
 					
 How test will be performed: To support NFR2, users will follow the user manual
 to set up and run the OCRacle program. Any issues encountered by the users will
@@ -607,9 +607,8 @@ Initial State: The ruff linter is set up and ready to run.
 Input/Condition: The codebase of the \progname{} project.
 
 Output/Result: A report on code quality, identifying any issues that need to be
-addressed. Issues that can automatically be fixed will be
-fixed. Any issues that cannot be automatically fixed will be documented via
-failure of the test.
+addressed. Issues that can automatically be fixed will be fixed. Any issues that
+cannot be automatically fixed will be documented via failure of the test.
 
 How test will be performed: To support NFR3, the test will be run on GHA. The
 linter will check the codebase for any issues.
@@ -642,13 +641,13 @@ Any issues will be document via GitHub issues.
 Type: Dynamic, Automatic
 					
 Initial State: The OCRacle system is installed in a Docker environment, which
-provides cross-platform compatibility.
+provides cross-platform compatibility. 
 					
 Input/Condition: The program and its dependencies are set up on a Docker
-environment.
+environment. This system is running in the GHA environment.
 					
-Output/Result: Confirmation that the program runs correctly on the Docker
-environment.
+Output/Result: The GHA environment is able to run the program and associated
+tests without any incompatibility related issues.
 					
 How test will be performed: To support NFR4, the test will be run on GHA, which
 is a dockerized environment. As long as all tests pass, the program is
@@ -687,128 +686,144 @@ T13 &  &   &   &   &   &   &   &   & X \\ \hline
 
 \section{Unit Test Description}
 
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
+This section has not been completed yet because the MIS document has not been
+completed yet. The unit tests will be based on the modules and interfaces
+outlined in the MIS document.
 
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
+% \wss{This section should not be filled in until after the MIS (detailed design
+%   document) has been completed.}
 
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
+% \wss{Reference your MIS (detailed design document) and explain your overall
+% philosophy for test case selection.}  
+
+% \wss{To save space and time, it may be an option to provide less detail in this section.  
+% For the unit tests you can potentially layout your testing strategy here.  That is, you 
+% can explain how tests will be selected for each module.  For instance, your test building 
+% approach could be test cases for each access program, including one test for normal behaviour 
+% and as many tests as needed for edge cases.  Rather than create the details of the input 
+% and output here, you could point to the unit testing code.  For this to work, you code 
+% needs to be well-documented, with meaningful names for all of the tests.}
 
 \subsection{Unit Testing Scope}
 
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
+This section has not been completed yet because the MIS document has not been
+completed yet. The unit tests will be based on the modules and interfaces
+outlined in the MIS document.
+
+% \wss{What modules are outside of the scope.  If there are modules that are
+%   developed by someone else, then you would say here if you aren't planning on
+%   verifying them.  There may also be modules that are part of your software, but
+%   have a lower priority for verification than others.  If this is the case,
+%   explain your rationale for the ranking of module importance.}
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+This section has not been completed yet because the MIS document has not been
+completed yet. The unit tests will be based on the modules and interfaces
+outlined in the MIS document.
 
-\subsubsection{Module 1}
+% \wss{Most of the verification will be through automated unit testing.  If
+%   appropriate specific modules can be verified by a non-testing based
+%   technique.  That can also be documented in this section.}
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
+% \subsubsection{Module 1}
 
-\begin{enumerate}
+% % \wss{Include a blurb here to explain why the subsections below cover the module.
+% %   References to the MIS would be good.  You will want tests from a black box
+% %   perspective and from a white box perspective.  Explain to the reader how the
+% %   tests were selected.}
 
-\item{test-id1\\}
+% \begin{enumerate}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+% \item{test-id1\\}
+
+% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
+%   be automatic}
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: \wss{The expected result for the given inputs}
+% Output: \wss{The expected result for the given inputs}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+% Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+% How test will be performed: 
 					
-\item{test-id2\\}
+% \item{test-id2\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
+%   be automatic}
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: \wss{The expected result for the given inputs}
+% Output: \wss{The expected result for the given inputs}
 
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
+% Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+% How test will be performed: 
 
-\item{...\\}
+% \item{...\\}
     
-\end{enumerate}
+% \end{enumerate}
 
-\subsubsection{Module 2}
+% \subsubsection{Module 2}
 
-...
+% ...
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
+This section has not been completed yet because the MIS document has not been
+completed yet. The unit tests will be based on the modules and interfaces
+outlined in the MIS document.
 
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
+% \wss{If there is a module that needs to be independently assessed for
+%   performance, those test cases can go here.  In some projects, planning for
+%   nonfunctional tests of units will not be that relevant.}
 
-\subsubsection{Module ?}
+% \wss{These tests may involve collecting performance data from previously
+%   mentioned functional tests.}
+
+% \subsubsection{Module ?}
 		
-\begin{enumerate}
+% \begin{enumerate}
 
-\item{test-id1\\}
+% \item{test-id1\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
+% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
+%   be automatic}
 					
-Initial State: 
+% Initial State: 
 					
-Input/Condition: 
+% Input/Condition: 
 					
-Output/Result: 
+% Output/Result: 
 					
-How test will be performed: 
+% How test will be performed: 
 					
-\item{test-id2\\}
+% \item{test-id2\\}
 
-Type: Functional, Dynamic, Manual, Static etc.
+% Type: Functional, Dynamic, Manual, Static etc.
 					
-Initial State: 
+% Initial State: 
 					
-Input: 
+% Input: 
 					
-Output: 
+% Output: 
 					
-How test will be performed: 
+% How test will be performed: 
 
-\end{enumerate}
+% \end{enumerate}
 
-\subsubsection{Module ?}
+% \subsubsection{Module ?}
 
-...
+% ...
 
-\subsection{Traceability Between Test Cases and Modules}
+% \subsection{Traceability Between Test Cases and Modules}
 
-\wss{Provide evidence that all of the modules have been considered.}
+% \wss{Provide evidence that all of the modules have been considered.}
 				
 \bibliographystyle{plainnat}
 
@@ -816,17 +831,17 @@ How test will be performed:
 
 \newpage
 
-\section{Appendix}
+% \section{Appendix}
 
-This is where you can place additional information.
+% This is where you can place additional information.
 
-\subsection{Symbolic Parameters}
+% \subsection{Symbolic Parameters}
 
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+% The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
+% Their values are defined in this section for easy maintenance.
 
-\subsection{Usability Survey Questions?}
+% \subsection{Usability Survey Questions?}
 
-\wss{This is a section that would be appropriate for some projects.}
+% \wss{This is a section that would be appropriate for some projects.}
 
 \end{document}
