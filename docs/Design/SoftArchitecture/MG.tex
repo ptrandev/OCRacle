@@ -46,8 +46,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+March 5, 2025 & 1.0 & Initial Document Creation\\
 \bottomrule
 \end{tabularx}
 
@@ -72,9 +71,8 @@ This section records information for easy reference.
   R & Requirement\\
   SC & Scientific Computing \\
   SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
+  \progname & Name of the Project\\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
   \bottomrule
 \end{tabular}\\
 
@@ -158,15 +156,26 @@ change.
 
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+hardware on which the software is running.
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The accepted image
+formats of the input data.
+\item[\refstepcounter{acnum} \actheacnum \label{acTraining}:] The training
+methods used for the model.
+\item[\refstepcounter{acnum} \actheacnum \label{acTesting}:] The testing methods
+used for the model.
+\item[\refstepcounter{acnum} \actheacnum \label{acPreprocessing}:] The image
+preprocessing techniques used before classification.
+\item[\refstepcounter{acnum} \actheacnum \label{acModel}:] The model used for
+image classification.
+\item[\refstepcounter{acnum} \actheacnum \label{acOutput}:] The output format of
+the model.
+\item[\refstepcounter{acnum} \actheacnum \label{acGUI}:] The specific form of
+the graphical user interface.
 \end{description}
 
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
+% \wss{Anticipated changes relate to changes that would be made in requirements,
+% design or implementation choices.  They are not related to changes that are made
+% at run-time, like the values of parameters.}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -178,9 +187,12 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] The input data will
+always be in the form of an image.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucOutput}:] The results of the
+model output will always be displayed to the graphical user interface.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPurpose}:] The program will
+only be used for classifying a single Latin alphabet character in an image.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -192,7 +204,13 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mInput}:] Input Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mTraining}:] Model Training Module
+\item [\refstepcounter{mnum} \mthemnum \label{mTesting}:] Model Testing Module
+\item [\refstepcounter{mnum} \mthemnum \label{mPreprocessing}:] Image Preprocessing Module
+\item [\refstepcounter{mnum} \mthemnum \label{mModel}:] Model Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOutput}:] Model Output Module
+\item [\refstepcounter{mnum} \mthemnum \label{mGUI}:] Graphical User Interface Module 
 \end{description}
 
 
@@ -206,19 +224,17 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} &
+Input Format Module\\
+& Model Output Module\\
+& Graphical User Interface Module\\
+& Image Preprocessing Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} &
+Model Training Module\\
+& Model Testing Module\\
+& Model Module\\
 \bottomrule
 
 \end{tabular}
@@ -232,12 +248,12 @@ The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+% \wss{The intention of this section is to document decisions that are made
+%   ``between'' the requirements and the design.  To satisfy some requirements,
+%   design decisions need to be made.  Rather than make these decisions implicit,
+%   they are explicitly recorded here.  For instance, if a program has security
+%   requirements, a specific design decision may be made to satisfy those
+%   requirements with a password.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -320,17 +336,11 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+R1 & \mref{mHH}, \mref{mInput}\\
+R2 & \mref{mPreprocessing}\\
+R3 & \mref{mTraining}, \mref{mTesting}, \mref{mModel}\\
+R4 & \mref{mOutput}, \mref{mModel} \mref{mGUI}\\
+R5 & \mref{mOutput}, \mref{mModel}, \mref{mGUI}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -345,16 +355,12 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
 \acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
+\acref{acTraining} & \mref{mTraining}\\
+\acref{acTesting} & \mref{mTesting}\\
+\acref{acPreprocessing} & \mref{mPreprocessing}\\
+\acref{acModel} & \mref{mModel}\\
 \acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acGUI} & \mref{mGUI}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -389,23 +395,6 @@ arrows in the diagram typically correspond to the presence of import statement.}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
-
-%\section*{References}
-
-\section{User Interfaces}
-
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
-
-\section{Design of Communication Protocols}
-
-\wss{If appropriate}
-
-\section{Timeline}
-
-\wss{Schedule of tasks and who is responsible}
-
-\wss{You can point to GitHub if this information is included there}
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
