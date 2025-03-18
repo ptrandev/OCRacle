@@ -107,6 +107,9 @@ character & char & a single symbol or digit\\
 integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+unsigned 8-bit integer & uint8 & an integer in [0, 255]\\
+bounded real & $\mathbb{R}_{\text{min} \leq x \leq \text{max}}$ & a real number in the range [$\text{min}$, $\text{max}$]\\
+File & File & a file object supported by Python\\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -140,7 +143,7 @@ Input Format Module\\
 & Model Testing Module\\
 & Prediction Model Module\\
 & Application Module\\
-& OAR Performance Metrics Module\\
+& Performance Metrics Module\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision} &
@@ -159,15 +162,9 @@ Image Preprocessing Module\\
 
 \section{MIS of Application Module} \label{MApplication}
 
-% \wss{Use labels for cross-referencing}
-
-% \wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-% \wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
-
 \subsection{Module}
 
-\wss{Short name for the module}
+main
 
 \subsection{Uses}
 
@@ -181,6 +178,8 @@ Image Preprocessing Module\\
 
 \subsubsection{Exported Constants}
 
+N/A
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -188,7 +187,7 @@ Image Preprocessing Module\\
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+main & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -197,42 +196,30 @@ Image Preprocessing Module\\
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+N/A
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+The Graphical User Interface module is responsible for handling all user
+inputs and outputs. The Application module is responsible for coordinating the
+interaction between the GUI, Input Format, and Model Output modules.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent main():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: The application is started and the user is able to interact
+with the GUI to input images and view the model's predictions.
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+N/A
 
 \section{MIS of Input Format Module} \label{MInput}
 
@@ -255,11 +242,11 @@ N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{2cm} p{4cm} p{4cm}}
+\begin{tabular}{p{2cm} p{2cm} p{3cm} p{6cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-input & string & $T_{28 \times 28}$ where $T_{i,j} \in \{0, \ldots, 255\} $ & DimensionsError, FormatError \\
+input & filePath: string & imageMatrix: uint8$_{28 \times 28}$ & DimensionsError, FormatError \\
 \hline
 \end{tabular}
 \end{center}
@@ -272,13 +259,7 @@ N/A
 
 \subsubsection{Environment Variables}
 
-\begin{itemize}
-  \item $n_{min}$: minimum number of pixels in the vertical direction
-  \item $n_{max}$: maximum number of pixels in the vertical direction
-  \item $m_{min}$: minimum number of pixels in the horizontal direction
-  \item $m_{max}$: maximum number of pixels in the horizontal direction
-  \item supportedFormats: list of supported image formats (e.g. PNG, JPEG)
-\end{itemize}
+N/A
 
 \subsubsection{Assumptions}
 
@@ -286,16 +267,24 @@ N/A
 
 \subsubsection{Access Routine Semantics}
 
-\noindent input(path):
+\noindent input(filePath):
 \begin{itemize} 
-\item output: image := preprocessing(inputImage)
+\item output: imageMatrix := preprocessing(file)
 \item exception: A DimensionsError exception is thrown if the input image
 exceeds the bounds of the $n_{min}$, $n_{max}$, $m_{min}$, and $m_{max}$
-parameters. A FormatError exception is thrown if the input image is not one of
-the supported formats.
+parameters as specified by the SRS. A FormatError exception is thrown if the
+input image is not one of the supported formats.
 \end{itemize}
 
 \subsubsection{Local Functions}
+
+\noindent readImage(filePath):
+\begin{itemize} 
+\item output: File object. A file object is returned that can be used to
+read the image file by the preprocessing module.
+\item exception: A FormatError is thrown if the input image is not one of the
+supported formats.
+\end{itemize}
 
 \section{MIS of Model Output Module} \label{MOutput}
 
@@ -312,6 +301,66 @@ output
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item LABELS: \{'A',...,'Z'\}
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+output & imageMatrix: uint8$_{28 \times 28}$ & prediction: char, confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+We assume that the image matrix has been preprocessed as specified in the SRS
+before being passed to the prediction model used by the output module.
+\subsubsection{Access Routine Semantics}
+
+\noindent output(imageMatrix):
+\begin{itemize}
+\item output: prediction, confidenceMatrix := predict(imageMatrix)
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+N/A
+
+\section{MIS of Model Training Module} \label{MTraining}
+
+\subsection{Module}
+
+train
+
+\subsection{Uses}
+
+\begin{itemize}
+  \item Performance Metrics Module \ref{MPerformance}
+  \item Model Output Module \ref{MOutput}
+  \item Input Format Module \ref{MInput}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
 N/A
 
 \subsubsection{Exported Access Programs}
@@ -321,7 +370,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+train & - & model: float32$_{\text{m} \times \text{n}}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -330,119 +379,77 @@ N/A
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\begin{itemize}
+  \item dataset: (uint8$_{28 \times 28}$, char)[]
+  \item epochs: $\mathbb{N}$
+  \item batch\_size: $\mathbb{N}$
+  \item learning\_rate: $\mathbb{R}$
+  \item epsilon: $\mathbb{R}$
+  \item time\_step: $\mathbb{R}$
+  \item first\_moment: $\mathbb{R}$
+  \item second\_moment: $\mathbb{R}$
+  \item beta1: $\mathbb{R}$
+  \item beta2: $\mathbb{R}$
+  \item gradient: float32$_{\text{m} \times \text{n}}$
+  \item theta: float32$_{\text{m} \times \text{n}}$
+  \item y\_hat: $float32_{\text{m} \times \text{n}}$
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+N/A
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent train():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: The model is trained on the dataset using the hyperparameters
+epochs, batch\_size, learning\_rate, epsilon, time\_step, first\_moment,
+second\_moment, beta1, and beta2. These are manipulated via the ADAM optimizer
+as specified by the SRS.
+\item output: model := $f_{train}()$
 \end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
-
-\section{MIS of Model Training Module} \label{MTraining}
-
-\subsection{Module}
-
-\wss{Short name for the module}
-
-\subsection{Uses}
-
+\noindent relu(x):
 \begin{itemize}
-  \item Performance Metrics Module \ref{MPerformance}
-  \item Model Output Module \ref{MOutput}
-  \item Input Format Module \ref{MInput}
+\item output: result := max(0, x)
 \end{itemize}
 
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-\wss{accessProg} & - & - & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
-
-\subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
-\subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}():
+\noindent softmax(x):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item output: result := $e^{x} / \sum_{i=1}^{n} e^{x_i}$
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\noindent cnn\_forward(x, theta):
+\begin{itemize}
+\item transition: y\_hat := $f_{cnn\_forward}(x, theta)$. This function
+calculates the output of the model given the input x and the weights theta.
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\noindent cnn\_backward(x, y, y\_hat, theta):
+\begin{itemize}
+\item transition: gradient := $f_{cnn\_backward}(x, y, y\_hat, theta)$. This
+function calculates the gradient of the model given the input x, the target y,
+the output y\_hat, and the weights theta.
+\end{itemize}
 
-\subsubsection{Local Functions}
+\noindent updateTheta(gradient, theta, time\_step, first\_moment, second\_moment, beta1, beta2, epsilon):
+\begin{itemize}
+\item transition: theta := $f_{updateTheta}(gradient, theta, time\_step, first\_moment, second\_moment, beta1, beta2, epsilon)$. This function updates the weights of the model using the ADAM optimizer.
+\end{itemize}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
 
 \section{MIS of Model Testing Module} \label{MTesting}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+test
 
 \subsection{Uses}
 
@@ -456,14 +463,16 @@ N/A
 
 \subsubsection{Exported Constants}
 
+N/A
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{2cm} p{2cm} p{6cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+test & - & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, accuracy: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -472,49 +481,42 @@ N/A
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\begin{itemize}
+  \item dataset: (uint8$_{28 \times 28}$, char)[]
+  \item loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$
+  \item accuracy: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$
+  \item confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+The model has a valid weight format for the test dataset and was trained using
+the same hyperparameters as the training module.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent test():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: The model is tested on a dataset of unseen images. The loss,
+accuracy, and confusion matrix are calculated using the model's predictions.
+\item output: loss, accuracy, confusionMatrix := crossEntropyLoss(prediction,
+target), accuracy(prediction, target), confusionMatrix(prediction, target)
 \end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+N/A
 
 
 \section{MIS of Prediction Model Module} \label{MModel}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+model
 
 \subsection{Uses}
 
@@ -523,6 +525,8 @@ N/A
 
 \subsubsection{Exported Constants}
 
+N/A
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -530,7 +534,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+predict & imageMatrix: uint8$_{28 \times 28}$ & confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -539,64 +543,55 @@ N/A
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+\begin{itemize}
+  \item model: float32$_{\text{m} \times \text{n}}$
+\end{itemize}
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+We assume that the input image has been preprocessed as specified in the SRS
+before being passed to the prediction model.
+
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent predict(imageMatrix):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item output: confidenceMatrix := $f_{predict}(imageMatrix)$
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+N/A
 
 \section{MIS of Image Preprocessing Module} \label{mPreprocessing}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+preprocessing
 
 \subsection{Uses}
-
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
 
+N/A
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{3cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+preprocessing & file : File & imageMatrix: uint8$_{28 \times 28}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -605,48 +600,35 @@ N/A
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+N/A
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+All input data has been validated by the Input Format Module before being
+processed by the Image Preprocessing Module.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\noindent preprocessing(file):
+\begin{itemize} 
+\item output: image := $uint8_{28 \times 28}$.
+The input file has been transformed such that it conforms to the preprocessing
+requirements as specified by the SRS.
 \end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+N/A
 
 \section{MIS of Performance Metrics Module} \label{MPerformance}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+performance
 
 \subsection{Uses}
 
@@ -655,14 +637,18 @@ N/A
 
 \subsubsection{Exported Constants}
 
+N/A
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+crossEntropyLoss & prediction: float32$_{\text{m} \times \text{n}}$, target: float32$_{\text{m} \times \text{n}}$ & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & - \\
+accuracy & prediction: float32$_{\text{m} \times \text{n}}$, target: float32$_{\text{m} \times \text{n}}$ & accuracy: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & - \\
+confusionMatrix & prediction: float32$_{\text{m} \times \text{n}}$, target: float32$_{\text{m} \times \text{n}}$ & confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -671,49 +657,43 @@ N/A
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-a memory.}
+N/A
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-when the module has external interaction with the environment, such as for a
-device driver, screen interface, keyboard, file, etc.}
+N/A
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
+We assume that the prediction and target matrices are of the same dimensions.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent crossEntropyLoss(prediction, target):
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item output: loss := $f_{crossEntropyLoss}(prediction, target)$
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-have a state transition.  In this case a state transition can only occur if
-the module is changing the state of another module.}
+\noindent accuracy(prediction, target):
+\begin{itemize}
+\item output: accuracy := $f_{accuracy}(prediction, target)$
+\end{itemize}
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-will have one or the other.}
+\noindent confusionMatrix(prediction, target):
+\begin{itemize}
+\item output: confusionMatrix := $f_{confusionMatrix}(prediction, target)$
+
+\end{itemize}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-They are not necessarily something that is going to be implemented
-explicitly.  Even if they are implemented, they are not exported; they only
-have local scope.}
+N/A
 
 \section{MIS of Graphical User Interface Module} \label{MGUI}
 
 \subsection{Module}
 
-\wss{Short name for the module}
-
+gui
 \subsection{Uses}
 
 \begin{itemize}
@@ -724,6 +704,8 @@ have local scope.}
 
 \subsubsection{Exported Constants}
 
+N/A
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -731,7 +713,7 @@ have local scope.}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+- & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -740,42 +722,30 @@ have local scope.}
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-a memory.}
+N/A
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-when the module has external interaction with the environment, such as for a
-device driver, screen interface, keyboard, file, etc.}
+\begin{itemize}
+  \item displayWindow (dimensions: $\mathbb{Z}_+ \times \mathbb{Z}_+$)
+  \item keyboard (keypress: char)
+  \item mouse (location : $\mathbb{Z}_+ \times \mathbb{Z}_+$, click: bool)
+\end{itemize}
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-exceptions, but for practical purposes assumptions are sometimes appropriate.}
+This behavior will be sufficiently abstracted by the use of Python Notebook,
+which will handle all UI elements and interactions with the user. As a result,
+the GUI modules does not need to have any pre-defined state variables or access
+routines.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
-\begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
-\end{itemize}
-
-\wss{A module without environment variables or state variables is unlikely to
-have a state transition.  In this case a state transition can only occur if
-the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-will have one or the other.}
+N/A
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-They are not necessarily something that is going to be implemented
-explicitly.  Even if they are implemented, they are not exported; they only
-have local scope.}
+N/A
 
 \newpage
 
