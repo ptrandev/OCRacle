@@ -217,7 +217,6 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mOutput}:] Model Output Module
 \item [\refstepcounter{mnum} \mthemnum \label{mGUI}:] Graphical User Interface Module
 \item [\refstepcounter{mnum} \mthemnum \label{mAccuracy}:] Accuracy Metrics Module
-\item [\refstepcounter{mnum} \mthemnum \label{mConstants}:] Constants Module
 \end{description}
 
 
@@ -307,12 +306,13 @@ to be implemented.
 
 \begin{description}
 \item[Secrets:] The data and execution flow of the application.
-\item[Services:] Orchestrates the execution of the system. This includes
-coordinating the input \mref{mInput}, preprocessing \mref{mPreprocessing},
-model training \mref{mTraining}, model testing \mref{mTesting}, model
-classification \mref{mModel}, and output \mref{mOutput} modules. It also
-displays the relevant information to the user in the graphical user interface
-\mref{mGUI}.
+\item[Services:] Orchestrates the execution of the user facing system.
+This includes coordinating the input \mref{mInput} and output \mref{mOutput}
+modules and displaying the relevant information to the user in the graphical
+user interface \mref{mGUI}. This module is the main entry point for the
+application. Note that training and testing the model is done in
+\mref{mTraining} and \mref{mTesting} respectively, and is a separate routine
+from the application.
 \item[Implemented By:] \progname{}
 \item[Type of Module:] Abstract Data Type
 \end{description}
@@ -342,6 +342,7 @@ required by the graphical user interface.
 \begin{description}
 \item[Secrets:] The methods for training the model.
 \item[Services:] Trains the model using the input data via a test-train split.
+This module produces the model weights and architecture for \mref{mModel}.
 \item[Implemented By:] \progname{}
 \item[Type of Module:] Abstract Data Type
 \end{description}
@@ -351,7 +352,8 @@ required by the graphical user interface.
 \begin{description}
 \item[Secrets:] The methods for testing the model.
 \item[Services:] Tests the model using both data that the model was trained on
-and data that the model was not trained on.
+and data that the model was not trained on. This tests \mref{mModel} to compare
+its accuracy to the previous OAR project.
 \item[Implemented By:] \progname{}
 \item[Type of Module:] Abstract Data Type
 \end{description}
@@ -366,6 +368,26 @@ is a probability distribution over the possible classes.
 \item[Type of Module:] Abstract Data Type
 \end{description}
 
+\subsubsection{Image Preprocessing Module (\mref{mPreprocessing})}
+
+\begin{description}
+\item[Secrets:] The image preprocessing techniques used before classification.
+\item[Services:] Used by \mref{mInput} to preprocess the input image data before
+sending it to \mref{mModel} for classification.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Accuracy Metrics Module (\mref{mAccuracy})}
+
+\begin{description}
+\item[Secrets:] The performance metrics used to evaluate the model.
+\item[Services:] Given the model output, ground truth, and performance of the
+previous OAR project, calculates the performance metrics.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Library
+\end{description}
+
 \subsection{Software Decision Module}
 
 \begin{description}
@@ -377,26 +399,6 @@ is a probability distribution over the possible classes.
   % Changes in these modules are more likely to be motivated by a desire to
   % improve performance than by externally imposed changes.
 \item[Implemented By:] --
-\end{description}
-
-\subsubsection{Image Preprocessing Module (\mref{mPreprocessing})}
-
-\begin{description}
-\item[Secrets:] The image preprocessing techniques used before classification.
-\item[Services:] Used by \mref{mInput} to preprocess the input image data before
-sending it to \mref{mModel} for classification.
-\item[Implemented By:] Pandas, OpenCV, NumPy
-\item[Type of Module:] Library
-\end{description}
-
-\subsubsection{Accuracy Metrics Module (\mref{mAccuracy})}
-
-\begin{description}
-\item[Secrets:] The performance metrics used to evaluate the model.
-\item[Services:] Given the model output, ground truth, and performance of the
-previous OAR project, calculates the performance metrics.
-\item[Implemented By:] scikit-learn, seaborn, OAR
-\item[Type of Module:] Library
 \end{description}
 
 \subsubsection{Graphical User Interface Module (\mref{mGUI})}
@@ -480,7 +482,7 @@ because they use modules from the lower levels.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=1\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
