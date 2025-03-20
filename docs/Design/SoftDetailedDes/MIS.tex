@@ -140,7 +140,6 @@ The following table is taken directly from the Module Guide document for this pr
 Input Format Module\\
 & Model Output Module\\
 & Model Training Module\\
-& Model Testing Module\\
 & Prediction Model Module\\
 & Application Module\\
 & Image Preprocessing Module\\
@@ -424,82 +423,6 @@ IM1 in the SRS \cite[4.2.4]{SRS}. For each step, theta is updated using the
 gradient of the model.
 \item output: $\theta$. Once the model has been trained and loss has been
 minimized, the weights of the model are returned.
-\end{itemize}
-
-\subsubsection{Local Functions}
-
-N/A
-
-
-\section{MIS of Model Testing Module} \label{MTesting}
-
-\subsection{Module}
-
-test
-
-\subsection{Uses}
-
-\begin{itemize}
-  \item Input Format Module \ref{MInput}
-  \item Model Output Module \ref{MOutput}
-  \item Accuracy Metrics Module \ref{mAccuracy}
-\end{itemize}
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-N/A
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{2cm} p{8cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-test & - & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\begin{itemize}
-  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]. The
-  dataset of images and their corresponding labels used for testing the model.
-  \item loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$. The
-  cross-entropy loss of the model, which is a measure of the model's performance.
-  \item confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$. A matrix that shows the model's predictions versus the actual labels.
-\end{itemize}
-
-\subsubsection{Environment Variables}
-
-N/A
-
-\subsubsection{Assumptions}
-
-Assume that the model has been trained using the Model Training Module
-\ref{MTraining}.
-
-\subsubsection{Access Routine Semantics}
-
-\noindent test():
-\begin{itemize}
-\item transition: The model is tested on a dataset of unseen images. The loss,
-and confusion matrix are calculated using the model's predictions.
-\item output:
-\begin{itemize}
-  \item loss := crossEntropyLoss(prediction, target). The prediction from the
-  model is compared to the true target values from the dataset. The Accuracy
-  Metrics Module \ref{mAccuracy} is used to calculate the cross-entropy loss.
-  \item confusionMatrix := confusionMatrix(prediction, target). The prediction
-  from the model is compared to the true target values from the dataset. The
-  Accuracy Metrics Module \ref{mAccuracy} is used to calculate the confusion
-  matrix.
-\end{itemize}
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -792,9 +715,10 @@ N/A
 \section{Appendix} \label{Appendix}
 
 \begin{itemize}
-  \item The Python Notebook documentation can be found at \url{https://jupyter-notebook.readthedocs.io/en/latest/user-documentation.html}. This informs the full range
-  of interactions that the Graphical User Interface Module \ref{MGUI} can have
-  with the user.
+  \item The Python Notebook documentation can be found at
+  \url{https://jupyter-notebook.readthedocs.io/en/latest/user-documentation.html}.
+  This informs the full range of interactions that the Graphical User Interface
+  Module \ref{MGUI} can have with the user.
   \item Generative AI Acknowledgement: ChatGPT-4o was used to generate valid
   LaTeX for mathematical expressions in this document.
 \end{itemize}
