@@ -109,6 +109,7 @@ natural number & $\mathbb{N}$ & a number without a fractional component in [1, $
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
 bounded real & $\mathbb{R}_{\text{min} \leq x \leq \text{max}}$ & a real number in the range [$\text{min}$, $\text{max}$]\\
 bounded integer & $\mathbb{Z}_{\text{min} \leq x \leq \text{max}}$ & an integer in the range [$\text{min}$, $\text{max}$]\\
+boolean & bool & a value that is either true or false\\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -167,9 +168,9 @@ main
 \subsection{Uses}
 
 \begin{itemize}
-  \item Graphical User Interface Module \ref{MGUI}
   \item Input Format Module \ref{MInput}
   \item Model Output Module \ref{MOutput}
+  \item Graphical User Interface Module \ref{MGUI}
 \end{itemize}
 
 \subsection{Syntax}
@@ -198,7 +199,9 @@ N/A
 
 \subsubsection{Environment Variables}
 
-N/A
+\begin{itemize}
+  \item filePath: string. The path to the input image file from the user.
+\end{itemize}
 
 \subsubsection{Assumptions}
 
@@ -389,16 +392,16 @@ train & - & model: $\mathbb{R}^{m \times n}$ & - \\
   \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]. The
   dataset of images and their corresponding labels used for training the model.
   \item epochs: $\mathbb{N}$. The number of epochs to train the model.
-  \item batch\_size: $\mathbb{N}$. The number of images to train on in each batch.
-  \item learning\_rate: $\mathbb{R}$. The rate at which the model learns.
-  \item epsilon: $\mathbb{R}$. A small value to prevent division by zero.
-  \item time\_step: $\mathbb{R}$. The time step for the ADAM optimizer.
-  \item first\_moment: $\mathbb{R}$. The first moment for the ADAM optimizer.
-  \item second\_moment: $\mathbb{R}$. The second moment for the ADAM optimizer.
-  \item beta1: $\mathbb{R}$. The beta1 parameter for the ADAM optimizer.
-  \item beta2: $\mathbb{R}$. The beta2 parameter for the ADAM optimizer.
-  \item gradient: $\mathbb{R}^{m \times n}$. The gradient of the model.
-  \item theta: $\mathbb{R}^{m \times n}$. The weights of the model.
+  \item batchSize: $\mathbb{N}$. The number of images to train on in each batch.
+  \item timeStep: $\mathbb{R}$. The time step for the ADAM optimizer.
+  \item $\alpha$: $\mathbb{R}$. The rate at which the model learns.
+  \item $\epsilon$: $\mathbb{R}$. A small value to prevent division by zero.
+  \item $m_{t}$: $\mathbb{R}$. The first moment for the ADAM optimizer.
+  \item $v_{t}$: $\mathbb{R}$. The second moment for the ADAM optimizer.
+  \item $\beta_1$: $\mathbb{R}$. The $\beta_1$ parameter for the ADAM optimizer.
+  \item $\beta_2$: $\mathbb{R}$. The $\beta_2$ parameter for the ADAM optimizer.
+  \item $g_{t}$: $\mathbb{R}^{m \times n}$. The gradient of the model. 
+  \item $\theta_{t}$: $\mathbb{R}^{m \times n}$. The weights of the model.
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -414,13 +417,13 @@ N/A
 \noindent train():
 \begin{itemize}
 \item transition: The model is trained on the dataset using the hyperparameters
-learning\_rate, epochs, batch\_size, epsilon, time\_step, first\_moment,
-second\_moment, beta1, and beta2. The ADAM optimizer is used to minimize the
-cross-entropy loss as specified by TM:ADAM \cite[4.2.2]{SRS} and IM1 in the SRS
-\cite[4.2.4]{SRS}. For each step, theta is updated using the gradient of the
-model.
-\item output: theta. Once the model has been trained and loss has been minimized,
-the weights of the model are returned.
+$\alpha$, $\beta_1$, $\beta_2$, $\epsilon$, $m_{t}$, $v_{t}$, $g_{t}$,
+$\theta_{t}$, epochs, batchSize, and timeStep. The ADAM optimizer is used to
+minimize the cross-entropy loss as specified by TM:ADAM \cite[4.2.2]{SRS} and
+IM1 in the SRS \cite[4.2.4]{SRS}. For each step, theta is updated using the
+gradient of the model.
+\item output: $\theta$. Once the model has been trained and loss has been
+minimized, the weights of the model are returned.
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -437,9 +440,9 @@ test
 \subsection{Uses}
 
 \begin{itemize}
-  \item Accuracy Metrics Module \ref{mAccuracy}
-  \item Model Output Module \ref{MOutput}
   \item Input Format Module \ref{MInput}
+  \item Model Output Module \ref{MOutput}
+  \item Accuracy Metrics Module \ref{mAccuracy}
 \end{itemize}
 
 \subsection{Syntax}
@@ -751,9 +754,9 @@ N/A
 \subsubsection{Environment Variables}
 
 \begin{itemize}
-  \item displayWindow (dimensions: $\mathbb{Z}_+ \times \mathbb{Z}_+$)
-  \item keyboard (keypress: char)
-  \item mouse (location : $\mathbb{Z}_+ \times \mathbb{Z}_+$, click: bool)
+  \item displayWindow: (dimensions: $\mathbb{Z}_+ \times \mathbb{Z}_+$)
+  \item keyboard: (keypress: char)
+  \item mouse: (location: $\mathbb{Z}_+ \times \mathbb{Z}_+$, click: bool)
 \end{itemize}
 
 \subsubsection{Assumptions}
