@@ -107,9 +107,8 @@ character & char & a single symbol or digit\\
 integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
-unsigned 8-bit integer & uint8 & an integer in [0, 255]\\
 bounded real & $\mathbb{R}_{\text{min} \leq x \leq \text{max}}$ & a real number in the range [$\text{min}$, $\text{max}$]\\
-File & File & a file object supported by Python\\
+bounded integer & $\mathbb{Z}_{\text{min} \leq x \leq \text{max}}$ & an integer in the range [$\text{min}$, $\text{max}$]\\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -133,23 +132,22 @@ The following table is taken directly from the Module Guide document for this pr
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding} & ~ \\
+{Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} &
+\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} &
 Input Format Module\\
 & Model Output Module\\
 & Model Training Module\\
 & Model Testing Module\\
 & Prediction Model Module\\
 & Application Module\\
-& Performance Metrics Module\\
+& Image Preprocessing Module\\
+& Accuracy Metrics Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} &
-Image Preprocessing Module\\
-& Performance Metrics Module\\
-& Graphical User Interface Module\\
+\multirow{1}{0.3\textwidth}{Software Decision Module}&
+Graphical User Interface Module\\
 \bottomrule
 
 \end{tabular}
@@ -246,7 +244,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-input & filePath: string & imageMatrix: uint8$_{28 \times 28}$ & DimensionsError, FormatError \\
+input & filePath: string & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & DimensionsError, FormatError, FileNotFound \\
 \hline
 \end{tabular}
 \end{center}
@@ -259,7 +257,9 @@ N/A
 
 \subsubsection{Environment Variables}
 
-N/A
+\begin{itemize}
+  \item filePath: string. The path to the input image file from the user.
+\end{itemize}
 
 \subsubsection{Assumptions}
 
@@ -269,22 +269,23 @@ N/A
 
 \noindent input(filePath):
 \begin{itemize} 
-\item output: imageMatrix := preprocessing(file)
-\item exception: A DimensionsError exception is thrown if the input image
-exceeds the bounds of the $n_{min}$, $n_{max}$, $m_{min}$, and $m_{max}$
-parameters as specified by the SRS. A FormatError exception is thrown if the
-input image is not one of the supported formats.
+\item output: imageMatrix := preprocessing(filePath). After ensuring that all
+exceptions are handled, call the preprocessing module \ref{mPreprocessing} to
+perform the necessary transformations on the input image.
+\item exceptions:
+\begin{itemize}
+  \item A DimensionsError exception is thrown if the input image
+  exceeds the bounds of the $n_{min}$, $n_{max}$, $m_{min}$, and $m_{max}$
+  parameters as specified by Table 4 in the SRS \cite[4.2.6]{SRS}.
+  \item A FormatError exception is thrown if the input image is not one of the supported formats
+  specified by R1 in the SRS \cite[5.1.1]{SRS}.
+  \item A FileNotFound exception is thrown if the input file does not exist.
+\end{itemize}
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent readImage(filePath):
-\begin{itemize} 
-\item output: File object. A file object is returned that can be used to
-read the image file by the preprocessing module.
-\item exception: A FormatError is thrown if the input image is not one of the
-supported formats.
-\end{itemize}
+N/A
 
 \section{MIS of Model Output Module} \label{MOutput}
 
@@ -313,7 +314,7 @@ output
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-output & imageMatrix: uint8$_{28 \times 28}$ & prediction: char, confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
+output & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & prediction: char, confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -330,18 +331,21 @@ N/A
 
 \subsubsection{Assumptions}
 
-We assume that the image matrix has been preprocessed as specified in the SRS
-before being passed to the prediction model used by the output module.
+We assume that the imageMatrix input has been processed by the Input Format
+Module \ref{MInput} before being passed to the Model Output Module.
+
 \subsubsection{Access Routine Semantics}
 
 \noindent output(imageMatrix):
 \begin{itemize}
-\item output: prediction, confidenceMatrix := predict(imageMatrix)
+\item output:
+\begin{itemize}
+  \item confidenceMatrix := predict(imageMatrix). Call the prediction model
+  module \ref{MModel} to generate a confidence matrix for the input image.
+  \item prediction := LABELS[argmax(confidenceMatrix)]. Return the character
+  representing the highest confidence value in the confidence matrix.
 \end{itemize}
-
-\subsubsection{Local Functions}
-
-N/A
+\end{itemize}
 
 \section{MIS of Model Training Module} \label{MTraining}
 
@@ -352,9 +356,10 @@ train
 \subsection{Uses}
 
 \begin{itemize}
-  \item Performance Metrics Module \ref{MPerformance}
-  \item Model Output Module \ref{MOutput}
   \item Input Format Module \ref{MInput}
+  \item Model Output Module \ref{MOutput}
+  \item Prediction Model Module \ref{MModel}
+  \item Accuracy Metrics Module \ref{mAccuracy}
 \end{itemize}
 
 \subsection{Syntax}
@@ -370,7 +375,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-train & - & model: float32$_{\text{m} \times \text{n}}$ & - \\
+train & - & model: $\mathbb{R}^{m \times n}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -380,7 +385,7 @@ train & - & model: float32$_{\text{m} \times \text{n}}$ & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-  \item dataset: (uint8$_{28 \times 28}$, char)[]
+  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]
   \item epochs: $\mathbb{N}$
   \item batch\_size: $\mathbb{N}$
   \item learning\_rate: $\mathbb{R}$
@@ -390,9 +395,9 @@ train & - & model: float32$_{\text{m} \times \text{n}}$ & - \\
   \item second\_moment: $\mathbb{R}$
   \item beta1: $\mathbb{R}$
   \item beta2: $\mathbb{R}$
-  \item gradient: float32$_{\text{m} \times \text{n}}$
-  \item theta: float32$_{\text{m} \times \text{n}}$
-  \item y\_hat: $float32_{\text{m} \times \text{n}}$
+  \item gradient: $\mathbb{R}^{m \times n}$
+  \item theta: $\mathbb{R}^{m \times n}$
+  \item y\_hat: $\mathbb{R}^{m \times n}$
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -454,7 +459,7 @@ test
 \subsection{Uses}
 
 \begin{itemize}
-  \item Performance Metrics Module \ref{MPerformance}
+  \item Accuracy Metrics Module \ref{mAccuracy}
   \item Model Output Module \ref{MOutput}
   \item Input Format Module \ref{MInput}
 \end{itemize}
@@ -482,10 +487,11 @@ test & - & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, accuracy: 
 \subsubsection{State Variables}
 
 \begin{itemize}
-  \item dataset: (uint8$_{28 \times 28}$, char)[]
-  \item loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$
-  \item accuracy: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$
-  \item confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$
+  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]. The
+  dataset of images and their corresponding labels used for testing the model.
+  \item loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$. The
+  cross-entropy loss of the model, which is a measure of the model's performance.
+  \item confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$. A matrix that shows the model's predictions versus the actual labels.
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -494,17 +500,24 @@ N/A
 
 \subsubsection{Assumptions}
 
-The model has a valid weight format for the test dataset and was trained using
-the same hyperparameters as the training module.
+Assume that the model has been trained using the Model Training Module
+\ref{MTraining}.
 
 \subsubsection{Access Routine Semantics}
 
 \noindent test():
 \begin{itemize}
 \item transition: The model is tested on a dataset of unseen images. The loss,
-accuracy, and confusion matrix are calculated using the model's predictions.
-\item output: loss, accuracy, confusionMatrix := crossEntropyLoss(prediction,
-target), accuracy(prediction, target), confusionMatrix(prediction, target)
+and confusion matrix are calculated using the model's predictions.
+\item output:
+\begin{itemize}
+  \item loss := crossEntropyLoss(prediction, target). The prediction from the
+  model is compared to the true target values from the dataset. The Accuracy
+  Metrics Module \ref{mAccuracy} is used to calculate the cross-entropy loss.
+  \item confusionMatrix := confusionMatrix(prediction, target). The prediction
+  from the model is compared to the true target values from the dataset. The
+  Accuracy Metrics Module \ref{mAccuracy} is used to calculate the confusion
+  matrix.
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -534,7 +547,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-predict & imageMatrix: uint8$_{28 \times 28}$ & confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
+predict & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -544,7 +557,8 @@ predict & imageMatrix: uint8$_{28 \times 28}$ & confidenceMatrix: $\mathbb{R}_{\
 \subsubsection{State Variables}
 
 \begin{itemize}
-  \item model: float32$_{\text{m} \times \text{n}}$
+  \item model: $\mathbb{R}^{m \times n}$. The representation of the model's
+  weights for the prediction model.
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -561,9 +575,12 @@ before being passed to the prediction model.
 
 \noindent predict(imageMatrix):
 \begin{itemize}
-\item output: confidenceMatrix := $f_{predict}(imageMatrix)$
+\item output: confidenceMatrix. Where each element in the confidence matrix
+represents the model's confidence in the corresponding character. The model is
+used to generate a confidence matrix for the input image using a CNN as
+specified by GD3 in the SRS \cite[4.2.3]{SRS}. GD3 provides a high-level
+description of the model's architecture, but the implemented model may differ.
 \end{itemize}
-
 
 
 \subsubsection{Local Functions}
@@ -591,7 +608,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-preprocessing & file : File & imageMatrix: uint8$_{28 \times 28}$ & - \\
+preprocessing & file : string & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -615,16 +632,26 @@ processed by the Image Preprocessing Module.
 
 \noindent preprocessing(file):
 \begin{itemize} 
-\item output: image := $uint8_{28 \times 28}$.
-The input file has been transformed such that it conforms to the preprocessing
-requirements as specified by the SRS.
+\item output: imageMatrix := normalization(bicubicInterpolation(file)). The
+input file has been transformed such that it conforms to the preprocessing
+requirements as specified by A3 in the SRS \cite[4.2.1]{SRS}.
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-N/A
+\noindent bicubicInterpolation(imageMatrix):
+\begin{itemize}
+\item output: Perform bicubic interpolation such that the imageMatrix is
+transformed to a 28x28 matrix. as specified by TM:BI in the SRS \cite[4.2.2]{SRS}.
+\end{itemize}
+\noindent normalization(imageMatrix):
+\begin{itemize}
+\item output: Perform normalization such that the image is turned into a
+greyscale image with pixel values in the range [0, 255]. as specified by TM:N in
+the SRS \cite[4.2.2]{SRS}.
+\end{itemize}
 
-\section{MIS of Performance Metrics Module} \label{MPerformance}
+\section{MIS of Accuracy Metrics Module} \label{mAccuracy}
 
 \subsection{Module}
 
@@ -646,9 +673,8 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-crossEntropyLoss & prediction: float32$_{\text{m} \times \text{n}}$, target: float32$_{\text{m} \times \text{n}}$ & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & - \\
-accuracy & prediction: float32$_{\text{m} \times \text{n}}$, target: float32$_{\text{m} \times \text{n}}$ & accuracy: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & - \\
-confusionMatrix & prediction: float32$_{\text{m} \times \text{n}}$, target: float32$_{\text{m} \times \text{n}}$ & confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & - \\
+crossEntropyLoss & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & DimensionsError \\
+confusionMatrix & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & DimensionsError \\
 \hline
 \end{tabular}
 \end{center}
@@ -665,24 +691,32 @@ N/A
 
 \subsubsection{Assumptions}
 
-We assume that the prediction and target matrices are of the same dimensions.
+N/A
 
 \subsubsection{Access Routine Semantics}
 
 \noindent crossEntropyLoss(prediction, target):
 \begin{itemize}
-\item output: loss := $f_{crossEntropyLoss}(prediction, target)$
-\end{itemize}
-
-\noindent accuracy(prediction, target):
+\item output: loss := $- \sum_{i=1}^{n} target_i \log(prediction_i)$. The cross
+entropy loss is calculated for the model's predictions and the target values
+as specified by TM:CELF in the SRS \cite[4.2.2]{SRS}.
+\item exceptions:
 \begin{itemize}
-\item output: accuracy := $f_{accuracy}(prediction, target)$
+  \item A DimensionsError exception is thrown if the dimensions of the prediction
+  and target matrices do not match.
+\end{itemize}
 \end{itemize}
 
 \noindent confusionMatrix(prediction, target):
 \begin{itemize}
-\item output: confusionMatrix := $f_{confusionMatrix}(prediction, target)$
-
+\item output: confusionMatrix := $\text{confusionMatrix}_{i,j} = \sum_{k=1}^{n} \text{target}_{k,i} \times \text{prediction}_{k,j}$. A confusion matrix is generated for the
+model's predictions and the target values to fulfill NFR1 in the SRS
+\cite[5.2]{SRS}.
+\item exceptions:
+\begin{itemize}
+  \item A DimensionsError exception is thrown if the dimensions of the prediction
+  and target matrices do not match.
+\end{itemize}
 \end{itemize}
 
 \subsubsection{Local Functions}
