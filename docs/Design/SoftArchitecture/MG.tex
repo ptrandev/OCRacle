@@ -46,8 +46,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+March 5, 2025 & 1.0 & Initial Document Creation\\
 \bottomrule
 \end{tabularx}
 
@@ -72,9 +71,8 @@ This section records information for easy reference.
   R & Requirement\\
   SC & Scientific Computing \\
   SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
+  \progname & Name of the Project\\
   UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
   \bottomrule
 \end{tabular}\\
 
@@ -158,15 +156,30 @@ change.
 
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+hardware on which the software is running.
+\item[\refstepcounter{acnum} \actheacnum \label{acApplication}:] The
+control-flow of the application.
+\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The accepted image
+formats of the input data.
+\item[\refstepcounter{acnum} \actheacnum \label{acTraining}:] The training
+methods used for the model.
+\item[\refstepcounter{acnum} \actheacnum \label{acTesting}:] The testing methods
+used for the model.
+\item[\refstepcounter{acnum} \actheacnum \label{acPreprocessing}:] The image
+preprocessing techniques used before classification.
+\item[\refstepcounter{acnum} \actheacnum \label{acModel}:] The model used for
+image classification.
+\item[\refstepcounter{acnum} \actheacnum \label{acOutput}:] The output format of
+the model.
+\item[\refstepcounter{acnum} \actheacnum \label{acGUI}:] The specific form of
+the graphical user interface.
+\item[\refstepcounter{acnum} \actheacnum \label{acPerformance}:] The performance
+metrics used to evaluate the model.
 \end{description}
 
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
+% \wss{Anticipated changes relate to changes that would be made in requirements,
+% design or implementation choices.  They are not related to changes that are made
+% at run-time, like the values of parameters.}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -178,9 +191,12 @@ will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucInput}:] The input data will
+always be in the form of an image.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucOutput}:] The results of the
+model output will always be displayed to the graphical user interface.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucPurpose}:] The program will
+only be used for classifying a single Latin alphabet character in an image.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -192,7 +208,15 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mApplication}:] Application Module
+\item [\refstepcounter{mnum} \mthemnum \label{mInput}:] Input Format Module
+\item [\refstepcounter{mnum} \mthemnum \label{mTraining}:] Model Training Module
+\item [\refstepcounter{mnum} \mthemnum \label{mTesting}:] Model Testing Module
+\item [\refstepcounter{mnum} \mthemnum \label{mPreprocessing}:] Image Preprocessing Module
+\item [\refstepcounter{mnum} \mthemnum \label{mModel}:] Prediction Model Module
+\item [\refstepcounter{mnum} \mthemnum \label{mOutput}:] Model Output Module
+\item [\refstepcounter{mnum} \mthemnum \label{mGUI}:] Graphical User Interface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mAccuracy}:] Accuracy Metrics Module
 \end{description}
 
 
@@ -206,19 +230,19 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} &
+Input Format Module\\
+& Model Output Module\\
+& Model Training Module\\
+& Model Testing Module\\
+& Prediction Model Module\\
+& Application Module\\
+& Image Preprocessing Module\\
+& Accuracy Metrics Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{1}{0.3\textwidth}{Software Decision Module}&
+Graphical User Interface Module\\
 \bottomrule
 
 \end{tabular}
@@ -232,12 +256,12 @@ The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+% \wss{The intention of this section is to document decisions that are made
+%   ``between'' the requirements and the design.  To satisfy some requirements,
+%   design decisions need to be made.  Rather than make these decisions implicit,
+%   they are explicitly recorded here.  For instance, if a program has security
+%   requirements, a specific design decision may be made to satisfy those
+%   requirements with a password.}
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -278,19 +302,91 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
+\subsubsection{Application Module (\mref{mApplication})}
+
+\begin{description}
+\item[Secrets:] The data and execution flow of the application.
+\item[Services:] Orchestrates the execution of the user facing system.
+This includes coordinating the input \mref{mInput} and output \mref{mOutput}
+modules and displaying the relevant information to the user in the graphical
+user interface \mref{mGUI}. This module is the main entry point for the
+application. Note that training and testing the model is done in
+\mref{mTraining} and \mref{mTesting} respectively, and is a separate routine
+from the application.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
 \subsubsection{Input Format Module (\mref{mInput})}
 
 \begin{description}
 \item[Secrets:]The format and structure of the input data.
 \item[Services:]Converts the input data into the data structure used by the
   input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Model Output Module (\mref{mOutput})}
 
+\begin{description}
+\item[Secrets:] The format and structure of the output data.
+\item[Services:] Converts the output data from the model into the format
+required by the graphical user interface.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Model Training Module (\mref{mTraining})}
+
+\begin{description}
+\item[Secrets:] The methods for training the model.
+\item[Services:] Trains the model using the input data via a test-train split.
+This module produces the model weights and architecture for \mref{mModel}.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Model Testing Module (\mref{mTesting})}
+
+\begin{description}
+\item[Secrets:] The methods for testing the model.
+\item[Services:] Tests the model using both data that the model was trained on
+and data that the model was not trained on. This tests \mref{mModel} to compare
+its accuracy to the previous OAR project.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Prediction Model Module (\mref{mModel})}
+
+\begin{description}
+\item[Secrets:] The model weights and architecture.
+\item[Services:] Given an input image, provides an output classification, which
+is a probability distribution over the possible classes.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Abstract Data Type
+\end{description}
+
+\subsubsection{Image Preprocessing Module (\mref{mPreprocessing})}
+
+\begin{description}
+\item[Secrets:] The image preprocessing techniques used before classification.
+\item[Services:] Used by \mref{mInput} to preprocess the input image data before
+sending it to \mref{mModel} for classification.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Accuracy Metrics Module (\mref{mAccuracy})}
+
+\begin{description}
+\item[Secrets:] The performance metrics used to evaluate the model.
+\item[Services:] Given the model output, ground truth, and performance of the
+previous OAR project, calculates the performance metrics.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Library
+\end{description}
 
 \subsection{Software Decision Module}
 
@@ -305,7 +401,16 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Graphical User Interface Module (\mref{mGUI})}
+
+\begin{description}
+\item[Secrets:] User event handling, display of input data, display of output
+data, error messages, and other user interface functions.
+\item[Services:] Provides a Graphical User Interface to the user, allowing them
+to interact with the system.
+\item[Implemented By:] Python Notebook
+\item[Type of Module:] Abstract Data Type
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -320,17 +425,11 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+R1 & \mref{mHH}, \mref{mInput}, \mref{mGUI}, \mref{mApplication}\\
+R2 & \mref{mPreprocessing}, \mref{mInput}\\
+R3 & \mref{mTraining}, \mref{mTesting}, \mref{mModel}, \mref{mAccuracy}\\
+R4 & \mref{mOutput}, \mref{mModel} \mref{mGUI}\\
+R5 & \mref{mOutput}, \mref{mModel}, \mref{mGUI}, \mref{mApplication}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -344,17 +443,15 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \textbf{AC} & \textbf{Modules}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
+\acref{acApplication} & \mref{mApplication}\\
 \acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
+\acref{acTraining} & \mref{mTraining}\\
+\acref{acTesting} & \mref{mTesting}\\
+\acref{acPreprocessing} & \mref{mPreprocessing}\\
+\acref{acModel} & \mref{mModel}\\
 \acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acGUI} & \mref{mGUI}\\
+\acref{acPerformance} & \mref{mAccuracy}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -374,38 +471,21 @@ the modules. It can be seen that the graph is a directed acyclic graph
 system, and modules in the higher level of the hierarchy are essentially simpler
 because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
+% \wss{The uses relation is not a data flow diagram.  In the code there will often
+% be an import statement in module A when it directly uses module B.  Module B
+% provides the services that module A needs.  The code for module A needs to be
+% able to see these services (hence the import statement).  Since the uses
+% relation is transitive, there is a use relation without an import, but the
+% arrows in the diagram typically correspond to the presence of import statement.}
 
-\wss{If module A uses module B, the arrow is directed from A to B.}
+% \wss{If module A uses module B, the arrow is directed from A to B.}
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=1\textwidth]{UsesHierarchy.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
-
-%\section*{References}
-
-\section{User Interfaces}
-
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
-
-\section{Design of Communication Protocols}
-
-\wss{If appropriate}
-
-\section{Timeline}
-
-\wss{Schedule of tasks and who is responsible}
-
-\wss{You can point to GitHub if this information is included there}
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}

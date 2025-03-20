@@ -53,8 +53,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+March 13, 2025 & 1.0 & Initial Document Creation\\
 \bottomrule
 \end{tabularx}
 
@@ -62,9 +61,8 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+See SRS Documentation at \url{https://github.com/ptrandev/OCRacle/blob/main/docs/SRS/SRS.pdf}
+for symbols, abbreviations and acronyms.
 
 \newpage
 
@@ -77,16 +75,17 @@ See SRS Documentation at \wss{give url}
 \section{Introduction}
 
 The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
+\progname{}, an optical character recognition (OCR) program for identifying
+Latin alphabet characters.
 
 Complementary documents include the System Requirement Specifications
 and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
+found at \url{https://github.com/ptrandev/OCRacle/}.
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
+% \wss{You should describe your notation.  You can use what is below as
+%   a starting point.}
 
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
@@ -108,6 +107,9 @@ character & char & a single symbol or digit\\
 integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
+bounded real & $\mathbb{R}_{\text{min} \leq x \leq \text{max}}$ & a real number in the range [$\text{min}$, $\text{max}$]\\
+bounded integer & $\mathbb{Z}_{\text{min} \leq x \leq \text{max}}$ & an integer in the range [$\text{min}$, $\text{max}$]\\
+boolean & bool & a value that is either true or false\\
 \bottomrule
 \end{tabular} 
 \end{center}
@@ -131,21 +133,22 @@ The following table is taken directly from the Module Guide document for this pr
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding} & ~ \\
+{Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding} & Input Parameters\\
-& Output Format\\
-& Output Verification\\
-& Temperature ODEs\\
-& Energy Equations\\ 
-& Control Module\\
-& Specification Parameters Module\\
+\multirow{8}{0.3\textwidth}{Behaviour-Hiding Module} &
+Input Format Module\\
+& Model Output Module\\
+& Model Training Module\\
+& Model Testing Module\\
+& Prediction Model Module\\
+& Application Module\\
+& Image Preprocessing Module\\
+& Accuracy Metrics Module\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision} & {Sequence Data Structure}\\
-& ODE Solver\\
-& Plotting\\
+\multirow{1}{0.3\textwidth}{Software Decision Module}&
+Graphical User Interface Module\\
 \bottomrule
 
 \end{tabular}
@@ -156,23 +159,25 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
-
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
-
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\section{MIS of Application Module} \label{MApplication}
 
 \subsection{Module}
 
-\wss{Short name for the module}
+main
 
 \subsection{Uses}
 
+\begin{itemize}
+  \item Input Format Module \ref{MInput}
+  \item Model Output Module \ref{MOutput}
+  \item Graphical User Interface Module \ref{MGUI}
+\end{itemize}
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+
+N/A
 
 \subsubsection{Exported Access Programs}
 
@@ -181,7 +186,7 @@ The following table is taken directly from the Module Guide document for this pr
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-\wss{accessProg} & - & - & - \\
+main & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -190,42 +195,592 @@ The following table is taken directly from the Module Guide document for this pr
 
 \subsubsection{State Variables}
 
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
+N/A
 
 \subsubsection{Environment Variables}
 
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
+\begin{itemize}
+  \item filePath: string. The path to the input image file from the user.
+\end{itemize}
 
 \subsubsection{Assumptions}
 
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
+The Graphical User Interface module \ref{MGUI} is responsible for handling all
+user inputs and displaying outputs The Application module is responsible for
+coordinating the interaction between the GUI, Input Format, and Model Output
+modules.
 
 \subsubsection{Access Routine Semantics}
 
-\noindent \wss{accessProg}():
+\noindent main():
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
+\item transition: The application is started and the user is able to interact
+with the GUI to input images and view the model's predictions.
 \end{itemize}
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
-
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
 
 \subsubsection{Local Functions}
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+N/A
+
+\section{MIS of Input Format Module} \label{MInput}
+
+\subsection{Module}
+
+input
+
+\subsection{Uses}
+
+\begin{itemize}
+  \item Image Preprocessing Module \ref{mPreprocessing}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{2cm} p{3cm} p{6cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+input & filePath: string & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & DimensionsError, FormatError, FileNotFound \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+  \item filePath: string. The path to the input image file from the user.
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+N/A
+
+\subsubsection{Access Routine Semantics}
+
+\noindent input(filePath):
+\begin{itemize} 
+\item output: imageMatrix := preprocessing(filePath). After ensuring that all
+exceptions are handled, call the preprocessing module \ref{mPreprocessing} to
+perform the necessary transformations on the input image.
+\item exceptions:
+\begin{itemize}
+  \item A DimensionsError exception is thrown if the input image
+  exceeds the bounds of the $n_{min}$, $n_{max}$, $m_{min}$, and $m_{max}$
+  parameters as specified by Table 4 in the SRS \cite[4.2.6]{SRS}.
+  \item A FormatError exception is thrown if the input image is not one of the supported formats
+  specified by R1 in the SRS \cite[5.1.1]{SRS}.
+  \item A FileNotFound exception is thrown if the input file does not exist.
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+N/A
+
+\section{MIS of Model Output Module} \label{MOutput}
+
+\subsection{Module}
+
+output
+\subsection{Uses}
+
+\begin{itemize}
+  \item Prediction Model Module \ref{MModel}
+\end{itemize}
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+\begin{itemize}
+  \item LABELS: \{'A',...,'Z'\}
+\end{itemize}
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+output & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & prediction: char, confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+We assume that the imageMatrix input has been processed by the Input Format
+Module \ref{MInput} before being passed to the Model Output Module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent output(imageMatrix):
+\begin{itemize}
+\item output:
+\begin{itemize}
+  \item confidenceMatrix := predict(imageMatrix). Call the prediction model
+  module \ref{MModel} to generate a confidence matrix for the input image.
+  \item prediction := LABELS[argmax(confidenceMatrix)]. Return the character
+  representing the highest confidence value in the confidence matrix.
+\end{itemize}
+\end{itemize}
+
+\section{MIS of Model Training Module} \label{MTraining}
+
+\subsection{Module}
+
+train
+
+\subsection{Uses}
+
+\begin{itemize}
+  \item Input Format Module \ref{MInput}
+  \item Model Output Module \ref{MOutput}
+  \item Prediction Model Module \ref{MModel}
+  \item Accuracy Metrics Module \ref{mAccuracy}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+train & - & model: $\mathbb{R}^{m \times n}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]. The
+  dataset of images and their corresponding labels used for training the model.
+  \item epochs: $\mathbb{N}$. The number of epochs to train the model.
+  \item batchSize: $\mathbb{N}$. The number of images to train on in each batch.
+  \item timeStep: $\mathbb{R}$. The time step for the ADAM optimizer.
+  \item $\alpha$: $\mathbb{R}$. The rate at which the model learns.
+  \item $\epsilon$: $\mathbb{R}$. A small value to prevent division by zero.
+  \item $m_{t}$: $\mathbb{R}$. The first moment for the ADAM optimizer.
+  \item $v_{t}$: $\mathbb{R}$. The second moment for the ADAM optimizer.
+  \item $\beta_1$: $\mathbb{R}$. The $\beta_1$ parameter for the ADAM optimizer.
+  \item $\beta_2$: $\mathbb{R}$. The $\beta_2$ parameter for the ADAM optimizer.
+  \item $g_{t}$: $\mathbb{R}^{m \times n}$. The gradient of the model. 
+  \item $\theta_{t}$: $\mathbb{R}^{m \times n}$. The weights of the model.
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+N/A
+
+\subsubsection{Access Routine Semantics}
+
+\noindent train():
+\begin{itemize}
+\item transition: The model is trained on the dataset using the hyperparameters
+$\alpha$, $\beta_1$, $\beta_2$, $\epsilon$, $m_{t}$, $v_{t}$, $g_{t}$,
+$\theta_{t}$, epochs, batchSize, and timeStep. The ADAM optimizer is used to
+minimize the cross-entropy loss as specified by TM:ADAM \cite[4.2.2]{SRS} and
+IM1 in the SRS \cite[4.2.4]{SRS}. For each step, theta is updated using the
+gradient of the model.
+\item output: $\theta$. Once the model has been trained and loss has been
+minimized, the weights of the model are returned.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+N/A
+
+
+\section{MIS of Model Testing Module} \label{MTesting}
+
+\subsection{Module}
+
+test
+
+\subsection{Uses}
+
+\begin{itemize}
+  \item Input Format Module \ref{MInput}
+  \item Model Output Module \ref{MOutput}
+  \item Accuracy Metrics Module \ref{mAccuracy}
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{2cm} p{8cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+test & - & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]. The
+  dataset of images and their corresponding labels used for testing the model.
+  \item loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$. The
+  cross-entropy loss of the model, which is a measure of the model's performance.
+  \item confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$. A matrix that shows the model's predictions versus the actual labels.
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+Assume that the model has been trained using the Model Training Module
+\ref{MTraining}.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent test():
+\begin{itemize}
+\item transition: The model is tested on a dataset of unseen images. The loss,
+and confusion matrix are calculated using the model's predictions.
+\item output:
+\begin{itemize}
+  \item loss := crossEntropyLoss(prediction, target). The prediction from the
+  model is compared to the true target values from the dataset. The Accuracy
+  Metrics Module \ref{mAccuracy} is used to calculate the cross-entropy loss.
+  \item confusionMatrix := confusionMatrix(prediction, target). The prediction
+  from the model is compared to the true target values from the dataset. The
+  Accuracy Metrics Module \ref{mAccuracy} is used to calculate the confusion
+  matrix.
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+N/A
+
+
+\section{MIS of Prediction Model Module} \label{MModel}
+
+\subsection{Module}
+
+model
+
+\subsection{Uses}
+
+N/A
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+predict & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+\begin{itemize}
+  \item model: $\mathbb{R}^{m \times n}$. The representation of the model's
+  weights for the prediction model.
+\end{itemize}
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+We assume that the input image has been preprocessed as specified in the SRS
+before being passed to the prediction model.
+
+
+\subsubsection{Access Routine Semantics}
+
+\noindent predict(imageMatrix):
+\begin{itemize}
+\item output: confidenceMatrix. Where each element in the confidence matrix
+represents the model's confidence in the corresponding character. The model is
+used to generate a confidence matrix for the input image using a CNN as
+specified by GD3 in the SRS \cite[4.2.3]{SRS}. GD3 provides a high-level
+description of the model's architecture, but the implemented model may differ.
+\end{itemize}
+
+
+\subsubsection{Local Functions}
+
+N/A
+
+\section{MIS of Image Preprocessing Module} \label{mPreprocessing}
+
+\subsection{Module}
+
+preprocessing
+
+\subsection{Uses}
+
+N/A
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{3cm} p{3cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+preprocessing & file : string & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+All input data has been validated by the Input Format Module before being
+processed by the Image Preprocessing Module.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent preprocessing(file):
+\begin{itemize} 
+\item output: imageMatrix := normalization(bicubicInterpolation(file)). The
+input file has been transformed such that it conforms to the preprocessing
+requirements as specified by A3 in the SRS \cite[4.2.1]{SRS}.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent bicubicInterpolation(imageMatrix):
+\begin{itemize}
+\item output: Perform bicubic interpolation such that the imageMatrix is
+transformed to a 28x28 matrix. as specified by TM:BI in the SRS \cite[4.2.2]{SRS}.
+\end{itemize}
+\noindent normalization(imageMatrix):
+\begin{itemize}
+\item output: Perform normalization such that the image is turned into a
+greyscale image with pixel values in the range [0, 255]. as specified by TM:N in
+the SRS \cite[4.2.2]{SRS}.
+\end{itemize}
+
+\section{MIS of Accuracy Metrics Module} \label{mAccuracy}
+
+\subsection{Module}
+
+performance
+
+\subsection{Uses}
+
+N/A
+
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+crossEntropyLoss & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & DimensionsError \\
+confusionMatrix & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & DimensionsError \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+N/A
+
+\subsubsection{Access Routine Semantics}
+
+\noindent crossEntropyLoss(prediction, target):
+\begin{itemize}
+\item output: loss := $- \sum_{i=1}^{n} target_i \log(prediction_i)$. The cross
+entropy loss is calculated for the model's predictions and the target values
+as specified by TM:CELF in the SRS \cite[4.2.2]{SRS}.
+\item exceptions:
+\begin{itemize}
+  \item A DimensionsError exception is thrown if the dimensions of the prediction
+  and target matrices do not match.
+\end{itemize}
+\end{itemize}
+
+\noindent confusionMatrix(prediction, target):
+\begin{itemize}
+\item output: confusionMatrix := $\text{confusionMatrix}_{i,j} = \sum_{k=1}^{n} \text{target}_{k,i} \times \text{prediction}_{k,j}$. A confusion matrix is generated for the
+model's predictions and the target values to fulfill NFR1 in the SRS
+\cite[5.2]{SRS}.
+\item exceptions:
+\begin{itemize}
+  \item A DimensionsError exception is thrown if the dimensions of the prediction
+  and target matrices do not match.
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+N/A
+
+\section{MIS of Graphical User Interface Module} \label{MGUI}
+
+\subsection{Module}
+
+gui
+\subsection{Uses}
+
+\begin{itemize}
+  \item Hardware-Hiding Module
+\end{itemize}
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+
+View the Appendix \ref{Appendix} for more information the full range of
+interactions that the Graphical User Interface Module can have with the user.
+
+\begin{center}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+displayOutput & - & - & - \\
+acceptInput & - & - & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+\begin{itemize}
+  \item displayWindow: (dimensions: $\mathbb{Z}_+ \times \mathbb{Z}_+$)
+  \item keyboard: (keypress: char)
+  \item mouse: (location: $\mathbb{Z}_+ \times \mathbb{Z}_+$, click: bool)
+\end{itemize}
+
+\subsubsection{Assumptions}
+
+This behavior will be significantly abstracted by the use of Python Notebook,
+which will handle all UI elements and interactions with the user. As a result,
+the GUI modules does not need to have any pre-defined state variables or access
+routines.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent displayOutput():
+\begin{itemize}
+\item transition: The output of the model is displayed to the user in the GUI.
+\end{itemize}
+
+\noindent acceptInput():
+\begin{itemize}
+\item transition: The user is able to input images to the model in the GUI.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+N/A
 
 \newpage
 
@@ -236,15 +791,14 @@ The following table is taken directly from the Module Guide document for this pr
 
 \section{Appendix} \label{Appendix}
 
-\wss{Extra information if required}
+\begin{itemize}
+  \item The Python Notebook documentation can be found at \url{https://jupyter-notebook.readthedocs.io/en/latest/user-documentation.html}. This informs the full range
+  of interactions that the Graphical User Interface Module \ref{MGUI} can have
+  with the user.
+  \item Generative AI Acknowledgement: ChatGPT-4o was used to generate valid
+  LaTeX for mathematical expressions in this document.
+\end{itemize}
 
 \newpage{}
-
-\section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741 projects}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Problem Analysis and Design.
 
 \end{document}
