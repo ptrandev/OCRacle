@@ -84,8 +84,8 @@ found at \url{https://github.com/ptrandev/OCRacle/}.
 
 \section{Notation}
 
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
+% \wss{You should describe your notation.  You can use what is below as
+%   a starting point.}
 
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
@@ -202,9 +202,10 @@ N/A
 
 \subsubsection{Assumptions}
 
-The Graphical User Interface module is responsible for handling all user
-inputs and outputs. The Application module is responsible for coordinating the
-interaction between the GUI, Input Format, and Model Output modules.
+The Graphical User Interface module \ref{MGUI} is responsible for handling all
+user inputs and displaying outputs The Application module is responsible for
+coordinating the interaction between the GUI, Input Format, and Model Output
+modules.
 
 \subsubsection{Access Routine Semantics}
 
@@ -385,19 +386,19 @@ train & - & model: $\mathbb{R}^{m \times n}$ & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]
-  \item epochs: $\mathbb{N}$
-  \item batch\_size: $\mathbb{N}$
-  \item learning\_rate: $\mathbb{R}$
-  \item epsilon: $\mathbb{R}$
-  \item time\_step: $\mathbb{R}$
-  \item first\_moment: $\mathbb{R}$
-  \item second\_moment: $\mathbb{R}$
-  \item beta1: $\mathbb{R}$
-  \item beta2: $\mathbb{R}$
-  \item gradient: $\mathbb{R}^{m \times n}$
-  \item theta: $\mathbb{R}^{m \times n}$
-  \item y\_hat: $\mathbb{R}^{m \times n}$
+  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]. The
+  dataset of images and their corresponding labels used for training the model.
+  \item epochs: $\mathbb{N}$. The number of epochs to train the model.
+  \item batch\_size: $\mathbb{N}$. The number of images to train on in each batch.
+  \item learning\_rate: $\mathbb{R}$. The rate at which the model learns.
+  \item epsilon: $\mathbb{R}$. A small value to prevent division by zero.
+  \item time\_step: $\mathbb{R}$. The time step for the ADAM optimizer.
+  \item first\_moment: $\mathbb{R}$. The first moment for the ADAM optimizer.
+  \item second\_moment: $\mathbb{R}$. The second moment for the ADAM optimizer.
+  \item beta1: $\mathbb{R}$. The beta1 parameter for the ADAM optimizer.
+  \item beta2: $\mathbb{R}$. The beta2 parameter for the ADAM optimizer.
+  \item gradient: $\mathbb{R}^{m \times n}$. The gradient of the model.
+  \item theta: $\mathbb{R}^{m \times n}$. The weights of the model.
 \end{itemize}
 
 \subsubsection{Environment Variables}
@@ -413,41 +414,18 @@ N/A
 \noindent train():
 \begin{itemize}
 \item transition: The model is trained on the dataset using the hyperparameters
-epochs, batch\_size, learning\_rate, epsilon, time\_step, first\_moment,
-second\_moment, beta1, and beta2. These are manipulated via the ADAM optimizer
-as specified by the SRS.
-\item output: model := $f_{train}()$
+learning\_rate, epochs, batch\_size, epsilon, time\_step, first\_moment,
+second\_moment, beta1, and beta2. The ADAM optimizer is used to minimize the
+cross-entropy loss as specified by TM:ADAM \cite[4.2.2]{SRS} and IM1 in the SRS
+\cite[4.2.4]{SRS}. For each step, theta is updated using the gradient of the
+model.
+\item output: theta. Once the model has been trained and loss has been minimized,
+the weights of the model are returned.
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent relu(x):
-\begin{itemize}
-\item output: result := max(0, x)
-\end{itemize}
-
-\noindent softmax(x):
-\begin{itemize}
-\item output: result := $e^{x} / \sum_{i=1}^{n} e^{x_i}$
-\end{itemize}
-
-\noindent cnn\_forward(x, theta):
-\begin{itemize}
-\item transition: y\_hat := $f_{cnn\_forward}(x, theta)$. This function
-calculates the output of the model given the input x and the weights theta.
-\end{itemize}
-
-\noindent cnn\_backward(x, y, y\_hat, theta):
-\begin{itemize}
-\item transition: gradient := $f_{cnn\_backward}(x, y, y\_hat, theta)$. This
-function calculates the gradient of the model given the input x, the target y,
-the output y\_hat, and the weights theta.
-\end{itemize}
-
-\noindent updateTheta(gradient, theta, time\_step, first\_moment, second\_moment, beta1, beta2, epsilon):
-\begin{itemize}
-\item transition: theta := $f_{updateTheta}(gradient, theta, time\_step, first\_moment, second\_moment, beta1, beta2, epsilon)$. This function updates the weights of the model using the ADAM optimizer.
-\end{itemize}
+N/A
 
 
 \section{MIS of Model Testing Module} \label{MTesting}
@@ -473,11 +451,11 @@ N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{2cm} p{6cm} p{2cm}}
+\begin{tabular}{p{2cm} p{2cm} p{8cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-test & - & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, accuracy: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & - \\
+test & - & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$, confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -519,6 +497,7 @@ and confusion matrix are calculated using the model's predictions.
   Accuracy Metrics Module \ref{mAccuracy} is used to calculate the confusion
   matrix.
 \end{itemize}
+\end{itemize}
 
 \subsubsection{Local Functions}
 
@@ -532,6 +511,8 @@ N/A
 model
 
 \subsection{Uses}
+
+N/A
 
 
 \subsection{Syntax}
@@ -594,6 +575,8 @@ N/A
 preprocessing
 
 \subsection{Uses}
+
+N/A
 
 \subsection{Syntax}
 
@@ -658,6 +641,8 @@ the SRS \cite[4.2.2]{SRS}.
 performance
 
 \subsection{Uses}
+
+N/A
 
 
 \subsection{Syntax}
@@ -742,12 +727,17 @@ N/A
 
 \subsubsection{Exported Access Programs}
 
+
+View the Appendix \ref{Appendix} for more information the full range of
+interactions that the Graphical User Interface Module can have with the user.
+
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-- & - & - & - \\
+displayOutput & - & - & - \\
+acceptInput & - & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -768,14 +758,22 @@ N/A
 
 \subsubsection{Assumptions}
 
-This behavior will be sufficiently abstracted by the use of Python Notebook,
+This behavior will be significantly abstracted by the use of Python Notebook,
 which will handle all UI elements and interactions with the user. As a result,
 the GUI modules does not need to have any pre-defined state variables or access
 routines.
 
 \subsubsection{Access Routine Semantics}
 
-N/A
+\noindent displayOutput():
+\begin{itemize}
+\item transition: The output of the model is displayed to the user in the GUI.
+\end{itemize}
+
+\noindent acceptInput():
+\begin{itemize}
+\item transition: The user is able to input images to the model in the GUI.
+\end{itemize}
 
 \subsubsection{Local Functions}
 
@@ -790,7 +788,13 @@ N/A
 
 \section{Appendix} \label{Appendix}
 
-\wss{Extra information if required}
+\begin{itemize}
+  \item The Python Notebook documentation can be found at \url{https://jupyter-notebook.readthedocs.io/en/latest/user-documentation.html}. This informs the full range
+  of interactions that the Graphical User Interface Module \ref{MGUI} can have
+  with the user.
+  \item Generative AI Acknowledgement: ChatGPT-4o was used to generate valid
+  LaTeX for mathematical expressions in this document.
+\end{itemize}
 
 \newpage{}
 
