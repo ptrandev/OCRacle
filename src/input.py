@@ -1,18 +1,18 @@
 #
 # Input Format Module
 #
-#  This module is responsible for reading the input file and parsing it into a
+# This module is responsible for reading the input file and parsing it into a
 # format that can be used by the rest of the program.
 #
 
 import os
 from PIL import Image
-from . import preprocessing
+import src.preprocessing as preprocessing
 
 N_MIN = 28
-N_MAX = 4096
+N_MAX = 2048
 M_MIN = 28
-M_MAX = 4096
+M_MAX = 2048
 
 
 def input(filePath: str):

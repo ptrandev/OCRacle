@@ -1,8 +1,8 @@
 #
 # Image Preprocessing Module
 #
-#  This module is responsible for processing the input image and preparing it for
-#  the output module.
+# This module is responsible for processing the input image and preparing it for
+# the output module.
 #
 
 from PIL import Image
