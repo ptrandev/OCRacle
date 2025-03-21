@@ -8,8 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.input import input
 from src.preprocessing import preprocessing
 
-TEST_IMAGES_PATH = "testImages/"
-
+TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
 
 def testJpegAcceptance():
     """
