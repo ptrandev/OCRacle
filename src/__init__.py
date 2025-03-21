@@ -1,1 +1,1 @@
-__all__ = ['inputFormat', 'imagePreprocessing']
+__all__ = ["inputFormat", "imagePreprocessing"]

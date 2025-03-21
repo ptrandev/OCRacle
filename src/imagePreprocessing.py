@@ -7,6 +7,7 @@
 
 from PIL import Image
 
+
 def preprocessing(image: Image) -> list[list[int]]:
     """
     Preprocesses the input image and returns the processed image.
@@ -30,6 +31,7 @@ def preprocessing(image: Image) -> list[list[int]]:
     # return the processed image
     return imageMatrix
 
+
 def bicubicInterpolation(image: Image, width: int = 28, height: int = 28) -> Image:
     """
     Resize the input image using bicubic interpolation.
@@ -46,8 +48,9 @@ def bicubicInterpolation(image: Image, width: int = 28, height: int = 28) -> Ima
     # resize the image using bicubic interpolation
     return image.resize((width, height), Image.BICUBIC)
 
+
 def normalization(image: Image) -> Image:
-    '''
+    """
     Normalize the input image to have pixel values between 0 and 255.
 
     Parameters:
@@ -55,6 +58,6 @@ def normalization(image: Image) -> Image:
 
     Returns:
     PIL.Image: The normalized image
-    '''
+    """
 
     return image.convert("L")
