@@ -4,8 +4,8 @@ from PIL import Image
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from src.inputFormat import input
-from src.imagePreprocessing import preprocessing
+from src.input import input
+from src.preprocessing import preprocessing
 
 TEST_IMAGES_PATH = "testImages/"
 

@@ -7,7 +7,7 @@
 
 import os
 from PIL import Image
-from src import imagePreprocessing
+from . import preprocessing
 
 N_MIN = 28
 N_MAX = 4096
@@ -53,7 +53,7 @@ def input(filePath: str):
         raise DimensionsError(f"Image dimensions {width}x{height} are not valid")
 
     # return the image content
-    return imagePreprocessing.preprocessing(image)
+    return preprocessing.preprocessing(image)
 
 
 # define custom exceptions
