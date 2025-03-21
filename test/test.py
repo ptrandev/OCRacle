@@ -2,9 +2,7 @@ import os
 import sys
 import pytest
 from PIL import Image
-from matplotlib import pyplot as plt
 import numpy as np
-import emnist
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -26,6 +24,7 @@ def testJpegAcceptance():
 
     assert image is not None
     assert image.shape == (1, 28, 28)
+
 
 def testPngAcceptance():
     """
@@ -70,6 +69,7 @@ def testImagePreProcessing():
     assert np.min(processedImage) == 0
     assert np.max(processedImage) == 1
 
+
 def testCharacterPrediction():
     """
     T5: Test character prediction
@@ -80,10 +80,11 @@ def testCharacterPrediction():
     prediction = output(image)
 
     assert prediction is not None
-    assert prediction['predictedLabel'] == 'Y'
+    assert prediction["predictedLabel"] == "Y"
 
-    assert prediction['confidenceMatrix'] is not None
-    assert prediction['confidenceMatrix'].shape == (1, 27)
+    assert prediction["confidenceMatrix"] is not None
+    assert prediction["confidenceMatrix"].shape == (1, 27)
+
 
 def testProbabilityVectorSum():
     """
@@ -97,6 +98,7 @@ def testProbabilityVectorSum():
     # Ensure the sum of the probability vector is 1
     assert np.sum(prediction) == 1
 
+
 def testProbabilityVectorLength():
     """
     T7: Test probability vector length
@@ -109,6 +111,7 @@ def testProbabilityVectorLength():
     # Ensure the shape of the probability vector is correct
     assert prediction.shape == (1, 27)
 
+
 def humanReadableOutput():
     """
     T8: Test human readable output
@@ -119,4 +122,4 @@ def humanReadableOutput():
     prediction = output(image)
 
     # Ensure that the human readable output is correct
-    assert prediction['predictedLabel'] == 'Y'
+    assert prediction["predictedLabel"] == "Y"
