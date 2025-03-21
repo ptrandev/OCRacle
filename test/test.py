@@ -1,17 +1,18 @@
-
 import sys
 import os
 from PIL import Image
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.inputFormat import input
 from src.imagePreprocessing import preprocessing
 
 TEST_IMAGES_PATH = "testImages/"
 
+
 def jpegAcceptanceTest():
     """
-      T1: Test reading a valid JPEG image file
+    T1: Test reading a valid JPEG image file
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.jpg")
     image = input(filePath)
@@ -19,9 +20,10 @@ def jpegAcceptanceTest():
     assert len(image) == 28
     assert len(image[0]) == 28
 
+
 def pngAcceptanceTest():
     """
-      T2: Test reading a valid PNG image file
+    T2: Test reading a valid PNG image file
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
 
@@ -31,9 +33,10 @@ def pngAcceptanceTest():
     assert len(image) == 28
     assert len(image[0]) == 28
 
+
 def nonSupportedFormatRejectionTest():
     """
-      T3: Test reading an invalid image file
+    T3: Test reading an invalid image file
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.pdf")
 
@@ -43,12 +46,13 @@ def nonSupportedFormatRejectionTest():
     except Exception as e:
         assert str(e) == f"File {filePath} is not a valid image file"
 
+
 def imagePreProcessingTest():
     """
-      T4: Test image preprocessing
+    T4: Test image preprocessing
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.jpg")
-    
+
     # read the filePath into a File object
     image = Image.open(filePath)
 
@@ -66,7 +70,6 @@ def imagePreProcessingTest():
     for row in processedImage:
         for pixel in row:
             assert pixel >= 0 and pixel <= 255
-
 
 
 if __name__ == "__main__":
