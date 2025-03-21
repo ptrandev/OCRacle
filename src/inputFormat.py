@@ -7,6 +7,7 @@
 
 import os
 from PIL import Image
+from src import imagePreprocessing
 
 N_MIN = 28
 N_MAX = 4096
@@ -34,18 +35,14 @@ def input(filePath: str):
     if not os.path.exists(filePath):
         raise FileNotFoundError(f"File {filePath} not found")
 
-    # ensure that the file is a JPEG or PNG image
-    if not filePath.endswith(".jpg") and not filePath.endswith(".png"):
-        raise FileFormatError(f"File {filePath} is not a valid image file")
-
     # open the image file using PIL
     try:
         image = Image.open(filePath)
     except Exception:
         raise FileFormatError(f"File {filePath} is not a valid image file")
 
-    # ensure that the file is a JPEG or PNG image
-    if image.format not in ["JPEG", "PNG"]:
+    # ensure that the image is a JPG, JPEG, or PNG file
+    if image.format not in ["JPEG", "JPG", "PNG"]:
         raise FileFormatError(f"File {filePath} is not a valid image file")
 
     # get the dimensions of the image
@@ -56,7 +53,7 @@ def input(filePath: str):
         raise DimensionsError(f"Image dimensions {width}x{height} are not valid")
 
     # return the image content
-    return image
+    return imagePreprocessing.preprocessing(image)
 
 
 # define custom exceptions
@@ -66,9 +63,3 @@ class DimensionsError(Exception):
 
 class FileFormatError(Exception):
     pass
-
-
-age = 12
-
-if age > 10:
-    print("You are too old")
