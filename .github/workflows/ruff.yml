@@ -14,8 +14,18 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v3
 
-    - name: Run Ruff to to check, fix, and format Python code in the src/ and test/ directories
+    - name: Run Ruff to to check code style and fix issues
       uses: astral-sh/ruff-action@v3
+      args: check /src /test/ --fix
+    
+    - name: Run Ruff to format code
+      uses: astral-sh/ruff-action@v3
+      args: format /src /test/
+
+    - name: Commit changes
       run: |
-        ruff check --fix src/ test/
-        ruff format src/ test/
+        git config --global user.email "
+        git config --global user.name "GitHub Actions"
+        git add .
+        git commit -m "Format Python code with Ruff"
+        git push
