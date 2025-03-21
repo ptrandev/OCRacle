@@ -10,6 +10,7 @@ from src.preprocessing import preprocessing
 
 TEST_IMAGES_PATH = "testImages/"
 
+
 def testJpegAcceptance():
     """
     T1: Test reading a valid JPEG image file
@@ -44,6 +45,7 @@ def testNonSupportedFormatRejection():
     with pytest.raises(Exception) as excinfo:
         input(filePath)
     assert str(excinfo.value) == f"File {filePath} is not a valid image file"
+
 
 def testImagePreProcessing():
     """
