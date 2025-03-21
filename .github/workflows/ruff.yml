@@ -25,9 +25,4 @@ jobs:
         args: format src/ test/
 
     - name: Commit changes
-      run: |
-        git config --global user.email "
-        git config --global user.name "GitHub Actions"
-        git add .
-        git commit -m "Format Python code with Ruff"
-        git push
+      uses: stefanzweifel/git-auto-commit-action@v5
