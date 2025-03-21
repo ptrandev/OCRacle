@@ -51,10 +51,13 @@ def normalization(image: Image) -> np.ndarray:
     list[list[int]]: The normalized image
     """
 
-    image = image.convert('L')
+    image = image.convert("L")
 
     # turn the image into a list of pixel values
-    imageMatrix = [[image.getpixel((x, y)) for x in range(image.width)] for y in range(image.height)]
+    imageMatrix = [
+        [image.getpixel((x, y)) for x in range(image.width)]
+        for y in range(image.height)
+    ]
 
     # normalize the image to have pixel values between 0 and 1
     imageMatrix = [[pixel / 255.0 for pixel in row] for row in imageMatrix]

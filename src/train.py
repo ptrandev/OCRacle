@@ -13,35 +13,39 @@ from emnist import extract_training_samples, extract_test_samples
 EPOCHS = 5
 BATCH_SIZE = 32
 
+
 def train():
-  # Load EMNIST data
-  images, labels = extract_training_samples('letters')
-  test_images, test_labels = extract_test_samples('letters')
+    # Load EMNIST data
+    images, labels = extract_training_samples("letters")
+    test_images, test_labels = extract_test_samples("letters")
 
-  # Normalize the images to a pixel range of 0 to 1
-  images = images / 255.0
-  test_images = test_images / 255.0
+    # Normalize the images to a pixel range of 0 to 1
+    images = images / 255.0
+    test_images = test_images / 255.0
 
-  # Define the model
-  model = tf.keras.models.Sequential([
-    tf.keras.layers.Flatten(input_shape=(28, 28)),
-    tf.keras.layers.Dense(512, activation='relu'),
-    tf.keras.layers.Dropout(0.1),
-    tf.keras.layers.Dense(27, activation='softmax')
-  ])
+    # Define the model
+    model = tf.keras.models.Sequential(
+        [
+            tf.keras.layers.Flatten(input_shape=(28, 28)),
+            tf.keras.layers.Dense(512, activation="relu"),
+            tf.keras.layers.Dropout(0.1),
+            tf.keras.layers.Dense(27, activation="softmax"),
+        ]
+    )
 
-  # Compile the model
-  model.compile(optimizer='adam',
-                loss='sparse_categorical_crossentropy',
-                metrics=['accuracy'])
+    # Compile the model
+    model.compile(
+        optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"]
+    )
 
-  print("Training model...")
-  model.fit(images, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
+    print("Training model...")
+    model.fit(images, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
 
-  print("Evaluating model...")
-  model.evaluate(test_images, test_labels, batch_size=BATCH_SIZE)
+    print("Evaluating model...")
+    model.evaluate(test_images, test_labels, batch_size=BATCH_SIZE)
 
-  print("Saving model...")
-  model.save(os.path.join(os.path.dirname(__file__), 'model.keras'))
+    print("Saving model...")
+    model.save(os.path.join(os.path.dirname(__file__), "model.keras"))
+
 
 train()
