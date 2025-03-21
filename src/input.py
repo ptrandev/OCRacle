@@ -8,6 +8,7 @@
 import os
 from PIL import Image
 import src.preprocessing as preprocessing
+import numpy as np
 
 N_MIN = 28
 N_MAX = 2048
@@ -15,7 +16,7 @@ M_MIN = 28
 M_MAX = 2048
 
 
-def input(filePath: str):
+def input(filePath: str) -> np.ndarray:
     """
     Reads the input file and returns a matrix representation of the image.
 
@@ -23,7 +24,7 @@ def input(filePath: str):
     filePath (str): The path to the input file
 
     Returns:
-    str: The content of the input file
+    np.ndarray: The matrix representation of the image
 
     Exceptions:
     FileNotFoundError: If the file is not found

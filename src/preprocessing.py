@@ -6,9 +6,10 @@
 #
 
 from PIL import Image
+import numpy as np
 
 
-def preprocessing(image: Image) -> list[list[int]]:
+def preprocessing(image: Image) -> np.ndarray:
     """
     Preprocesses the input image and returns the processed image.
 
@@ -19,17 +20,7 @@ def preprocessing(image: Image) -> list[list[int]]:
     PIL.Image: The processed image
     """
 
-    # resize the image to 28x28 pixels using bicubic interpolation
-    image = bicubicInterpolation(image)
-
-    # convert the image to grayscale, from 0 to 255
-    image = normalization(image)
-
-    # turn the image into a 28 x 28 matrix
-    imageMatrix = [[image.getpixel((x, y)) for x in range(28)] for y in range(28)]
-
-    # return the processed image
-    return imageMatrix
+    return normalization(bicubicInterpolation(image))
 
 
 def bicubicInterpolation(image: Image, width: int = 28, height: int = 28) -> Image:
@@ -49,15 +40,26 @@ def bicubicInterpolation(image: Image, width: int = 28, height: int = 28) -> Ima
     return image.resize((width, height), Image.BICUBIC)
 
 
-def normalization(image: Image) -> Image:
+def normalization(image: Image) -> np.ndarray:
     """
-    Normalize the input image to have pixel values between 0 and 255.
+    Normalize the input image to have pixel values between 0 and 1.
 
     Parameters:
     image (PIL.Image): The input image
 
     Returns:
-    PIL.Image: The normalized image
+    list[list[int]]: The normalized image
     """
 
-    return image.convert("L")
+    image = image.convert('L')
+
+    # turn the image into a list of pixel values
+    imageMatrix = [[image.getpixel((x, y)) for x in range(image.width)] for y in range(image.height)]
+
+    # normalize the image to have pixel values between 0 and 1
+    imageMatrix = [[pixel / 255.0 for pixel in row] for row in imageMatrix]
+
+    # turn into numpy array
+    imageMatrix = np.array(imageMatrix).reshape(1, 28, 28)
+
+    return imageMatrix
