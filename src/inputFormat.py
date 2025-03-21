@@ -63,3 +63,8 @@ class DimensionsError(Exception):
 
 class FileFormatError(Exception):
   pass
+
+age=12
+
+if age>10:
+    print("You are too old")
