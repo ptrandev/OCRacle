@@ -16,5 +16,6 @@ jobs:
 
     - name: Run Ruff to to check, fix, and format Python code in the src/ and test/ directories
       uses: astral-sh/ruff-action@v3
-      with:
-        args: --check --fix --format src/ test/
+      run: |
+        ruff check --fix src/ test/
+        ruff format src/ test/
