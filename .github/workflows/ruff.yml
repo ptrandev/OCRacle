@@ -14,7 +14,7 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v3
 
-    - name: Run Ruff to format code
+    - name: Run Ruff to to check, fix, and format Python code in the src/ and test/ directories
       uses: astral-sh/ruff-action@v3
       with:
-        args: 'check src/ test/ --fix'
+        args: --check --fix --format src/ test/
