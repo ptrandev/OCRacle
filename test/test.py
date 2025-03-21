@@ -10,6 +10,7 @@ from src.preprocessing import preprocessing
 
 TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
 
+
 def testJpegAcceptance():
     """
     T1: Test reading a valid JPEG image file
