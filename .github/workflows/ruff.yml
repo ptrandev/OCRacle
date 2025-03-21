@@ -16,11 +16,13 @@ jobs:
 
     - name: Run Ruff to to check code style and fix issues
       uses: astral-sh/ruff-action@v3
-      args: check /src /test/ --fix
+      with:
+        args: check /src /test/ --fix
     
     - name: Run Ruff to format code
       uses: astral-sh/ruff-action@v3
-      args: format /src /test/
+      with:
+        args: format /src /test/
 
     - name: Commit changes
       run: |
