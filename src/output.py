@@ -5,13 +5,12 @@
 # to the user in a human readable format.
 #
 
-from typing import Tuple
 from src.model import predict
 import numpy as np
 
 LABELS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-def output(imageMatrix: np.ndarray) -> Tuple[str, np.ndarray]:
+def output(imageMatrix: np.ndarray) -> dict[str, np.ndarray]:
     """
     Processes the model's output and displays it to the user in a human readable format.
 
@@ -23,4 +22,8 @@ def output(imageMatrix: np.ndarray) -> Tuple[str, np.ndarray]:
     """
 
     prediction = predict(imageMatrix)
-    return (LABELS[np.argmax(prediction) - 1], prediction)
+
+    return {
+        "predictedLabel": LABELS[np.argmax(prediction) - 1],
+        "confidenceMatrix": prediction
+    }

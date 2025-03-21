@@ -2,11 +2,16 @@ import os
 import sys
 import pytest
 from PIL import Image
+from matplotlib import pyplot as plt
+import numpy as np
+import emnist
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.input import input
 from src.preprocessing import preprocessing
+from src.model import predict
+from src.output import output
 
 TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
 
@@ -16,11 +21,11 @@ def testJpegAcceptance():
     T1: Test reading a valid JPEG image file
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.jpg")
-    image = input(filePath)
-    assert image is not None
-    assert len(image) == 28
-    assert len(image[0]) == 28
 
+    image = input(filePath)
+
+    assert image is not None
+    assert image.shape == (1, 28, 28)
 
 def testPngAcceptance():
     """
@@ -28,11 +33,10 @@ def testPngAcceptance():
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
 
-    # test reading a valid image file
     image = input(filePath)
+
     assert image is not None
-    assert len(image) == 28
-    assert len(image[0]) == 28
+    assert image.shape == (1, 28, 28)
 
 
 def testNonSupportedFormatRejection():
@@ -59,14 +63,60 @@ def testImagePreProcessing():
     # Test preprocessing function
     processedImage = preprocessing(image)
 
-    # Ensure that the processed image is not None
     assert processedImage is not None
+    assert processedImage.shape == (1, 28, 28)
 
-    # Ensure dimensions of the processed image are 28 x 28
-    assert len(processedImage) == 28
-    assert len(processedImage[0]) == 28
+    # ensure min and max pixel values are 0 and 1
+    assert np.min(processedImage) == 0
+    assert np.max(processedImage) == 1
 
-    # Ensure that image is in grayscale
-    for row in processedImage:
-        for pixel in row:
-            assert 0 <= pixel <= 255
+def testCharacterPrediction():
+    """
+    T5: Test character prediction
+    """
+    filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
+
+    image = input(filePath)
+    prediction = output(image)
+
+    assert prediction is not None
+    assert prediction['predictedLabel'] == 'Y'
+
+    assert prediction['confidenceMatrix'] is not None
+    assert prediction['confidenceMatrix'].shape == (1, 27)
+
+def testProbabilityVectorSum():
+    """
+    T6: Test probability vector sum
+    """
+    filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
+
+    image = input(filePath)
+    prediction = predict(image)
+
+    # Ensure the sum of the probability vector is 1
+    assert np.sum(prediction) == 1
+
+def testProbabilityVectorLength():
+    """
+    T7: Test probability vector length
+    """
+    filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
+
+    image = input(filePath)
+    prediction = predict(image)
+
+    # Ensure the shape of the probability vector is correct
+    assert prediction.shape == (1, 27)
+
+def humanReadableOutput():
+    """
+    T8: Test human readable output
+    """
+    filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
+
+    image = input(filePath)
+    prediction = output(image)
+
+    # Ensure that the human readable output is correct
+    assert prediction['predictedLabel'] == 'Y'
