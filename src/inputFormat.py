@@ -13,58 +13,62 @@ N_MAX = 4096
 M_MIN = 28
 M_MAX = 4096
 
-def input(filePath : str):
-  '''
-  Reads the input file and returns a matrix representation of the image.
 
-  Parameters:
-  filePath (str): The path to the input file
+def input(filePath: str):
+    """
+    Reads the input file and returns a matrix representation of the image.
 
-  Returns:
-  str: The content of the input file
+    Parameters:
+    filePath (str): The path to the input file
 
-  Exceptions:
-  FileNotFoundError: If the file is not found
-  DimensionsError: If the image dimensions are not valid
-  FileFormatError: If the file format is not valid
-  '''
+    Returns:
+    str: The content of the input file
 
-  # Check if the file exists
-  if not os.path.exists(filePath):
-    raise FileNotFoundError(f"File {filePath} not found")
+    Exceptions:
+    FileNotFoundError: If the file is not found
+    DimensionsError: If the image dimensions are not valid
+    FileFormatError: If the file format is not valid
+    """
 
-  # ensure that the file is a JPEG or PNG image
-  if not filePath.endswith('.jpg') and not filePath.endswith('.png'):
-    raise FileFormatError(f"File {filePath} is not a valid image file")
+    # Check if the file exists
+    if not os.path.exists(filePath):
+        raise FileNotFoundError(f"File {filePath} not found")
 
-  # open the image file using PIL
-  try:
-    image = Image.open(filePath)
-  except Exception as e:
-    raise FileFormatError(f"File {filePath} is not a valid image file")
-  
-  # ensure that the file is a JPEG or PNG image
-  if image.format not in ['JPEG', 'PNG']:
-    raise FileFormatError(f"File {filePath} is not a valid image file")
+    # ensure that the file is a JPEG or PNG image
+    if not filePath.endswith(".jpg") and not filePath.endswith(".png"):
+        raise FileFormatError(f"File {filePath} is not a valid image file")
 
-  # get the dimensions of the image
-  width, height = image.size
+    # open the image file using PIL
+    try:
+        image = Image.open(filePath)
+    except Exception:
+        raise FileFormatError(f"File {filePath} is not a valid image file")
 
-  # ensure that the image dimensions are valid
-  if width < N_MIN or width > N_MAX or height < M_MIN or height > M_MAX:
-    raise DimensionsError(f"Image dimensions {width}x{height} are not valid")
+    # ensure that the file is a JPEG or PNG image
+    if image.format not in ["JPEG", "PNG"]:
+        raise FileFormatError(f"File {filePath} is not a valid image file")
 
-  # return the image content
-  return image
+    # get the dimensions of the image
+    width, height = image.size
+
+    # ensure that the image dimensions are valid
+    if width < N_MIN or width > N_MAX or height < M_MIN or height > M_MAX:
+        raise DimensionsError(f"Image dimensions {width}x{height} are not valid")
+
+    # return the image content
+    return image
+
 
 # define custom exceptions
 class DimensionsError(Exception):
-  pass
+    pass
+
 
 class FileFormatError(Exception):
-  pass
+    pass
 
-age=12
 
-if age>10:
+age = 12
+
+if age > 10:
     print("You are too old")
