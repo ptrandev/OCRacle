@@ -1,4 +1,4 @@
-name: Run Tests (Linux)
+name: Run Tests (Windows)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   run_tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - name: Check out repository
