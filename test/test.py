@@ -34,6 +34,7 @@ def testPngAcceptance():
 
     image = input(filePath)
 
+    # Ensure that the image is not None and has the correct shape
     assert image is not None
     assert image.shape == (1, 28, 28)
 
@@ -44,7 +45,7 @@ def testNonSupportedFormatRejection():
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.pdf")
 
-    # Test reading an invalid image file
+    # Test reading an invalid image file, this should raise an exception
     with pytest.raises(Exception) as excinfo:
         input(filePath)
     assert str(excinfo.value) == f"File {filePath} is not a valid image file"
@@ -62,6 +63,7 @@ def testImagePreProcessing():
     # Test preprocessing function
     processedImage = preprocessing(image)
 
+    # ensure that the processed image is not None and has the correct shape
     assert processedImage is not None
     assert processedImage.shape == (1, 28, 28)
 
@@ -79,9 +81,11 @@ def testCharacterPrediction():
     image = input(filePath)
     prediction = output(image)
 
+    # Ensure that the prediction is not None and has the correct label
     assert prediction is not None
     assert prediction["predictedLabel"] == "Y"
 
+    # Ensure that the confidence matrix is not None and has the correct shape
     assert prediction["confidenceMatrix"] is not None
     assert prediction["confidenceMatrix"].shape == (1, 27)
 
