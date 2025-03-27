@@ -37,17 +37,14 @@ def evaluate_model(model_path):
     for i in range(1, len(LABELS) + 1):
         class_accuracy[LABELS[i - 1]] = (confusion_matrix[i][i] / tf.reduce_sum(confusion_matrix[i])).numpy().item()
 
-    # get the highest and lowest accuracy classes and their accuracy
-    highest_accuracy = max(class_accuracy, key=class_accuracy.get)
-    lowest_accuracy = min(class_accuracy, key=class_accuracy.get)
+    # order class_accuracy by accuracy
+    class_accuracy = dict(sorted(class_accuracy.items(), key=lambda item: item[1], reverse=True))
 
     return {
         "loss": loss,
         "accuracy": accuracy,
         "confusion_matrix": confusion_matrix,
         "class_accuracy": class_accuracy,
-        "highest_accuracy": highest_accuracy,
-        "lowest_accuracy": lowest_accuracy
     }
 
 print(evaluate_model(os.path.join(os.path.dirname(__file__), "model.keras")))
