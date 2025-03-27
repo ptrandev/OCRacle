@@ -14,4 +14,4 @@ MODEL = tf.keras.models.load_model(
 
 
 def predict(imageMatrix):
-    return MODEL.predict(imageMatrix)
+    return MODEL.predict(imageMatrix, verbose=0)
