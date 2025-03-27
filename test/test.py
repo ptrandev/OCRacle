@@ -15,6 +15,7 @@ from src.accuracy import evaluate
 TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "../src/model.keras")
 
+
 def testJpegAcceptance():
     """
     T1: Test reading a valid JPEG image file
@@ -128,6 +129,7 @@ def testHumanReadableOutput():
 
     # Ensure that the human readable output is correct
     assert prediction["predictedLabel"] == "Y"
+
 
 def testAccuracyMeasurement():
     """
