@@ -10,8 +10,9 @@ import tensorflow as tf
 from emnist import extract_test_samples
 import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from src.output import LABELS
+
 
 # get the accuracy, loss, and confusion matrix
 def evaluate_model(model_path):
@@ -29,13 +30,17 @@ def evaluate_model(model_path):
 
     # get the confusion matrix
     predictions = model.predict(test_images)
-    confusion_matrix = tf.math.confusion_matrix(test_labels, tf.argmax(predictions, axis=1))
+    confusion_matrix = tf.math.confusion_matrix(
+        test_labels, tf.argmax(predictions, axis=1)
+    )
 
     # calculate the accuracy of each class, return as a dictionary with class labels
     # discard first class in confusion matrix as it is not present in the dataset
     class_accuracy = {}
     for i in range(1, len(LABELS) + 1):
-        class_accuracy[LABELS[i - 1]] = (confusion_matrix[i][i] / tf.reduce_sum(confusion_matrix[i])).numpy().item()
+        class_accuracy[LABELS[i - 1]] = (
+            (confusion_matrix[i][i] / tf.reduce_sum(confusion_matrix[i])).numpy().item()
+        )
 
     # get the highest and lowest accuracy classes and their accuracy
     highest_accuracy = max(class_accuracy, key=class_accuracy.get)
@@ -47,7 +52,8 @@ def evaluate_model(model_path):
         "confusion_matrix": confusion_matrix,
         "class_accuracy": class_accuracy,
         "highest_accuracy": highest_accuracy,
-        "lowest_accuracy": lowest_accuracy
+        "lowest_accuracy": lowest_accuracy,
     }
+
 
 print(evaluate_model(os.path.join(os.path.dirname(__file__), "model.keras")))
