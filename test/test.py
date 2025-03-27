@@ -10,9 +10,10 @@ from src.input import input
 from src.preprocessing import preprocessing
 from src.model import predict
 from src.output import output
+from src.accuracy import evaluate
 
 TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
-
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "../src/model.keras")
 
 def testJpegAcceptance():
     """
@@ -99,8 +100,8 @@ def testProbabilityVectorSum():
     image = input(filePath)
     prediction = predict(image)
 
-    # Ensure the sum of the probability vector is 1
-    assert np.sum(prediction) == 1
+    # Ensure the sum of the probability vector is 1, with some tolerance
+    assert np.sum(prediction) == pytest.approx(1.0, abs=1e-3)
 
 
 def testProbabilityVectorLength():
@@ -116,7 +117,7 @@ def testProbabilityVectorLength():
     assert prediction.shape == (1, 27)
 
 
-def humanReadableOutput():
+def testHumanReadableOutput():
     """
     T8: Test human readable output
     """
@@ -127,3 +128,15 @@ def humanReadableOutput():
 
     # Ensure that the human readable output is correct
     assert prediction["predictedLabel"] == "Y"
+
+def testAccuracyMeasurement():
+    """
+    T9: Test accuracy measurement
+    """
+
+    evaluation = evaluate(MODEL_PATH)
+
+    # Ensure that the evaluation is not None
+    assert evaluation is not None
+    # ensure accuracy is above 0.674
+    assert evaluation["accuracy"] > 0.674
