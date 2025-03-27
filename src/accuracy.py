@@ -43,7 +43,9 @@ def evaluate(model_path):
         )
 
     # order class_accuracy by accuracy
-    class_accuracy = dict(sorted(class_accuracy.items(), key=lambda item: item[1], reverse=True))
+    class_accuracy = dict(
+        sorted(class_accuracy.items(), key=lambda item: item[1], reverse=True)
+    )
 
     return {
         "loss": loss,
