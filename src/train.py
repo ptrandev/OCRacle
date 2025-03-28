@@ -11,7 +11,7 @@ import sys
 import tensorflow as tf
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from src.libraries.emnist import extract_training_samples, extract_test_samples
+from src.data import extractTrainingSamples
 
 EPOCHS = 5
 BATCH_SIZE = 32
@@ -19,16 +19,7 @@ BATCH_SIZE = 32
 
 def train():
     # Load EMNIST data
-    images, labels = extract_training_samples("letters")
-    test_images, test_labels = extract_test_samples("letters")
-
-    # Normalize the images to a pixel range of 0 to 1
-    images = images / 255.0
-    test_images = test_images / 255.0
-
-    # scale labels to 0-25
-    labels = labels - 1
-    test_labels = test_labels - 1
+    images, labels = extractTrainingSamples()
 
     # Define the model
     model = tf.keras.models.Sequential(
@@ -47,9 +38,6 @@ def train():
 
     print("Training model...")
     model.fit(images, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
-
-    print("Evaluating model...")
-    model.evaluate(test_images, test_labels, batch_size=BATCH_SIZE)
 
     print("Saving model...")
     model.save(os.path.join(os.path.dirname(__file__), "model.keras"))

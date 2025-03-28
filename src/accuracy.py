@@ -11,19 +11,13 @@ import tensorflow as tf
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.output import LABELS
-from src.libraries.emnist import extract_test_samples
+from src.data import extractTestSamples
 
 
 # get the accuracy, loss, and confusion matrix
 def evaluate(model_path):
     # Load the test dataset
-    test_images, test_labels = extract_test_samples("letters")
-
-    # Normalize the images to a pixel range of 0 to 1
-    test_images = test_images / 255.0
-
-    # scale labels to 0-25
-    test_labels = test_labels - 1
+    test_images, test_labels = extractTestSamples()
 
     # Load the trained model
     model = tf.keras.models.load_model(model_path)
