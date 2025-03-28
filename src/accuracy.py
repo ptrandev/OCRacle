@@ -8,6 +8,8 @@
 import os
 import sys
 import tensorflow as tf
+import keras
+from typing import cast, Dict, Union
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.output import LABELS
@@ -15,38 +17,41 @@ from src.data import extractTestSamples
 
 
 # get the accuracy, loss, and confusion matrix
-def evaluate(model_path):
+def evaluate(model_path: str) -> Dict[str, Union[float, tf.Tensor, Dict[str, float]]]:
     # Load the test dataset
     test_images, test_labels = extractTestSamples()
 
     # Load the trained model
-    model = tf.keras.models.load_model(model_path)
+    model = cast(
+        keras.Model,
+        keras.models.load_model(model_path)
+    )
 
     # Evaluate the model, get the cross-entropy loss and accuracy
-    loss, accuracy = model.evaluate(test_images, test_labels, verbose=0)
+    loss, accuracy = model.evaluate(test_images, test_labels, verbose="0")
 
     # get the confusion matrix
     predictions = model.predict(test_images)
-    confusion_matrix = tf.math.confusion_matrix(
+    confusionMatrix = tf.math.confusion_matrix(
         test_labels, tf.argmax(predictions, axis=1)
     )
 
     # calculate the accuracy of each class, return as a dictionary with class labels
-    class_accuracy = {}
+    classAccuracy = {}
     for i in range(len(LABELS)):
         # calculate the accuracy for each class
-        class_accuracy[LABELS[i]] = (
-            (confusion_matrix[i][i] / tf.reduce_sum(confusion_matrix[i])).numpy().item()
+        classAccuracy[LABELS[i]] = (
+            (confusionMatrix[i][i] / tf.reduce_sum(confusionMatrix[i])).numpy().item()
         )
 
-    # order class_accuracy by accuracy
-    class_accuracy = dict(
-        sorted(class_accuracy.items(), key=lambda item: item[1], reverse=True)
+    # order classAccuracy by accuracy
+    classAccuracy = dict(
+        sorted(classAccuracy.items(), key=lambda item: item[1], reverse=True)
     )
 
     return {
         "loss": loss,
         "accuracy": accuracy,
-        "confusion_matrix": confusion_matrix,
-        "class_accuracy": class_accuracy,
+        "confusionMatrix": confusionMatrix,
+        "classAccuracy": classAccuracy,
     }

@@ -8,7 +8,7 @@
 
 import os
 import sys
-import tensorflow as tf
+import keras
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.data import extractTrainingSamples
@@ -18,16 +18,25 @@ BATCH_SIZE = 32
 
 
 def train():
+    """
+    Train the model using the EMNIST dataset.
+    The model is a simple feedforward neural network with one hidden layer.
+    The model is trained using the ADAM optimizer and the categorical cross-entropy
+    loss function.
+
+    The model is saved to disk in the current directory with the name "model.keras".
+    """
+
     # Load EMNIST data
     images, labels = extractTrainingSamples()
 
     # Define the model
-    model = tf.keras.models.Sequential(
+    model = keras.models.Sequential(
         [
-            tf.keras.layers.Flatten(input_shape=(28, 28)),
-            tf.keras.layers.Dense(512, activation="relu"),
-            tf.keras.layers.Dropout(0.1),
-            tf.keras.layers.Dense(26, activation="softmax"),
+            keras.layers.Flatten(input_shape=(28, 28)),
+            keras.layers.Dense(512, activation="relu"),
+            keras.layers.Dropout(0.1),
+            keras.layers.Dense(26, activation="softmax"),
         ]
     )
 

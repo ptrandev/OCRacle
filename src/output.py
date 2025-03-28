@@ -13,6 +13,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.model import predict
 import numpy as np
 
+from typing import Union, Dict
+
 LABELS = [
     "A",
     "B",
@@ -42,8 +44,7 @@ LABELS = [
     "Z",
 ]
 
-
-def output(imageMatrix: np.ndarray) -> dict[str, np.ndarray]:
+def output(imageMatrix: np.ndarray) -> Dict[str, Union[str, np.ndarray]]:
     """
     Processes the model's output and displays it to the user in a human readable format.
 
@@ -51,7 +52,7 @@ def output(imageMatrix: np.ndarray) -> dict[str, np.ndarray]:
     imageMatrix (np.ndarray): The matrix representation of the image
 
     Returns:
-    tuple (str, np.ndarray): The predicted label and the model's output
+    Dict[str, Union[str, np.ndarray]]: A dictionary containing the predicted label and the confidence matrix
     """
 
     prediction = predict(imageMatrix)

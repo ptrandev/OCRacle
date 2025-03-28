@@ -6,12 +6,24 @@
 #
 
 import os
-import tensorflow as tf
+import keras
+import numpy as np
 
-MODEL = tf.keras.models.load_model(
+from typing import cast
+
+# Adding an explicit cast to help static type checkers like Pylance
+MODEL = cast(keras.Model, keras.models.load_model(
     os.path.join(os.path.dirname(__file__), "model.keras")
-)
+))
 
+def predict(imageMatrix: np.ndarray) -> np.ndarray:
+    """
+    Make a prediction on the input image matrix using the pre-trained model.
 
-def predict(imageMatrix):
-    return MODEL.predict(imageMatrix, verbose=0)
+    Parameters:
+    imageMatrix (np.ndarray): The input image as a numpy array
+
+    Returns:
+    np.ndarray: The predicted output from the model
+    """
+    return MODEL.predict(imageMatrix, verbose="0")
