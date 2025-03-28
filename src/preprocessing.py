@@ -23,7 +23,9 @@ def preprocessing(image: Image.Image) -> np.ndarray:
     return normalization(bicubicInterpolation(image))
 
 
-def bicubicInterpolation(image: Image.Image, width: int = 28, height: int = 28) -> Image.Image:
+def bicubicInterpolation(
+    image: Image.Image, width: int = 28, height: int = 28
+) -> Image.Image:
     """
     Resize the input image using bicubic interpolation.
 

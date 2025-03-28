@@ -40,7 +40,7 @@ def processSamples(images, labels) -> tuple:
     Parameters:
     images (np.ndarray): The images to preprocess
     labels (np.ndarray): The labels to preprocess
-    
+
     Returns:
     tuple: The preprocessed images and labels
     """

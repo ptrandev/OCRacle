@@ -22,10 +22,7 @@ def evaluate(model_path: str) -> Dict[str, Union[float, tf.Tensor, Dict[str, flo
     test_images, test_labels = extractTestSamples()
 
     # Load the trained model
-    model = cast(
-        keras.Model,
-        keras.models.load_model(model_path)
-    )
+    model = cast(keras.Model, keras.models.load_model(model_path))
 
     # Evaluate the model, get the cross-entropy loss and accuracy
     loss, accuracy = model.evaluate(test_images, test_labels, verbose="0")
