@@ -57,6 +57,6 @@ def output(imageMatrix: np.ndarray) -> dict[str, np.ndarray]:
     prediction = predict(imageMatrix)
 
     return {
-        "predictedLabel": LABELS[np.argmax(prediction) - 1],
+        "predictedLabel": LABELS[np.argmax(prediction)],
         "confidenceMatrix": prediction,
     }

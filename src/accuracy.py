@@ -22,6 +22,9 @@ def evaluate(model_path):
     # Normalize the images to a pixel range of 0 to 1
     test_images = test_images / 255.0
 
+    # scale labels to 0-25
+    test_labels = test_labels - 1
+
     # Load the trained model
     model = tf.keras.models.load_model(model_path)
 
@@ -35,12 +38,12 @@ def evaluate(model_path):
     )
 
     # calculate the accuracy of each class, return as a dictionary with class labels
-    # discard first class in confusion matrix as it is not present in the dataset
     class_accuracy = {}
-    for i in range(1, len(LABELS) + 1):
-        class_accuracy[LABELS[i - 1]] = (
-            (confusion_matrix[i][i] / tf.reduce_sum(confusion_matrix[i])).numpy().item()
-        )
+    for i in range(len(LABELS)):
+        # calculate the accuracy for each class
+        class_accuracy[LABELS[i]] = (confusion_matrix[i][i] / tf.reduce_sum(
+            confusion_matrix[i]
+        )).numpy().item()
 
     # order class_accuracy by accuracy
     class_accuracy = dict(

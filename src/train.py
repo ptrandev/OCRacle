@@ -23,13 +23,17 @@ def train():
     images = images / 255.0
     test_images = test_images / 255.0
 
+    # scale labels to 0-25
+    labels = labels - 1
+    test_labels = test_labels - 1
+
     # Define the model
     model = tf.keras.models.Sequential(
         [
             tf.keras.layers.Flatten(input_shape=(28, 28)),
             tf.keras.layers.Dense(512, activation="relu"),
             tf.keras.layers.Dropout(0.1),
-            tf.keras.layers.Dense(27, activation="softmax"),
+            tf.keras.layers.Dense(26, activation="softmax"),
         ]
     )
 

@@ -89,7 +89,7 @@ def testCharacterPrediction():
 
     # Ensure that the confidence matrix is not None and has the correct shape
     assert prediction["confidenceMatrix"] is not None
-    assert prediction["confidenceMatrix"].shape == (1, 27)
+    assert prediction["confidenceMatrix"].shape == (1, 26)
 
 
 def testProbabilityVectorSum():
@@ -115,7 +115,7 @@ def testProbabilityVectorLength():
     prediction = predict(image)
 
     # Ensure the shape of the probability vector is correct
-    assert prediction.shape == (1, 27)
+    assert prediction.shape == (1, 26)
 
 
 def testHumanReadableOutput():
