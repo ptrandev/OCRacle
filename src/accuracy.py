@@ -13,6 +13,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.output import LABELS
 from src.libraries.emnist import extract_test_samples
 
+
 # get the accuracy, loss, and confusion matrix
 def evaluate(model_path):
     # Load the test dataset
@@ -40,9 +41,9 @@ def evaluate(model_path):
     class_accuracy = {}
     for i in range(len(LABELS)):
         # calculate the accuracy for each class
-        class_accuracy[LABELS[i]] = (confusion_matrix[i][i] / tf.reduce_sum(
-            confusion_matrix[i]
-        )).numpy().item()
+        class_accuracy[LABELS[i]] = (
+            (confusion_matrix[i][i] / tf.reduce_sum(confusion_matrix[i])).numpy().item()
+        )
 
     # order class_accuracy by accuracy
     class_accuracy = dict(
