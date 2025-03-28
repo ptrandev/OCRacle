@@ -6,13 +6,12 @@
 #
 
 import os
-import tensorflow as tf
-from emnist import extract_test_samples
 import sys
+import tensorflow as tf
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.output import LABELS
-
+from src.libraries.emnist import extract_test_samples
 
 # get the accuracy, loss, and confusion matrix
 def evaluate(model_path):

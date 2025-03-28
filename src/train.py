@@ -7,8 +7,11 @@
 #
 
 import os
+import sys
 import tensorflow as tf
-from emnist import extract_training_samples, extract_test_samples
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from src.libraries.emnist import extract_training_samples, extract_test_samples
 
 EPOCHS = 5
 BATCH_SIZE = 32
