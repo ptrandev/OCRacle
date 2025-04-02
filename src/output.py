@@ -13,8 +13,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.model import predict
 import numpy as np
 
-from typing import Union, Dict
-
 LABELS = [
     "A",
     "B",
