@@ -7,7 +7,6 @@
 
 import os
 import keras
-import numpy as np
 
 from typing import cast
 
