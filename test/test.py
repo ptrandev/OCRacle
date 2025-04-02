@@ -8,7 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.input import input
 from src.preprocessing import preprocessing
-from src.model import predict
+from src.model import MODEL
 from src.output import output
 from src.accuracy import evaluate
 
@@ -99,7 +99,7 @@ def testProbabilityVectorSum():
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
 
     image = input(filePath)
-    prediction = predict(image)
+    prediction = MODEL.predict(image, verbose="0")
 
     # Ensure the sum of the probability vector is 1, with some tolerance
     assert np.sum(prediction) == pytest.approx(1.0, abs=1e-3)
@@ -112,7 +112,7 @@ def testProbabilityVectorLength():
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
 
     image = input(filePath)
-    prediction = predict(image)
+    prediction = MODEL.predict(image, verbose="0")
 
     # Ensure the shape of the probability vector is correct
     assert prediction.shape == (1, 26)
@@ -136,7 +136,7 @@ def testAccuracyMeasurement():
     T9: Test accuracy measurement
     """
 
-    evaluation = evaluate(MODEL_PATH)
+    evaluation = evaluate()
 
     # Ensure that the evaluation exists
     assert evaluation is not None

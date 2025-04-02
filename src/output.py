@@ -10,7 +10,7 @@ import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from src.model import predict
+from src.model import MODEL
 import numpy as np
 
 LABELS = [
@@ -54,7 +54,7 @@ def output(imageMatrix: np.ndarray):
     Dict[str, Union[str, np.ndarray]]: A dictionary containing the predicted label and the confidence matrix
     """
 
-    prediction = predict(imageMatrix)
+    prediction = MODEL.predict(imageMatrix, verbose="0")
 
     return {
         "predictedLabel": LABELS[np.argmax(prediction)],

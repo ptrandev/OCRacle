@@ -8,16 +8,15 @@
 import os
 import sys
 import tensorflow as tf
-import keras
-from typing import cast
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.output import LABELS
 from src.data import extractTestSamples
+from src.model import MODEL
 
 
 # get the accuracy, loss, and confusion matrix
-def evaluate(model_path: str):
+def evaluate():
     """
     Evaluate the model using the test dataset.
 
@@ -34,14 +33,11 @@ def evaluate(model_path: str):
     # Load the test dataset
     test_images, test_labels = extractTestSamples()
 
-    # Load the trained model
-    model = cast(keras.Model, keras.models.load_model(model_path))
-
     # Evaluate the model, get the cross-entropy loss and accuracy
-    loss, accuracy = model.evaluate(test_images, test_labels, verbose="0")
+    loss, accuracy = MODEL.evaluate(test_images, test_labels, verbose="0")
 
     # get the confusion matrix
-    predictions = model.predict(test_images)
+    predictions = MODEL.predict(test_images)
     confusionMatrix = tf.math.confusion_matrix(
         test_labels, tf.argmax(predictions, axis=1)
     )

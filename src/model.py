@@ -16,16 +16,3 @@ MODEL = cast(
     keras.Model,
     keras.models.load_model(os.path.join(os.path.dirname(__file__), "model.keras")),
 )
-
-
-def predict(imageMatrix: np.ndarray) -> np.ndarray:
-    """
-    Make a prediction on the input image matrix using the pre-trained model.
-
-    Parameters:
-    imageMatrix (np.ndarray): The input image as a numpy array
-
-    Returns:
-    np.ndarray: The predicted output from the model
-    """
-    return MODEL.predict(imageMatrix, verbose="0")
