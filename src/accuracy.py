@@ -9,7 +9,7 @@ import os
 import sys
 import tensorflow as tf
 import keras
-from typing import cast, Dict, Union
+from typing import cast
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.output import LABELS
@@ -17,7 +17,20 @@ from src.data import extractTestSamples
 
 
 # get the accuracy, loss, and confusion matrix
-def evaluate(model_path: str) -> Dict[str, Union[float, tf.Tensor, Dict[str, float]]]:
+def evaluate(model_path: str):
+    """
+    Evaluate the model using the test dataset.
+
+    Args:
+        model_path (str): The path to the trained model.
+
+    Returns:
+        loss (float): The cross-entropy loss of the model on the test dataset.
+        accuracy (float): The accuracy of the model on the test dataset.
+        confusionMatrix (tf.Tensor): The confusion matrix of the model on the test dataset.
+        classAccuracy (Dict[str, float]): The accuracy of each class in the test dataset.
+    """
+
     # Load the test dataset
     test_images, test_labels = extractTestSamples()
 

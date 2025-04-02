@@ -45,7 +45,7 @@ LABELS = [
 ]
 
 
-def output(imageMatrix: np.ndarray) -> Dict[str, Union[str, np.ndarray]]:
+def output(imageMatrix: np.ndarray):
     """
     Processes the model's output and displays it to the user in a human readable format.
 

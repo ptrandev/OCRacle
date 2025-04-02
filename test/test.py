@@ -138,7 +138,7 @@ def testAccuracyMeasurement():
 
     evaluation = evaluate(MODEL_PATH)
 
-    # Ensure that the evaluation is not None
+    # Ensure that the evaluation exists
     assert evaluation is not None
-    # ensure accuracy is above 0.674
+    # ensure accuracy is better than the previous OAR model
     assert evaluation["accuracy"] > 0.674
