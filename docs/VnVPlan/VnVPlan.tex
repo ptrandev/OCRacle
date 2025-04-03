@@ -81,7 +81,7 @@ February 20, 2025 & 1.0 & Initial Creation\\
 \end{tabular}\\
 
 % \wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-%   \citep{SRS} tables, if appropriate}
+%   \cite{SRS} tables, if appropriate}
 
 % \wss{Remove this section if it isn't needed}
 
@@ -91,7 +91,7 @@ February 20, 2025 & 1.0 & Initial Creation\\
 
 This document outlines the verification and validation plan for the \progname{}
 program. This document will outline the testing procedures that will be used to
-ensure that the software meets the requirements outlined in the SRS document.
+ensure that the software meets the requirements outlined in the SRS document \citep{SRS}.
 
 \section{General Information}
 
@@ -169,12 +169,12 @@ understand how to use the program and what to expect from it.
 %   documents and within those entries include a hyperlink to the documents.}
 
   \begin{itemize}
-    \item SRS Document \cite{SRS}: Outlines the requirements for the \progname{}
+    \item SRS Document \citep{SRS}: Outlines the requirements for the \progname{}
     program. This VnV plan will be based on the requirements outlined in this
     document.
-    \item MG Document: Outlines the modules that compose the \progname{} program.
+    \item MG Document \citep{MG}: Outlines the modules that compose the \progname{} program.
     The VnV plan will be based on the modules outlined in this document.
-    \item MIS Document: Outlines the interfaces of the modules that compose the
+    \item MIS Document \citep{MIS}: Outlines the interfaces of the modules that compose the
     \progname{} program. The VnV plan will be based on the interfaces outlined in
     this document.
   \end{itemize}
@@ -223,12 +223,12 @@ the SRS document may be modified, and the reviewers will be assigned a new
 GitHub issue to review the changes.
 
 To ensure that the SRS document is complete, correct, and consistent, the
-reviewers can rely on the SRS checklist \cite{SRSChecklist}.
+reviewers can rely on the SRS checklist \citep{SRSChecklist}.
 
 \subsection{Design Verification Plan}
 
 The design of the \progname{} program will be verified by the domain expert and
-instructor using the MG checklist \cite{MGChecklist} and MIS checklist \cite{MISChecklist}.
+instructor using the MG checklist \citep{MGChecklist} and MIS checklist \citep{MISChecklist}.
 
 Reviewers will focus on ensuring that the modules and interfaces are correctly
 defined for the \progname{} program given the requirements outlined in the SRS
@@ -244,7 +244,7 @@ document.
 \subsection{Verification and Validation Plan Verification Plan}
 
 The VnV plan will be reviewed by the domain expert and instructor using the 
-VnV plan checklist \cite{VnVChecklist}. The author will be responsible for
+VnV plan checklist \citep{VnVChecklist}. The author will be responsible for
 addressing any comments made by the reviewers. As the project progresses the
 VnV plan may be modified, and the reviewers will be assigned a new GitHub issue
 to review the changes.
@@ -581,16 +581,18 @@ Type: Dynamic, Manual
 					
 Initial State: The codebase and user manual are available.
 					
-Input/Condition: A group of test users with basic command line skills, from the
-VnV team.
+Input/Condition: All members of the VnV team, which are assumed to have basic
+command line skills.
 					
 Output/Result: Feedback on ease of use, clarity of instructions, and any
 difficulties encountered by the users.
 					
 How test will be performed: To support NFR2, users will follow the user manual
-to set up and run the OCRacle program. Any issues encountered by the users will
-be documented via GitHub issues.
-
+to set up and run the \progname{} program. The major tasks that a user should be
+able to complete are: setting up a python virtual environment, install dependencies,
+and using \progname{} to identify a single uppercase Latin alphabet character
+in an image. Any issues encountered by the users will be documented via GitHub
+issues.
 \end{enumerate}
 
 \subsubsection{Maintainability Testing}
@@ -625,10 +627,10 @@ Input/Condition: The codebase of the \progname{} project.
 Output/Result: A report on code modularity, identifying code sections that are
 not easily modifiable or understandable.
 					
-How test will be performed: To support NFR3, the VnV team will review the
-codebase and identify sections that are not easily modifiable or understandable.
-Any issues will be document via GitHub issues.
-
+How test will be performed: To support NFR3, the VnV team will review the codebase
+and utilize the Source Code Checklist \citep{CodeChecklist} to identify
+sections of the code that are not easily modifiable or understandable. Any issues
+encountered by the reviewers will be documented via GitHub issues.
 \end{enumerate}
 
 \subsubsection{Portability Testing}
@@ -641,18 +643,17 @@ Any issues will be document via GitHub issues.
 
 Type: Dynamic, Automatic
 					
-Initial State: The OCRacle system is installed in a Docker environment, which
-provides cross-platform compatibility. 
+Initial State: The OCRacle system and its dependencies are installed in the
+GHA environment.
 					
-Input/Condition: The program and its dependencies are set up on a Docker
-environment. This system is running in the GHA environment.
+Input/Condition: This system is running in the GHA environment.
 					
-Output/Result: The GHA environment is able to run the program and associated
-tests without any incompatibility related issues.
+Output/Result: The GHA environment is able to run all automatic tests described
+in the VnV Plan without any issues.
 					
-How test will be performed: To support NFR4, the test will be run on GHA, which
-is a dockerized environment. As long as all tests pass, the program is
-considered to be cross-platform compatible.
+How test will be performed: To support NFR4, all automatic tests will be run on
+GHA, on a Windows, Linux, and MacOS environment. As long as all tests pass, the
+program is considered to be cross-platform compatible.
 
 \end{enumerate}
 
@@ -661,7 +662,8 @@ considered to be cross-platform compatible.
 The following table outlines the traceability between the test cases and the
 requirements outlined in the SRS document. Note: The table has been generated
 using ChatGPT 4o. The output has been manually validated to ensure that it is
-correct.
+correct. \footnote{The following query was used: "Fill out the following traceability
+matrix given the following table template and the information from this document: [table template and information from this document]."}
 
 \begin{table}[h]
 \centering
@@ -688,9 +690,21 @@ T13 &  &   &   &   &   &   &   &   & X \\ \hline
 
 \section{Unit Test Description}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+The unit tests will be based on the modules and interfaces outlined in the
+MG \citep{MG} and MIS \citep{MIS} documents. The unit tests will be created using
+the pytest framework. These tests will be run in a GHA environment on every pull
+request, on a Windows, Linux, and MacOS environment.
+
+The following modules already have their functionality validated by the System Tests. As such, it is not necessary to create Unit Tests for these modules:
+
+\begin{itemize}
+  \item Input Format Module (M2)
+  \item Model Output Module (M3)
+  \item Model Output Module (M7)
+  \item Prediction Model Module (M6)
+  \item Image Preprocessing Module (M5)
+  \item Accuracy Metrics Module (M9)
+\end{itemize}
 
 % \wss{This section should not be filled in until after the MIS (detailed design
 %   document) has been completed.}

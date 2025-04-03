@@ -173,6 +173,8 @@ the model.
 the graphical user interface.
 \item[\refstepcounter{acnum} \actheacnum \label{acPerformance}:] The performance
 metrics used to evaluate the model.
+\item[\refstepcounter{acnum} \actheacnum \label{acData}:] The data loading
+methods used to load the data.
 \end{description}
 
 % \wss{Anticipated changes relate to changes that would be made in requirements,
@@ -214,6 +216,7 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mOutput}:] Model Output Module
 \item [\refstepcounter{mnum} \mthemnum \label{mGUI}:] Graphical User Interface Module
 \item [\refstepcounter{mnum} \mthemnum \label{mAccuracy}:] Accuracy Metrics Module
+\item [\refstepcounter{mnum} \mthemnum \label{mData}:] Data Loading Module
 \end{description}
 
 
@@ -235,6 +238,7 @@ Input Format Module\\
 & Application Module\\
 & Image Preprocessing Module\\
 & Accuracy Metrics Module\\
+& Data Loading Module\\
 \midrule
 
 \multirow{1}{0.3\textwidth}{Software Decision Module}&
@@ -370,6 +374,16 @@ sending it to \mref{mModel} for classification.
 previous OAR project, calculates the performance metrics.
 \item[Implemented By:] \progname{}
 \item[Type of Module:] Library
+\end{description}
+
+\subsubsection{Data Loading Module (\mref{mData})}
+
+\begin{description}
+\item[Secrets:] The data loading methods used to load the data.
+\item[Services:] Loads the test and train data from the input data source,
+ensuring that it is in a format this is accepted by \mref{mTraining} and \mref{mAccuracy}.
+\item[Implemented By:] \progname{}
+\item[Type of Module:] Abstract Data Type
 \end{description}
 
 \subsection{Software Decision Module}
