@@ -522,10 +522,13 @@ Initial State: The \progname{} system is ready for input.
 Input: An image containing a single uppercase Latin alphabet character.
 
 Output: The predicted character is displayed in a human-readable format.
+A human-readable format is defined as displaying $P_{pred}$, which is the
+character with the highest probability in the confidence matrix $P$.
 
 Test Case Derivation: Based on R5, the program must display character
-predictions in a readable format. We check to see if the UI displays the
-same character that the model predicted.
+predictions in a readable format. To validate this, this test will ensure
+that the final output function correctly returns a character belonging in
+${\{A...Z\}}$ as the predicted character.
 
 How test will be performed: The automatic test will be run on GHA.
 
@@ -550,22 +553,23 @@ ensure that the program is an improvement.
 \item{T9: Accuracy Measurement\\}
 
 Type: Dynamic, Automated
-					
+
 Initial State: The \progname{} system is ready for input. The previous
 OAR project's accuracy metrics are available for comparison. This is an
 extension of T5, which tests the program's ability to predict characters.
-					
-Input/Condition: A subset of images from the EMNIST dataset, which should be
-different from the training set.
-					
-Output/Result: A confusion matrix and overall accuracy percentage. These results
-are compared to OAR to determine if \progname{} performs better.
-					
+
+Input/Condition: The "train" subset of the EMNIST letters dataset.
+
+Output/Result: The overall accuracy percentage of the predictions made by the
+\progname{} system. This overall accuracy report is compared to OAR's overall
+accuracy percentage as reported the OAR VnV Report to determine if \progname{}
+performed better.
+
 How test will be performed: To support NFR1, the test will be run on GHA. The
 system will predict the characters in the test images and compare the
-predictions to the known correct labels. The confusion matrix and overall
-accuracy percentage will be calculated and compared to the OAR predecessor's
-accuracy metrics, which have been previously calculated.
+predictions to the known correct labels. The accuracy will be calculated using
+the formula dictated in Section \ref{sec:AccuracyCalculation}. The overall accuracy percentage from
+this test is compared against the OAR predecessor's overall accuracy percentage.
 
 \end{enumerate}
 
@@ -589,10 +593,10 @@ difficulties encountered by the users.
 					
 How test will be performed: To support NFR2, users will follow the user manual
 to set up and run the \progname{} program. The major tasks that a user should be
-able to complete are: setting up a python virtual environment, install dependencies,
-and using \progname{} to identify a single uppercase Latin alphabet character
-in an image. Any issues encountered by the users will be documented via GitHub
-issues.
+able to complete are: 1. setting up a Python virtual environment, 2. install
+dependencies, 3. running the test suite, and 4. using \progname{} to identify a
+single uppercase Latin alphabet character in an image. Any issues encountered by
+the users will be documented via GitHub issues.
 \end{enumerate}
 
 \subsubsection{Maintainability Testing}
@@ -847,9 +851,14 @@ outlined in the MIS document.
 
 \newpage
 
-% \section{Appendix}
+\section{Appendix}
 
-% This is where you can place additional information.
+\subsection{Accuracy Calculation}
+\label{sec:AccuracyCalculation}
+To calculate the accuracy of the model, the categorical accuracy of the
+model will be used. To perform the calculation, the \href{https://github.com/keras-team/keras/blob/c2e36f369b411ad1d0a40ac096fe35f73b9dffd3/keras/metrics.py}{categorical\_accuracy} function
+from the Keras library will be used. This is the mathematical equivalent to the
+accuracy calculation described in the OAR project's VnV Plan \citep{OARVnVPlan}.
 
 % \subsection{Symbolic Parameters}
 
