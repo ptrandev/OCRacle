@@ -12,6 +12,7 @@ from src.model import MODEL
 from src.output import output
 from src.accuracy import evaluate
 from src.data import extractTestSamples, extractTrainingSamples
+from src.train import train
 
 TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "../src/model.keras")
@@ -156,9 +157,28 @@ def testAccuracyMeasurement():
 
     assert evaluation is not None
 
-    # ensure accuracy is better than the previous OAR model
+    # ensure overall accuracy is better than the previous OAR model
     assert evaluation["accuracy"] > 0.674
 
+
+def testModelTraining():
+    """
+    T14: Test model training
+    """
+
+    # Test the training function
+    train()
+
+    # Ensure the model is saved to the correct path
+    assert os.path.exists(MODEL_PATH)
+
+    # Load the model and check if it is loaded correctly
+    loaded_model = MODEL.load_model(MODEL_PATH)
+    assert loaded_model is not None
+
+    # Ensure that the loaded model takes in 28x28 input and produces 1x26 output
+    assert loaded_model.input_shape == (None, 28, 28)
+    assert loaded_model.output_shape == (None, 26)
 
 def testLoadTrainSubset():
     """

@@ -15,7 +15,7 @@ from src.data import extractTrainingSamples
 
 EPOCHS = 5
 BATCH_SIZE = 32
-
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.keras")
 
 def train():
     """
@@ -35,7 +35,7 @@ def train():
         [
             keras.layers.Flatten(input_shape=(28, 28)),
             keras.layers.Dense(512, activation="relu"),
-            keras.layers.Dropout(0.1),
+            keras.layers.Dropout(0.1), # prevent overfitting
             keras.layers.Dense(26, activation="softmax"),
         ]
     )
@@ -49,7 +49,4 @@ def train():
     model.fit(images, labels, epochs=EPOCHS, batch_size=BATCH_SIZE)
 
     print("Saving model...")
-    model.save(os.path.join(os.path.dirname(__file__), "model.keras"))
-
-
-train()
+    model.save(MODEL_PATH)
