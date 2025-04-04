@@ -3,6 +3,8 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -81,7 +83,7 @@ February 20, 2025 & 1.0 & Initial Creation\\
 \end{tabular}\\
 
 % \wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-%   \citep{SRS} tables, if appropriate}
+%   \cite{SRS} tables, if appropriate}
 
 % \wss{Remove this section if it isn't needed}
 
@@ -91,7 +93,7 @@ February 20, 2025 & 1.0 & Initial Creation\\
 
 This document outlines the verification and validation plan for the \progname{}
 program. This document will outline the testing procedures that will be used to
-ensure that the software meets the requirements outlined in the SRS document.
+ensure that the software meets the requirements outlined in the SRS document \citep{SRS}.
 
 \section{General Information}
 
@@ -169,12 +171,12 @@ understand how to use the program and what to expect from it.
 %   documents and within those entries include a hyperlink to the documents.}
 
   \begin{itemize}
-    \item SRS Document \cite{SRS}: Outlines the requirements for the \progname{}
+    \item SRS Document \citep{SRS}: Outlines the requirements for the \progname{}
     program. This VnV plan will be based on the requirements outlined in this
     document.
-    \item MG Document: Outlines the modules that compose the \progname{} program.
+    \item MG Document \citep{MG}: Outlines the modules that compose the \progname{} program.
     The VnV plan will be based on the modules outlined in this document.
-    \item MIS Document: Outlines the interfaces of the modules that compose the
+    \item MIS Document \citep{MIS}: Outlines the interfaces of the modules that compose the
     \progname{} program. The VnV plan will be based on the interfaces outlined in
     this document.
   \end{itemize}
@@ -223,12 +225,12 @@ the SRS document may be modified, and the reviewers will be assigned a new
 GitHub issue to review the changes.
 
 To ensure that the SRS document is complete, correct, and consistent, the
-reviewers can rely on the SRS checklist \cite{SRSChecklist}.
+reviewers can rely on the SRS checklist \citep{SRSChecklist}.
 
 \subsection{Design Verification Plan}
 
 The design of the \progname{} program will be verified by the domain expert and
-instructor using the MG checklist \cite{MGChecklist} and MIS checklist \cite{MISChecklist}.
+instructor using the MG checklist \citep{MGChecklist} and MIS checklist \citep{MISChecklist}.
 
 Reviewers will focus on ensuring that the modules and interfaces are correctly
 defined for the \progname{} program given the requirements outlined in the SRS
@@ -244,7 +246,7 @@ document.
 \subsection{Verification and Validation Plan Verification Plan}
 
 The VnV plan will be reviewed by the domain expert and instructor using the 
-VnV plan checklist \cite{VnVChecklist}. The author will be responsible for
+VnV plan checklist \citep{VnVChecklist}. The author will be responsible for
 addressing any comments made by the reviewers. As the project progresses the
 VnV plan may be modified, and the reviewers will be assigned a new GitHub issue
 to review the changes.
@@ -297,7 +299,7 @@ pull request will be rejected.
 
 To enforce code quality, the ruff linter and code formatter will be used to
 ensure that the code follows the PEP 8 style guide and is formatted correctly.
-In addition to this tool, the mypy static type checker will be used to ensure
+In addition to this tool, the pyright static type checker will be used to ensure
 that the code is correctly typed. For each pull request, the linter, code
 formatter, and static type checker will be run on GHA. If any of
 these tools fail, the pull request will be rejected.
@@ -368,7 +370,12 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: A single uppercase Latin alphabet character in JPEG format.
+Input: A single uppercase Latin alphabet character in JPEG format. This letter
+should come from the "test" subset of the EMNIST letters dataset. \footnote{
+  To learn more about this dataset, refer to Section \ref{sec:EMNISTLetters}.
+  Anywhere a single sample is required for the test, the author has arbitrarily
+  chosen the letter "Y" from the EMNIST letters dataset.
+}
 
 Output: The system accepts the image as an input without errors.
 
@@ -383,7 +390,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: A single uppercase Latin alphabet character in PNG format.
+Input: A single uppercase Latin alphabet character in PNG format. This letter
+should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The system accepts the mage as an input without errors.
 
@@ -397,7 +405,7 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An file in any format other than JPEG or PNG.
+Input: A file in any format other than JPEG or PNG.
 
 Output: The system rejects the file, displaying an appropriate error message.
 
@@ -419,6 +427,7 @@ Control: Automatic
 Initial State: The \progname{} system is ready for input.
 
 Input: A valid image containing a single uppercase Latin alphabet character.
+This image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: As described in IM1, the system pre-processed the image for the
 classification task in the specified manner.
@@ -447,7 +456,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character, which should match the character in the image.
 The predicted character corresponds to the character with the highest
@@ -465,8 +475,9 @@ How test will be performed: The automatic test will be run on GHA.
 
 These tests ensure that the program outputs a correctly formatted probability
 vector. The probability vector should contain the probability of each character
-in the alphabet, and the sum of the probabilities should be 1. These tests
-cover R4.
+in the alphabet, and the sum of the probabilities should be 1, since the
+input is assumed to always be a valid character as specified in the SRS
+under Assumption 2 \citep{SRS}. These tests cover R4.
 
 \paragraph{Probability Vector Validity}
 
@@ -478,7 +489,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: A probability vector where the sum of the probabilities is 1.
 
@@ -492,7 +504,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: A probability vector where the length is equal to the number of
 characters in the alphabet, which is 26.
@@ -519,13 +532,17 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character is displayed in a human-readable format.
+A human-readable format is defined as displaying $P_{pred}$, which is the
+character with the highest probability in the confidence matrix $P$.
 
 Test Case Derivation: Based on R5, the program must display character
-predictions in a readable format. We check to see if the UI displays the
-same character that the model predicted.
+predictions in a readable format. To validate this, this test will ensure
+that the final output function correctly returns a character belonging in
+${\{A...Z\}}$ as the predicted character.
 
 How test will be performed: The automatic test will be run on GHA.
 
@@ -550,22 +567,24 @@ ensure that the program is an improvement.
 \item{T9: Accuracy Measurement\\}
 
 Type: Dynamic, Automated
-					
+
 Initial State: The \progname{} system is ready for input. The previous
 OAR project's accuracy metrics are available for comparison. This is an
 extension of T5, which tests the program's ability to predict characters.
-					
-Input/Condition: A subset of images from the EMNIST dataset, which should be
-different from the training set.
-					
-Output/Result: A confusion matrix and overall accuracy percentage. These results
-are compared to OAR to determine if \progname{} performs better.
-					
+
+Input/Condition: All image samples from the "train" subset of the EMNIST letters
+dataset.
+
+Output/Result: The overall accuracy percentage of the predictions made by the
+\progname{} system. This overall accuracy report is compared to OAR's overall
+accuracy percentage as reported the OAR VnV Report to determine if \progname{}
+performed better.
+
 How test will be performed: To support NFR1, the test will be run on GHA. The
 system will predict the characters in the test images and compare the
-predictions to the known correct labels. The confusion matrix and overall
-accuracy percentage will be calculated and compared to the OAR predecessor's
-accuracy metrics, which have been previously calculated.
+predictions to the known correct labels. The accuracy will be calculated using
+the formula dictated in Section \ref{sec:AccuracyCalculation}. The overall accuracy percentage from
+this test is compared against the OAR predecessor's overall accuracy percentage.
 
 \end{enumerate}
 
@@ -581,16 +600,18 @@ Type: Dynamic, Manual
 					
 Initial State: The codebase and user manual are available.
 					
-Input/Condition: A group of test users with basic command line skills, from the
-VnV team.
+Input/Condition: All members of the VnV team, which are assumed to have basic
+command line skills.
 					
 Output/Result: Feedback on ease of use, clarity of instructions, and any
 difficulties encountered by the users.
 					
 How test will be performed: To support NFR2, users will follow the user manual
-to set up and run the OCRacle program. Any issues encountered by the users will
-be documented via GitHub issues.
-
+to set up and run the \progname{} program. The major tasks that a user should be
+able to complete are: 1. setting up a Python virtual environment, 2. install
+dependencies, 3. running the test suite, and 4. using \progname{} to identify a
+single uppercase Latin alphabet character in an image. Any issues encountered by
+the users will be documented via GitHub issues.
 \end{enumerate}
 
 \subsubsection{Maintainability Testing}
@@ -599,7 +620,7 @@ be documented via GitHub issues.
 
 \begin{enumerate}
 
-\item{T11: Ruff Linter Usability Test\\}
+\item{T11: Ruff Linter Test\\}
 
 Type: Static, Automatic
 
@@ -614,7 +635,22 @@ cannot be automatically fixed will be documented via failure of the test.
 How test will be performed: To support NFR3, the test will be run on GHA. The
 linter will check the codebase for any issues.
 
-\item{T12: Code Review for Modularity\\}
+\item{T12: Pyright Static Type Checker Test\\}
+
+Type: Static, Automatic
+
+Initial State: The pyright static type checker is set up and ready to run.
+
+Input/Condition: The codebase of the \progname{} project.
+
+Output/Result: A report on type errors, identifying any issues that need to be
+addressed. Issues that can automatically be fixed will be fixed. Any issues that
+cannot be automatically fixed will be documented via failure of the test.
+
+How test will be performed: To support NFR3, the test will be run on GHA. The
+static type checker will check the codebase for any issues.
+
+\item{T13: Code Review for Modularity\\}
 
 Type: Static, Manual
 					
@@ -625,10 +661,10 @@ Input/Condition: The codebase of the \progname{} project.
 Output/Result: A report on code modularity, identifying code sections that are
 not easily modifiable or understandable.
 					
-How test will be performed: To support NFR3, the VnV team will review the
-codebase and identify sections that are not easily modifiable or understandable.
-Any issues will be document via GitHub issues.
-
+How test will be performed: To support NFR3, the VnV team will review the codebase
+and utilize the Source Code Checklist \citep{CodeChecklist} to identify
+sections of the code that are not easily modifiable or understandable. Any issues
+encountered by the reviewers will be documented via GitHub issues.
 \end{enumerate}
 
 \subsubsection{Portability Testing}
@@ -637,22 +673,21 @@ Any issues will be document via GitHub issues.
 
 \begin{enumerate}
 
-\item{T13: Cross-Platform Compatibility Test\\}
+\item{T14: Cross-Platform Compatibility Test\\}
 
 Type: Dynamic, Automatic
 					
-Initial State: The OCRacle system is installed in a Docker environment, which
-provides cross-platform compatibility. 
+Initial State: The OCRacle system and its dependencies are installed in the
+GHA environment.
 					
-Input/Condition: The program and its dependencies are set up on a Docker
-environment. This system is running in the GHA environment.
+Input/Condition: This system is running in the GHA environment.
 					
-Output/Result: The GHA environment is able to run the program and associated
-tests without any incompatibility related issues.
+Output/Result: The GHA environment is able to run all automatic tests described
+in the VnV Plan without any issues.
 					
-How test will be performed: To support NFR4, the test will be run on GHA, which
-is a dockerized environment. As long as all tests pass, the program is
-considered to be cross-platform compatible.
+How test will be performed: To support NFR4, all automatic tests will be run on
+GHA, on a Windows, Linux, and MacOS environment. As long as all tests pass, the
+program is considered to be cross-platform compatible.
 
 \end{enumerate}
 
@@ -661,7 +696,8 @@ considered to be cross-platform compatible.
 The following table outlines the traceability between the test cases and the
 requirements outlined in the SRS document. Note: The table has been generated
 using ChatGPT 4o. The output has been manually validated to ensure that it is
-correct.
+correct. \footnote{The following query was used: "Fill out the following traceability
+matrix given the following table template and the information from this document: [table template and information from this document]."}
 
 \begin{table}[h]
 \centering
@@ -688,9 +724,15 @@ T13 &  &   &   &   &   &   &   &   & X \\ \hline
 
 \section{Unit Test Description}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+The unit tests will be based on the modules and interfaces outlined in the
+MG \citep{MG} and MIS \citep{MIS} documents. The unit tests will be created using
+the pytest framework. These tests will be run in a GHA environment on every pull
+request, on a Windows, Linux, and MacOS environment.
+
+Unit tests will focus on validating the functionality of modules that have
+not already been validated by the system tests. Since these modules have a
+static input with a known output, there will be a focus on validating
+normal behavior without the need for edge cases.
 
 % \wss{This section should not be filled in until after the MIS (detailed design
 %   document) has been completed.}
@@ -708,9 +750,32 @@ outlined in the MIS document.
 
 \subsection{Unit Testing Scope}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+The following modules already have their functionality validated by the System
+Tests. As such, it is not necessary to create Unit Tests for these modules:
+
+\begin{itemize}
+  \item Input Format Module (M3)
+  \item Image Preprocessing Module (M5)
+  \item Prediction Model Module (M6)
+  \item Model Output Module (M7)
+  \item Accuracy Metrics Module (M9)
+\end{itemize}
+
+The following modules are implemented by a third party and are not
+considered to be part of the \progname{} program. As such, it is not necessary
+to create Unit Tests for these modules:
+
+\begin{itemize}
+  \item Hardware Hiding Modules (M1)
+  \item Graphical User Interface Module (M8)
+\end{itemize}
+
+The unit tests will be created to validate the behavior of the following modules:
+
+\begin{itemize}
+  \item Model Training Module (M4)
+  \item Data Loading Module (M10)
+\end{itemize}
 
 % \wss{What modules are outside of the scope.  If there are modules that are
 %   developed by someone else, then you would say here if you aren't planning on
@@ -720,66 +785,92 @@ outlined in the MIS document.
 
 \subsection{Tests for Functional Requirements}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+These unit tests validate the behavior of supporting modules to ensure that the
+\progname{} program meets the functional requirements outlined in the SRS
+document \citep{SRS}.
 
 % \wss{Most of the verification will be through automated unit testing.  If
 %   appropriate specific modules can be verified by a non-testing based
 %   technique.  That can also be documented in this section.}
 
-% \subsubsection{Module 1}
+\subsubsection{Model Training Module (M4)}
 
-% % \wss{Include a blurb here to explain why the subsections below cover the module.
-% %   References to the MIS would be good.  You will want tests from a black box
-% %   perspective and from a white box perspective.  Explain to the reader how the
-% %   tests were selected.}
+These tests ensure that the module is able to produce a model that conforms
+to R3 as outlined in the SRS document \citep{SRS}.
 
-% \begin{enumerate}
+Because the Model Training Module (M4) produces the Prediction Model Module (M6),
+as long as the tests for the Prediction Model Module (M6) pass, then this
+module's behavior is considered validated.
 
-% \item{test-id1\\}
+% \wss{Include a blurb here to explain why the subsections below cover the module.
+%   References to the MIS would be good.  You will want tests from a black box
+%   perspective and from a white box perspective.  Explain to the reader how the
+%   tests were selected.}
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-%   be automatic}
+\begin{enumerate}
+
+\item{T15: Model Training\\}
+
+Type: Dynamic, Automatic
 					
-% Initial State: 
+Initial State: THe \progname{} system is ready for input.
 					
-% Input: 
+Input: The "train" subset of the EMNIST letters dataset is available.
 					
-% Output: \wss{The expected result for the given inputs}
+Output: The modules produces the Prediction Model Module (M6), which is a model
+that has been trained on the "train" subset of the EMNIST letters dataset. 
 
-% Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: Based on R3, the program must be able to produce a model
+that is capable of taking in the specified input and producing the specified
+output in IM3 as described in the SRS document \citep{SRS}.
 
-% How test will be performed: 
-					
-% \item{test-id2\\}
+How test will be performed: The test will be run on GHA. The system will train
+the model on the "train" subset of the EMNIST letters dataset to produce the
+Prediction Model Module (M6). Then, the rest of the system tests will run. This
+validates the behavior of the Model Training Module (M4) to produce a model
+in accordance with the requirements outlined in the SRS document \citep{SRS}.
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-%   be automatic}
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: \wss{The expected result for the given inputs}
+\end{enumerate}
 
-% Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\subsubsection{Data Loading Module (M10)}
 
-% How test will be performed: 
+These tests ensure that the module is able to load the "train" subset of the
+EMNIST letters dataset to support the training of the model. This fulfills R3 as
+outlined in the SRS document \citep{SRS}.
 
-% \item{...\\}
-    
-% \end{enumerate}
+\begin{enumerate}
 
-% \subsubsection{Module 2}
+\item{T16: Load Train Subset\\}
 
-% ...
+Type: Dynamic, Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input/Condition: The "train" subset of the EMNIST letters dataset is available.
+
+Output/Result: The module is able to load the "train" subset of the EMNIST
+letters, which is a tuple containing 20,800 images and their corresponding
+labels.
+
+Test Case Derivation: Based on R3, the program must have the "train" subset
+of the EMNIST letters dataset loaded in order to train the model.
+
+How test will be performed: The test will be run on GHA. The system will load the
+"train" subset of the EMNIST letters dataset and check that all of the
+data has been loaded correctly, such that the format of the images corresponds
+to DD2 as specified in the SRS document \citep{SRS}. The system will check tha
+the size of the dataset is 20,800 image/label pairs and that the labels are
+correctly formatted as an integer from 0-25 inclusive corresponding to the
+letters A-Z.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+These unit tests validate the behavior of supporting modules to ensure that the
+\progname{} program meets the nonfunctional requirements outlined in the SRS
+document \citep{SRS}.
+
 
 % \wss{If there is a module that needs to be independently assessed for
 %   performance, those test cases can go here.  In some projects, planning for
@@ -788,54 +879,103 @@ outlined in the MIS document.
 % \wss{These tests may involve collecting performance data from previously
 %   mentioned functional tests.}
 
-% \subsubsection{Module ?}
-		
-% \begin{enumerate}
+\subsubsection{Data Loading Module (M10)}
 
-% \item{test-id1\\}
+These tests ensure that the module is able to load the "test" subset of the
+EMNIST letters dataset to support the testing of the model's accuracy. This
+Fulfills NFR1 as outlined in the SRS document \citep{SRS}.
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-%   be automatic}
-					
-% Initial State: 
-					
-% Input/Condition: 
-					
-% Output/Result: 
-					
-% How test will be performed: 
-					
-% \item{test-id2\\}
+\begin{enumerate}
 
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
+\item{T17: Load Test Subset\\}
 
-% \end{enumerate}
+Type: Dynamic, Automatic
 
-% \subsubsection{Module ?}
+Initial State: The \progname{} system is ready for input.
 
-% ...
+Input/Condition: The "test" subset of the EMNIST letters dataset is available.
 
-% \subsection{Traceability Between Test Cases and Modules}
+Output/Result: The module is able to load the "test" subset of the EMNIST
+letters, which is a tuple containing 14,800 images and their corresponding
+labels.
+
+How test will be performed: The test will be run on GHA. The system will load
+the "test" subset of the EMNIST letters dataset and check that the data has been
+loaded correctly, such that the format of the images corresponds to DD2 as
+specified in the SRS document \citep{SRS}. The system will check that the size
+of the dataset is 14,800 image/label pairs and that the labels are correctly
+formatted as an integer from 0-25 inclusive corresponding to the letters A-Z.
+
+\end{enumerate}
+
+
+\subsection{Traceability Between Test Cases and Modules}
+
+The following table outlines the traceability between test cases and modules
+outlined in the MG \citep{MG}. Note: This table has been generated using ChatGPT
+4o. The output has been manually validated to ensure that it is correct.
+\footnote{The following query was used: "Here is an example of a table in LaTeX:
+[table template]. Please create a new table for tracking the tracability of test cases and modules in the same table format. Here is the information you'll need to complete this: [list of modules and the tests that validate each one]."}
 
 % \wss{Provide evidence that all of the modules have been considered.}
-				
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Test Case} & \textbf{M1} & \textbf{M2} & \textbf{M3} & \textbf{M4} & \textbf{M5} & \textbf{M6} & \textbf{M7} & \textbf{M9} & \textbf{M10} \\ \hline
+T1 &  &  & X &  &  &  &  &  &  \\ \hline
+T2 &  &  & X &  &  &  &  &  &  \\ \hline
+T3 &  &  & X &  &  &  &  &  &  \\ \hline
+T4 &  &  &   &  & X &  &  &  &  \\ \hline
+T5 &  &  & X &  &   &  & X &  &  \\ \hline
+T6 &  &  &  &  &  & X &  &  &  \\ \hline
+T7 &  &  &  &  &  & X &  &  &  \\ \hline
+T8 &  &  &  &  &  &  & X &  &  \\ \hline
+T9 &  &  &  &  &  &  &  & X &  \\ \hline
+T10 & X & X & X & X & X & X & X & X & X \\ \hline
+T11 & X & X & X & X & X & X & X & X & X \\ \hline
+T12 & X & X & X & X & X & X & X & X & X \\ \hline
+T13 & X & X & X & X & X & X & X & X & X \\ \hline
+T14 & X & X & X & X & X & X & X & X & X \\ \hline
+T15 &  &  &  & X &  &  &  &  &  \\ \hline
+T16 &  &  &  &  &  &  &  &  & X \\ \hline
+T17 &  &  &  &  &  &  &  &  & X \\ \hline
+\end{tabular}
+\caption{Traceability Matrix of Test Cases to Modules}
+\label{tab:traceability-matrix}
+\end{table}
+
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
 
 \newpage
 
-% \section{Appendix}
+\section{Appendix}
 
-% This is where you can place additional information.
+\subsection{EMNIST Letter Dataset}
+\label{sec:EMNISTLetters}
+
+The \href{https://www.tensorflow.org/datasets/catalog/emnist#emnistletters}{EMNIST Letters dataset} contains handwritten uppercase Latin alphabet
+characters. This dataset is split into a "train" subset consisting of 20,800
+image/label pairs and a "test" subset consisting of 14,800 image/label pairs.
+For the purpose of validating the \progname{} program, images from the "test"
+subset will be used for all system tests.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{emnist_letters.png}
+\caption{A sample of the EMNIST Letter dataset.}
+\label{FigUH}
+\end{figure}
+
+\subsection{Accuracy Calculation}
+\label{sec:AccuracyCalculation}
+To calculate the accuracy of the model, the categorical accuracy of the
+model will be used. To perform the calculation, the \href{https://github.com/keras-team/keras/blob/c2e36f369b411ad1d0a40ac096fe35f73b9dffd3/keras/metrics.py}{categorical\_accuracy} function
+from the Keras library will be used. This is the mathematical equivalent to the
+accuracy calculation described in the OAR project's VnV Plan \citep{OARVnVPlan}.
 
 % \subsection{Symbolic Parameters}
 

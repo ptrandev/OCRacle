@@ -1,0 +1,33 @@
+name: Run Tests (MacOS)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  run_tests:
+    runs-on: macos-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run pytest
+      uses: pavelzw/pytest-action@v2
+      with:
+        verbose: true
+        emoji: true
+        job-summary: true
+        custom-arguments: 'test/test.py -q'
+        click-to-expand: true
+        report-title: 'Test Report'
