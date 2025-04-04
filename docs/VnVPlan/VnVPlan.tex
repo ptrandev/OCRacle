@@ -289,11 +289,9 @@ feedback of the code walkthroughs to ensure that the code is correct.
 \label{sec:AutomatedTesting}
 
 GHA will be used to automate the testing of the \progname{} program. For
-each pull request, the tests will be run. The tests will include unit tests,
-functional tests, and nonfunctional tests. The tests will be created using the
-Python unittest framework, which is included in the Python standard library. The
-tests will be run using the pytest framework, which is included in the Python
-standard library. The tests will consist of predetermined inputs and expected
+each pull request, the tests will be run.The tests will include unit tests,
+functional tests, and nonfunctional tests. The tests will be run using the
+pytest framework. The tests will consist of predetermined inputs and expected
 outputs. The tests will be run on GHA. If any of the tests fail, the
 pull request will be rejected.
 
@@ -601,8 +599,9 @@ Type: Dynamic, Manual
 Initial State: The codebase and user manual are available.
 					
 Input/Condition: All members of the VnV team, which are assumed to have basic
-command line skills.
-					
+command line skills. At a minimum, the members of the team have the equivalent
+knowledge contained in the \href{https://missing.csail.mit.edu/}{MIT Missing Semester}.
+
 Output/Result: Feedback on ease of use, clarity of instructions, and any
 difficulties encountered by the users.
 					
