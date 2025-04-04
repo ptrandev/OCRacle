@@ -11,6 +11,7 @@ from src.preprocessing import preprocessing
 from src.model import MODEL
 from src.output import output
 from src.accuracy import evaluate
+from src.data import extractTestSamples, extractTrainingSamples
 
 TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "../src/model.keras")
@@ -142,3 +143,53 @@ def testAccuracyMeasurement():
     assert evaluation is not None
     # ensure accuracy is better than the previous OAR model
     assert evaluation["accuracy"] > 0.674
+
+def testLoadTrainSubset():
+    """
+    T15: Test load train subset
+    """
+
+    images, labels = extractTestSamples()
+
+    assert images is not None
+    assert labels is not None
+
+    # ensure images and length are 20,800
+    assert len(images) == 20800
+    assert len(labels) == 20800
+
+    # ensure images is the correct shape
+    assert images.shape == (len(images), 28, 28)
+
+    # ensure values of each image is 0-1 inclusive
+    assert np.min(images) == 0
+    assert np.max(images) == 1
+
+    # ensure label values are 0-25 inclusive
+    assert np.min(labels) == 0
+    assert np.max(labels) == 25
+
+def testLoadTestSubset():
+    """
+    T16: Test load train subset
+    """
+
+    images, labels = extractTrainingSamples()
+
+    assert images is not None
+    assert labels is not None
+
+    # ensure images and length are 124800
+    assert len(images) == 124800
+    assert len(labels) == 124800
+
+    # ensure images is the correct shape
+    assert images.shape == (len(images), 28, 28)
+
+    # ensure values of each image is 0-1 inclusive
+    assert np.min(images) == 0
+    assert np.max(images) == 1
+
+    # ensure label values are 0-25 inclusive
+    assert np.min(labels) == 0
+    assert np.max(labels) == 25

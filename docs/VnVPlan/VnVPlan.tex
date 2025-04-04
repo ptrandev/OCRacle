@@ -834,7 +834,7 @@ Initial State: The \progname{} system is ready for input.
 Input/Condition: The "train" subset of the EMNIST letters dataset is available.
 
 Output/Result: The module is able to load the "train" subset of the EMNIST
-letters, which is a tuple containing 88,800 images and their corresponding
+letters, which is a tuple containing 20,800 images and their corresponding
 labels.
 
 Test Case Derivation: Based on R3, the program must have the "train" subset
@@ -844,7 +844,7 @@ How test will be performed: The test will be run on GHA. The system will load th
 "train" subset of the EMNIST letters dataset and check that all of the
 data has been loaded correctly, such that the format of the images corresponds
 to DD2 as specified in the SRS document \citep{SRS}. The system will check tha
-the size of the dataset is 88,800 image/label pairs and that the labels are
+the size of the dataset is 20,800 image/label pairs and that the labels are
 correctly formatted as an integer from 0-25 inclusive corresponding to the
 letters A-Z.
 
@@ -894,10 +894,42 @@ formatted as an integer from 0-25 inclusive corresponding to the letters A-Z.
 \end{enumerate}
 
 
-% \subsection{Traceability Between Test Cases and Modules}
+\subsection{Traceability Between Test Cases and Modules}
+
+The following table outlines the traceability between test cases and modules
+outlined in the MG \citep{MG}. Note: This table has been generated using ChatGPT
+4o. The output has been manually validated to ensure that it is correct.
+\footnote{The following query was used: "Here is an example of a table in LaTeX:
+[table template]. Please create a new table for tracking the tracability of test cases and modules in the same table format. Here is the information you'll need to complete this: [list of modules and the tests that validate each one]."}
 
 % \wss{Provide evidence that all of the modules have been considered.}
-				
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Test Case} & \textbf{M1} & \textbf{M2} & \textbf{M3} & \textbf{M4} & \textbf{M5} & \textbf{M6} & \textbf{M7} & \textbf{M9} & \textbf{M10} \\ \hline
+T1 &  &  & X &  &  &  &  &  &  \\ \hline
+T2 &  &  & X &  &  &  &  &  &  \\ \hline
+T3 &  &  & X &  &  &  &  &  &  \\ \hline
+T4 &  &  &  &  & X &  &  &  &  \\ \hline
+T5 &  &  & X &  &  &  & X &  &  \\ \hline
+T6 &  &  &  &  &  & X &  &  &  \\ \hline
+T7 &  &  &  &  &  & X &  &  &  \\ \hline
+T8 &  &  &  &  &  &  & X &  &  \\ \hline
+T9 &  &  &  &  &  &  &  & X &  \\ \hline
+T10 & X & X &  &  &  &  &  &  & X \\ \hline
+T11 & X & X &  &  &  &  &  &  & X \\ \hline
+T12 & X & X &  &  &  &  &  &  & X \\ \hline
+T13 & X & X &  &  &  &  &  &  & X \\ \hline
+T14 &  &  &  & X &  &  &  &  &  \\ \hline
+T15 & X & X &  &  &  &  &  &  & X \\ \hline
+T16 & X & X &  &  &  &  &  &  & X \\ \hline
+\end{tabular}
+\caption{Test Cases to Modules Matrix}
+\label{tab:test-modules-matrix}
+\end{table}
+
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
@@ -910,7 +942,7 @@ formatted as an integer from 0-25 inclusive corresponding to the letters A-Z.
 \label{sec:EMNISTLetters}
 
 The \href{https://www.tensorflow.org/datasets/catalog/emnist#emnistletters}{EMNIST Letters dataset} contains handwritten uppercase Latin alphabet
-characters. This dataset is split into a "train" subset consisting of 88,800
+characters. This dataset is split into a "train" subset consisting of 20,800
 image/label pairs and a "test" subset consisting of 14,800 image/label pairs.
 For the purpose of validating the \progname{} program, images from the "test"
 subset will be used for all system tests.
