@@ -38,6 +38,7 @@ mdurl==0.1.2
 ml_dtypes==0.5.1
 namex==0.0.8
 nest-asyncio==1.6.0
+nodeenv==1.9.1
 numpy==2.0.2
 opt_einsum==3.4.0
 optree==0.14.1
@@ -54,6 +55,7 @@ ptyprocess==0.7.0
 pure_eval==0.2.3
 Pygments==2.19.1
 pyparsing==3.2.3
+pyright==1.1.398
 pytest==8.3.5
 pytest-emoji==0.2.0
 pytest-md==0.2.0
