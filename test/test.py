@@ -26,7 +26,13 @@ def testJpegAcceptance():
     image = input(filePath)
 
     assert image is not None
+    
+    # image should be 28x28
     assert image.shape == (1, 28, 28)
+    
+    # pixel values are between 0 and 1 inclusive
+    assert np.min(image) == 0
+    assert np.max(image) == 1
 
 
 def testPngAcceptance():
@@ -37,9 +43,14 @@ def testPngAcceptance():
 
     image = input(filePath)
 
-    # Ensure that the image is not None and has the correct shape
     assert image is not None
+
+    # image should be 28x28
     assert image.shape == (1, 28, 28)
+    
+    # pixel values are between 0 and 1 inclusive
+    assert np.min(image) == 0
+    assert np.max(image) == 1
 
 
 def testNonSupportedFormatRejection():
@@ -66,8 +77,9 @@ def testImagePreProcessing():
     # Test preprocessing function
     processedImage = preprocessing(image)
 
-    # ensure that the processed image is not None and has the correct shape
     assert processedImage is not None
+
+    # ensure that the processed image is 28x28
     assert processedImage.shape == (1, 28, 28)
 
     # ensure min and max pixel values are 0 and 1
@@ -84,12 +96,15 @@ def testCharacterPrediction():
     image = input(filePath)
     prediction = output(image)
 
-    # Ensure that the prediction is not None and has the correct label
     assert prediction is not None
+
+    # ensure predicted label is correct
     assert prediction["predictedLabel"] == "Y"
 
-    # Ensure that the confidence matrix is not None and has the correct shape
+
     assert prediction["confidenceMatrix"] is not None
+
+    # Ensure that the confidence matrix is 1x26
     assert prediction["confidenceMatrix"].shape == (1, 26)
 
 
@@ -115,7 +130,7 @@ def testProbabilityVectorLength():
     image = input(filePath)
     prediction = MODEL.predict(image, verbose="0")
 
-    # Ensure the shape of the probability vector is correct
+    # Ensure the shape of the probability vector is 1x26
     assert prediction.shape == (1, 26)
 
 
@@ -139,8 +154,8 @@ def testAccuracyMeasurement():
 
     evaluation = evaluate()
 
-    # Ensure that the evaluation exists
     assert evaluation is not None
+
     # ensure accuracy is better than the previous OAR model
     assert evaluation["accuracy"] > 0.674
 
@@ -154,7 +169,6 @@ def testLoadTrainSubset():
     assert images is not None
     assert labels is not None
 
-    # ensure images and length are 20,800
     assert len(images) == 20800
     assert len(labels) == 20800
 
@@ -179,7 +193,6 @@ def testLoadTestSubset():
     assert images is not None
     assert labels is not None
 
-    # ensure images and length are 124800
     assert len(images) == 124800
     assert len(labels) == 124800
 
