@@ -27,10 +27,10 @@ def testJpegAcceptance():
     image = input(filePath)
 
     assert image is not None
-    
+
     # image should be 28x28
     assert image.shape == (1, 28, 28)
-    
+
     # pixel values are between 0 and 1 inclusive
     assert np.min(image) == 0
     assert np.max(image) == 1
@@ -48,7 +48,7 @@ def testPngAcceptance():
 
     # image should be 28x28
     assert image.shape == (1, 28, 28)
-    
+
     # pixel values are between 0 and 1 inclusive
     assert np.min(image) == 0
     assert np.max(image) == 1
@@ -101,7 +101,6 @@ def testCharacterPrediction():
 
     # ensure predicted label is correct
     assert prediction["predictedLabel"] == "Y"
-
 
     assert prediction["confidenceMatrix"] is not None
 
