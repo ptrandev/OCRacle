@@ -12,10 +12,10 @@ import keras
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from src.data import extractTrainingSamples
+from src.model import MODEL_PATH
 
 EPOCHS = 5
 BATCH_SIZE = 32
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.keras")
 
 
 def train():

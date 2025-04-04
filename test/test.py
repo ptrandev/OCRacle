@@ -3,19 +3,19 @@ import sys
 import pytest
 from PIL import Image
 import numpy as np
+import keras
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.input import input
 from src.preprocessing import preprocessing
-from src.model import MODEL
+from src.model import MODEL, MODEL_PATH
 from src.output import output
 from src.accuracy import evaluate
 from src.data import extractTestSamples, extractTrainingSamples
 from src.train import train
 
 TEST_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "testImages/")
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "../src/model.keras")
 
 
 def testJpegAcceptance():
@@ -172,11 +172,13 @@ def testModelTraining():
     assert os.path.exists(MODEL_PATH)
 
     # Load the model and check if it is loaded correctly
-    loaded_model = MODEL.load_model(MODEL_PATH)
-    assert loaded_model is not None
+    loaded_model = keras.models.load_model(MODEL_PATH)
+    assert isinstance(loaded_model, keras.Model)
 
-    # Ensure that the loaded model takes in 28x28 input and produces 1x26 output
+    # Ensure that the loaded model takes in 28x28 input
     assert loaded_model.input_shape == (None, 28, 28)
+
+    # Ensure that the loaded model outputs 26 classes
     assert loaded_model.output_shape == (None, 26)
 
 

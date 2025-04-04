@@ -10,8 +10,9 @@ import keras
 
 from typing import cast
 
-# Adding an explicit cast to help static type checkers like Pylance
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.keras")
+
 MODEL = cast(
     keras.Model,
-    keras.models.load_model(os.path.join(os.path.dirname(__file__), "model.keras")),
+    keras.models.load_model(MODEL_PATH),
 )
