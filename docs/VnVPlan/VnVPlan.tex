@@ -3,6 +3,8 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -368,7 +370,12 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: A single uppercase Latin alphabet character in JPEG format.
+Input: A single uppercase Latin alphabet character in JPEG format. This letter
+should come from the "test" subset of the EMNIST letters dataset. \footnote{
+  To learn more about this dataset, refer to Section \ref{sec:EMNISTLetters}.
+  Anywhere a single sample is required for the test, the author has arbitrarily
+  chosen the letter "Y" from the EMNIST letters dataset.
+}
 
 Output: The system accepts the image as an input without errors.
 
@@ -383,7 +390,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: A single uppercase Latin alphabet character in PNG format.
+Input: A single uppercase Latin alphabet character in PNG format. This letter
+should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The system accepts the mage as an input without errors.
 
@@ -397,7 +405,7 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An file in any format other than JPEG or PNG.
+Input: A file in any format other than JPEG or PNG.
 
 Output: The system rejects the file, displaying an appropriate error message.
 
@@ -419,6 +427,7 @@ Control: Automatic
 Initial State: The \progname{} system is ready for input.
 
 Input: A valid image containing a single uppercase Latin alphabet character.
+This image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: As described in IM1, the system pre-processed the image for the
 classification task in the specified manner.
@@ -447,7 +456,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character, which should match the character in the image.
 The predicted character corresponds to the character with the highest
@@ -465,8 +475,9 @@ How test will be performed: The automatic test will be run on GHA.
 
 These tests ensure that the program outputs a correctly formatted probability
 vector. The probability vector should contain the probability of each character
-in the alphabet, and the sum of the probabilities should be 1. These tests
-cover R4.
+in the alphabet, and the sum of the probabilities should be 1, since the
+input is assumed to always be a valid character as specified in the SRS
+under Assumption 2 \citep{SRS}. These tests cover R4.
 
 \paragraph{Probability Vector Validity}
 
@@ -478,7 +489,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: A probability vector where the sum of the probabilities is 1.
 
@@ -492,7 +504,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: A probability vector where the length is equal to the number of
 characters in the alphabet, which is 26.
@@ -519,7 +532,8 @@ Control: Automatic
 
 Initial State: The \progname{} system is ready for input.
 
-Input: An image containing a single uppercase Latin alphabet character.
+Input: An image containing a single uppercase Latin alphabet character. This
+image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character is displayed in a human-readable format.
 A human-readable format is defined as displaying $P_{pred}$, which is the
@@ -558,7 +572,8 @@ Initial State: The \progname{} system is ready for input. The previous
 OAR project's accuracy metrics are available for comparison. This is an
 extension of T5, which tests the program's ability to predict characters.
 
-Input/Condition: The "train" subset of the EMNIST letters dataset.
+Input/Condition: All image samples from the "train" subset of the EMNIST letters
+dataset.
 
 Output/Result: The overall accuracy percentage of the predictions made by the
 \progname{} system. This overall accuracy report is compared to OAR's overall
@@ -852,6 +867,22 @@ outlined in the MIS document.
 \newpage
 
 \section{Appendix}
+
+\subsection{EMNIST Letter Dataset}
+\label{sec:EMNISTLetters}
+
+The \href{https://www.tensorflow.org/datasets/catalog/emnist#emnistletters}{EMNIST Letters dataset} contains handwritten uppercase Latin alphabet
+characters. This dataset is split into a "train" subset consisting of 88,800
+images and a "test" subset consisting of 14,800 images. For the purpose of
+validating the \progname{} program, images from the "test" subset will be used
+for all tests.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{emnist_letters.png}
+\caption{A sample of the EMNIST Letter dataset.}
+\label{FigUH}
+\end{figure}
 
 \subsection{Accuracy Calculation}
 \label{sec:AccuracyCalculation}
