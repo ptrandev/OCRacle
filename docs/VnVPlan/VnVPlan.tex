@@ -714,16 +714,10 @@ MG \citep{MG} and MIS \citep{MIS} documents. The unit tests will be created usin
 the pytest framework. These tests will be run in a GHA environment on every pull
 request, on a Windows, Linux, and MacOS environment.
 
-The following modules already have their functionality validated by the System Tests. As such, it is not necessary to create Unit Tests for these modules:
-
-\begin{itemize}
-  \item Input Format Module (M2)
-  \item Model Output Module (M3)
-  \item Model Output Module (M7)
-  \item Prediction Model Module (M6)
-  \item Image Preprocessing Module (M5)
-  \item Accuracy Metrics Module (M9)
-\end{itemize}
+Unit tests will focus on validating the functionality of modules that have
+not already been validated by the system tests. Since these modules have a
+static input with a known output, there will be a focus on validating
+normal behavior without the need for edge cases.
 
 % \wss{This section should not be filled in until after the MIS (detailed design
 %   document) has been completed.}
@@ -741,9 +735,32 @@ The following modules already have their functionality validated by the System T
 
 \subsection{Unit Testing Scope}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+The following modules already have their functionality validated by the System
+Tests. As such, it is not necessary to create Unit Tests for these modules:
+
+\begin{itemize}
+  \item Input Format Module (M3)
+  \item Image Preprocessing Module (M5)
+  \item Prediction Model Module (M6)
+  \item Model Output Module (M7)
+  \item Accuracy Metrics Module (M9)
+\end{itemize}
+
+The following modules are implemented by a third party and are not
+considered to be part of the \progname{} program. As such, it is not necessary
+to create Unit Tests for these modules:
+
+\begin{itemize}
+  \item Hardware Hiding Modules (M1)
+  \item Graphical User Interface Module (M8)
+\end{itemize}
+
+The unit tests will be created to validate the behavior of the following modules:
+
+\begin{itemize}
+  \item Model Training Module (M4)
+  \item Data Loading Module (M10)
+\end{itemize}
 
 % \wss{What modules are outside of the scope.  If there are modules that are
 %   developed by someone else, then you would say here if you aren't planning on
@@ -753,66 +770,92 @@ outlined in the MIS document.
 
 \subsection{Tests for Functional Requirements}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+These unit tests validate the behavior of supporting modules to ensure that the
+\progname{} program meets the functional requirements outlined in the SRS
+document \citep{SRS}.
 
 % \wss{Most of the verification will be through automated unit testing.  If
 %   appropriate specific modules can be verified by a non-testing based
 %   technique.  That can also be documented in this section.}
 
-% \subsubsection{Module 1}
+\subsubsection{Model Training Module (M4)}
 
-% % \wss{Include a blurb here to explain why the subsections below cover the module.
-% %   References to the MIS would be good.  You will want tests from a black box
-% %   perspective and from a white box perspective.  Explain to the reader how the
-% %   tests were selected.}
+These tests ensure that the module is able to produce a model that conforms
+to R3 as outlined in the SRS document \citep{SRS}.
 
-% \begin{enumerate}
+Because the Model Training Module (M4) produces the Prediction Model Module (M6),
+as long as the tests for the Prediction Model Module (M6) pass, then this
+module's behavior is considered validated.
 
-% \item{test-id1\\}
+% \wss{Include a blurb here to explain why the subsections below cover the module.
+%   References to the MIS would be good.  You will want tests from a black box
+%   perspective and from a white box perspective.  Explain to the reader how the
+%   tests were selected.}
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-%   be automatic}
+\begin{enumerate}
+
+\item{T14: Model Training\\}
+
+Type: Dynamic, Automatic
 					
-% Initial State: 
+Initial State: THe \progname{} system is ready for input.
 					
-% Input: 
+Input: The "train" subset of the EMNIST letters dataset is available.
 					
-% Output: \wss{The expected result for the given inputs}
+Output: The modules produces the Prediction Model Module (M6), which is a model
+that has been trained on the "train" subset of the EMNIST letters dataset. 
 
-% Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Test Case Derivation: Based on R3, the program must be able to produce a model
+that is capable of taking in the specified input and producing the specified
+output in IM3 as described in the SRS document \citep{SRS}.
 
-% How test will be performed: 
-					
-% \item{test-id2\\}
+How test will be performed: The test will be run on GHA. The system will train
+the model on the "train" subset of the EMNIST letters dataset to produce the
+Prediction Model Module (M6). Then, the rest of the system tests will run. This
+validates the behavior of the Model Training Module (M4) to produce a model
+in accordance with the requirements outlined in the SRS document \citep{SRS}.
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-%   be automatic}
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: \wss{The expected result for the given inputs}
+\end{enumerate}
 
-% Test Case Derivation: \wss{Justify the expected value given in the Output field}
+\subsubsection{Data Loading Module (M10)}
 
-% How test will be performed: 
+These tests ensure that the module is able to load the "train" subset of the
+EMNIST letters dataset to support the training of the model. This fulfills R3 as
+outlined in the SRS document \citep{SRS}.
 
-% \item{...\\}
-    
-% \end{enumerate}
+\begin{enumerate}
 
-% \subsubsection{Module 2}
+\item{T15: Load Train Subset\\}
 
-% ...
+Type: Dynamic, Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input/Condition: The "train" subset of the EMNIST letters dataset is available.
+
+Output/Result: The module is able to load the "train" subset of the EMNIST
+letters, which is a tuple containing 88,800 images and their corresponding
+labels.
+
+Test Case Derivation: Based on R3, the program must have the "train" subset
+of the EMNIST letters dataset loaded in order to train the model.
+
+How test will be performed: The test will be run on GHA. The system will load the
+"train" subset of the EMNIST letters dataset and check that all of the
+data has been loaded correctly, such that the format of the images corresponds
+to DD2 as specified in the SRS document \citep{SRS}. The system will check tha
+the size of the dataset is 88,800 image/label pairs and that the labels are
+correctly formatted as an integer from 0-25 inclusive corresponding to the
+letters A-Z.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
-This section has not been completed yet because the MIS document has not been
-completed yet. The unit tests will be based on the modules and interfaces
-outlined in the MIS document.
+These unit tests validate the behavior of supporting modules to ensure that the
+\progname{} program meets the nonfunctional requirements outlined in the SRS
+document \citep{SRS}.
+
 
 % \wss{If there is a module that needs to be independently assessed for
 %   performance, those test cases can go here.  In some projects, planning for
@@ -821,40 +864,35 @@ outlined in the MIS document.
 % \wss{These tests may involve collecting performance data from previously
 %   mentioned functional tests.}
 
-% \subsubsection{Module ?}
-		
-% \begin{enumerate}
+\subsubsection{Data Loading Module (M10)}
 
-% \item{test-id1\\}
+These tests ensure that the module is able to load the "test" subset of the
+EMNIST letters dataset to support the testing of the model's accuracy. This
+Fulfills NFR1 as outlined in the SRS document \citep{SRS}.
 
-% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-%   be automatic}
-					
-% Initial State: 
-					
-% Input/Condition: 
-					
-% Output/Result: 
-					
-% How test will be performed: 
-					
-% \item{test-id2\\}
+\begin{enumerate}
 
-% Type: Functional, Dynamic, Manual, Static etc.
-					
-% Initial State: 
-					
-% Input: 
-					
-% Output: 
-					
-% How test will be performed: 
+\item{T16: Load Test Subset\\}
 
-% \end{enumerate}
+Type: Dynamic, Automatic
 
-% \subsubsection{Module ?}
+Initial State: The \progname{} system is ready for input.
 
-% ...
+Input/Condition: The "test" subset of the EMNIST letters dataset is available.
+
+Output/Result: The module is able to load the "test" subset of the EMNIST
+letters, which is a tuple containing 14,800 images and their corresponding
+labels.
+
+How test will be performed: The test will be run on GHA. The system will load
+the "test" subset of the EMNIST letters dataset and check that the data has been
+loaded correctly, such that the format of the images corresponds to DD2 as
+specified in the SRS document \citep{SRS}. The system will check that the size
+of the dataset is 14,800 image/label pairs and that the labels are correctly
+formatted as an integer from 0-25 inclusive corresponding to the letters A-Z.
+
+\end{enumerate}
+
 
 % \subsection{Traceability Between Test Cases and Modules}
 
@@ -873,9 +911,9 @@ outlined in the MIS document.
 
 The \href{https://www.tensorflow.org/datasets/catalog/emnist#emnistletters}{EMNIST Letters dataset} contains handwritten uppercase Latin alphabet
 characters. This dataset is split into a "train" subset consisting of 88,800
-images and a "test" subset consisting of 14,800 images. For the purpose of
-validating the \progname{} program, images from the "test" subset will be used
-for all tests.
+image/label pairs and a "test" subset consisting of 14,800 image/label pairs.
+For the purpose of validating the \progname{} program, images from the "test"
+subset will be used for all system tests.
 
 \begin{figure}[H]
 \centering
