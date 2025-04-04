@@ -159,6 +159,7 @@ def testAccuracyMeasurement():
     # ensure accuracy is better than the previous OAR model
     assert evaluation["accuracy"] > 0.674
 
+
 def testLoadTrainSubset():
     """
     T15: Test load train subset
@@ -182,6 +183,7 @@ def testLoadTrainSubset():
     # ensure label values are 0-25 inclusive
     assert np.min(labels) == 0
     assert np.max(labels) == 25
+
 
 def testLoadTestSubset():
     """
