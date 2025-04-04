@@ -620,7 +620,7 @@ the users will be documented via GitHub issues.
 
 \begin{enumerate}
 
-\item{T11: Ruff Linter Usability Test\\}
+\item{T11: Ruff Linter Test\\}
 
 Type: Static, Automatic
 
@@ -635,7 +635,22 @@ cannot be automatically fixed will be documented via failure of the test.
 How test will be performed: To support NFR3, the test will be run on GHA. The
 linter will check the codebase for any issues.
 
-\item{T12: Code Review for Modularity\\}
+\item{T12: Pyright Static Type Checker Test\\}
+
+Type: Static, Automatic
+
+Initial State: The pyright static type checker is set up and ready to run.
+
+Input/Condition: The codebase of the \progname{} project.
+
+Output/Result: A report on type errors, identifying any issues that need to be
+addressed. Issues that can automatically be fixed will be fixed. Any issues that
+cannot be automatically fixed will be documented via failure of the test.
+
+How test will be performed: To support NFR3, the test will be run on GHA. The
+static type checker will check the codebase for any issues.
+
+\item{T13: Code Review for Modularity\\}
 
 Type: Static, Manual
 					
@@ -658,7 +673,7 @@ encountered by the reviewers will be documented via GitHub issues.
 
 \begin{enumerate}
 
-\item{T13: Cross-Platform Compatibility Test\\}
+\item{T14: Cross-Platform Compatibility Test\\}
 
 Type: Dynamic, Automatic
 					
@@ -794,7 +809,7 @@ module's behavior is considered validated.
 
 \begin{enumerate}
 
-\item{T14: Model Training\\}
+\item{T15: Model Training\\}
 
 Type: Dynamic, Automatic
 					
@@ -825,7 +840,7 @@ outlined in the SRS document \citep{SRS}.
 
 \begin{enumerate}
 
-\item{T15: Load Train Subset\\}
+\item{T16: Load Train Subset\\}
 
 Type: Dynamic, Automatic
 
@@ -872,7 +887,7 @@ Fulfills NFR1 as outlined in the SRS document \citep{SRS}.
 
 \begin{enumerate}
 
-\item{T16: Load Test Subset\\}
+\item{T17: Load Test Subset\\}
 
 Type: Dynamic, Automatic
 

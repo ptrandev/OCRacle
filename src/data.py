@@ -14,6 +14,11 @@ from src.libraries.emnist import extract_test_samples, extract_training_samples
 def extractTestSamples():
     """
     Load the EMNIST test dataset and preprocess the images and labels.
+
+    Returns:
+    tuple: The preprocessed images and labels
+    - images (np.ndarray): The preprocessed images
+    - labels (np.ndarray): The preprocessed labels
     """
 
     test_images, test_labels = extract_test_samples("letters")
@@ -24,6 +29,11 @@ def extractTestSamples():
 def extractTrainingSamples() -> tuple:
     """
     Load the EMNIST training dataset and preprocess the images and labels.
+
+    Returns:
+    tuple: The preprocessed images and labels
+    - images (np.ndarray): The preprocessed images
+    - labels (np.ndarray): The preprocessed labels
     """
 
     images, labels = extract_training_samples("letters")
