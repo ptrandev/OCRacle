@@ -179,6 +179,7 @@ def testModelTraining():
     assert loaded_model.input_shape == (None, 28, 28)
     assert loaded_model.output_shape == (None, 26)
 
+
 def testLoadTrainSubset():
     """
     T15: Test load train subset

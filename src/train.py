@@ -17,6 +17,7 @@ EPOCHS = 5
 BATCH_SIZE = 32
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "model.keras")
 
+
 def train():
     """
     Train the model using the EMNIST dataset.
@@ -35,7 +36,7 @@ def train():
         [
             keras.layers.Flatten(input_shape=(28, 28)),
             keras.layers.Dense(512, activation="relu"),
-            keras.layers.Dropout(0.1), # prevent overfitting
+            keras.layers.Dropout(0.1),  # prevent overfitting
             keras.layers.Dense(26, activation="softmax"),
         ]
     )
