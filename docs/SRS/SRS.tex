@@ -377,6 +377,9 @@ formats where text may be present. This digitalization process enables
 researchers to use computer programs to find trends and patterns in the
 digitized text.
 
+The \progname{} project aims to develop a program that can recognize and
+classify a single Latin alphabet character in an image.
+
 The following section describes the purpose of the document, the scope of
 requirements, characteristics of the intended reader, and the organizational
 roadmap of the document.
@@ -430,8 +433,13 @@ an upright position when input into the system.
 % }
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-The intended reader of this document should have an undergraduate level
-understanding of data science, machine learning, and linear algebra.
+The intended reader of this document should have knowledge equivalent to the
+following coursework:
+
+\begin{itemize}
+  \item MATH 1B03: Linear Algebra
+  \item COMPSCI 4ML3: Introduction to Machine Learning
+\end{itemize}
 
 % \plt{This section summarizes the skills and knowledge of the readers of the
 %   SRS.  It does NOT have the same purpose as the ``User Characteristics''
@@ -501,8 +509,6 @@ OCRacle model to predict the character in an input image.
   \item Technical User Responsibilities:
   \begin{itemize}
   \item Provide an image dataset to train the model following A\ref{A_EMNIST}, A\ref{A_Uppercase}, and A\ref{A_Preprocessing}.
-  \item Run the program on a compatible platform.
-  \item Interface with the program.
   \end{itemize}
   \item \progname{} Responsibilities:
   \begin{itemize}
