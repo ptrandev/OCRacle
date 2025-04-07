@@ -220,37 +220,41 @@ their units. The symbols are listed in alphabetical order.
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
 \textbf{symbol} & \textbf{unit} & \textbf{description}\\
 \midrule
-$I_{n \times m}$ & ${pixel^2}$ & Matrix representing an input image of n rows
+$I_{n \times m}$ & N/A & Matrix representing an input image of n rows
 and m columns provided by the end user
 \\
+${L}$ & N/A & The number of distinct labels that the model can predict
+\\
 $P_{1 \times 26}$ & N/A & Probability vector representing the output of the
-model, with 26 columns representing the probability of each character
+model, with ${L}$ columns representing the probability of each character
 \\
 $P_{pred}$ & N/A & The character predicted by the model.
 \\ 
-$T_{28 \times 28}$ & ${pixel^2}$ & Matrix representing a 28x28 pixel image from
+$T_{w \times w}$ & N/A & Matrix representing a ${w \times w}$ pixel image from
 the training data provided by the technical user
-\\
-$\alpha$ & N/A & Learning rate for the model
-\\
-$\theta$ & N/A & Vector representing the weights of the model
-\\
-$t$ & N/A & In the context of the Adam optimization algorithm, the time step
 \\
 $g_t$ & N/A & The gradient of the cost function with respect to the weights at
 time t
 \\
-$\hat{y}_i$ & N/A & The predicted probability of character i
-\\
-$y_i$ & N/A & The actual probability of character i
-\\
-$\epsilon$ & N/A & Small value to prevent division by zero
-\\
 $m_t$ & N/A & In the context of the Adam optimization algorithm, the first
 moment estimate at time t
 \\
+$t$ & N/A & In the context of the Adam optimization algorithm, the time step
+\\
 $v_t$ & N/A & In the context of the Adam optimization algorithm, the second
 moment estimate at time t
+\\
+$w$ & N/A & The number of rows/columns in the training dataset image
+\\
+$\alpha$ & N/A & Learning rate for the model
+\\
+$\epsilon$ & N/A & Small value to prevent division by zero
+\\
+$\theta$ & N/A & Vector representing the weights of the model
+\\
+$\hat{y}_i$ & N/A & The predicted probability of character i
+\\
+$y_i$ & N/A & The actual probability of character i
 \\
 \bottomrule
 \end{longtable*}
