@@ -500,7 +500,7 @@ OCRacle model to predict the character in an input image.
 \begin{itemize}
   \item Technical User Responsibilities:
   \begin{itemize}
-  \item Provide an image dataset to train the model following A\ref{A_EMNIST}, A\ref{A_Uppercase}, A\ref{A_Character}, A\ref{A_Labels}, and A\ref{A_Preprocessing}.
+  \item Provide an image dataset to train the model following A\ref{A_EMNIST}, A\ref{A_Uppercase}, and A\ref{A_Preprocessing}.
   \item Run the program on a compatible platform.
   \item Interface with the program.
   \end{itemize}
@@ -775,7 +775,7 @@ change [LC], in which the respective assumption is used.
 \begin{itemize}
 
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_EMNIST}:] The model will be trained on the EMNIST dataset where each image is 28x28 pixels as required by IM\ref{IM_Training}.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_LatinUppercase}:] The input images and training images will contain only uppercase Latin alphabet characters as required by IM\ref{IM_Training} and IM\ref{IM_CharacterPrediction}.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Uppercase}:] The input images and training images will contain only uppercase Latin alphabet characters as required by IM\ref{IM_Training} and IM\ref{IM_CharacterPrediction}.
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Preprocessing}:] All
 input images from the user undergo preprocessing such that they are in the same
 format as the training data, where TM\ref{TM:BI} and TM\ref{TM:N} are applied in
@@ -1417,7 +1417,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Sources& \cite{KigmaAndBa2014}, \cite{Mao2023} \\
   \hline
-  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_LatinUppercase}, R\ref{R_Output}\\
+  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_Uppercase}, R\ref{R_Output}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1471,7 +1471,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Sources& N/A\\
   \hline
-  Ref.\ By & A\ref{A_LatinUppercase}, R\ref{R_VerifyOutput}, R\ref{R_Calculate}\\
+  Ref.\ By & A\ref{A_Uppercase}, R\ref{R_VerifyOutput}, R\ref{R_Calculate}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1709,7 +1709,7 @@ IM\ref{IM_CharacterPrediction}.
 % typical values.}
 
 A\ref{A_EMNIST} is necessary to provide a dataset for training the model. To
-constrain the scope of the project, A\ref{A_LatinUppercase} restricts which
+constrain the scope of the project, A\ref{A_Uppercase} restricts which
 characters the program will focus on recognizing. This also makes comparing the 
 accuracy of OCRacle to the OAR project more meaningful as NRF\ref{NFR_Accuracy}
 outlines. Lastly, A\ref{A_Preprocessing} is necessary to ensure that the input
@@ -1769,7 +1769,7 @@ the assumptions.
   \hline
   & TM\ref{TM:BI} & TM\ref{TM:N} & TM\ref{TM:ADAM} & TM\ref{TM:CELF} & GD\ref{GD_ReLU} & GD\ref{GD_SM} & GD\ref{GD_CNN} & IM\ref{IM_Training} & IM\ref{IM_PreProcessing} \\ \hline
   A\ref{A_EMNIST} &       &      &         &         &         &       &        & X           &                  \\ \hline
-  A\ref{A_LatinUppercase} &       &      &         &         &         &       &        & X           &                  \\ \hline
+  A\ref{A_Uppercase} &       &      &         &         &         &       &        & X           &                  \\ \hline
   A\ref{A_Preprocessing} & X     & X    &         &         &         &       &        &             & X                \\ \hline
   \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
