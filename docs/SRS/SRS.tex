@@ -393,7 +393,7 @@ roadmap of the document.
 
 \subsection{Purpose of Document}
 
-This document serves as a software requirements specification for the OCRacle
+This document serves as a software requirements specification for the \progname{}
 project. This includes the general system description, problem description,
 solution characteristics, and requirements. This document will be used a
 reference for building the solution.
@@ -493,9 +493,9 @@ characteristics and lists the system constraints.
 %   the system constraint.}
 
 We can take two perspectives on the system context. The first is the technical
-user, who interfaces with the OCRacle program to produce a model that can
+user, who interfaces with the \progname{} program to produce a model that can
 predict the character in an image. The second is the end user, who uses the
-OCRacle model to predict the character in an input image.
+\progname{} model to predict the character in an input image.
 
 \begin{figure}[h!]
   \begin{center}
@@ -1664,8 +1664,10 @@ IM\ref{IM_CharacterPrediction}.
 
 \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
   \textbf{Accuracy} The accuracy of the the software shall exceed the previous
-  OAR project. Since the OAR project provides a confusion matrix, the accuracy
-  of OCRacle shall be measured by the same metric. \cite{Ceranic2024}
+  OAR project. Since the OAR project provides an overall accuracy measurement,
+  the overall accuracy of the \progname{} software shall be measured using the
+  same method as the OAR project as described in section 6.2 of the VnV Plan
+  \citep{VnV}.
   
   % \plt{Characterize the accuracy by giving the context/use for
   %   the software.  Maybe something like, ``The accuracy of the computed
@@ -1674,9 +1676,7 @@ IM\ref{IM_CharacterPrediction}.
   %   described following the procedure given in Section~X of the Verification and
   %   Validation Plan.''  A link to the VnV plan would be a nice extra.}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability}
-  A user with a basic understand of the command line should be able to setup and
-  run the program exclusively using the included user manual.
+\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability} A user with the skills specified in Section 4.2.2 of the VnV Plan should be capable of executing all the tasks described in that same section. \citep{VnV}
 
   % \plt{Characterize the usability by giving the context/use for the software.
   %   You should likely reference the user characteristics section.  The level of
@@ -1723,7 +1723,7 @@ provides a large dataset of pre-labeled handwritten Latin alphabet characters in
 both uppercase and lowercase, making it a suitable choice for this project.
 
 A\ref{A_Latin} restricts which characters the program will focus on
-recognizing. This also makes comparing the accuracy of OCRacle to the OAR project
+recognizing. This also makes comparing the accuracy of \progname{} to the OAR project
 more meaningful as NRF\ref{NFR_Accuracy} outlines.
 
 Lastly, A\ref{A_Preprocessing} is necessary to ensure that the input image is in
