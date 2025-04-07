@@ -289,11 +289,9 @@ feedback of the code walkthroughs to ensure that the code is correct.
 \label{sec:AutomatedTesting}
 
 GHA will be used to automate the testing of the \progname{} program. For
-each pull request, the tests will be run. The tests will include unit tests,
-functional tests, and nonfunctional tests. The tests will be created using the
-Python unittest framework, which is included in the Python standard library. The
-tests will be run using the pytest framework, which is included in the Python
-standard library. The tests will consist of predetermined inputs and expected
+each pull request, the tests will be run.The tests will include unit tests,
+functional tests, and nonfunctional tests. The tests will be run using the
+pytest framework. The tests will consist of predetermined inputs and expected
 outputs. The tests will be run on GHA. If any of the tests fail, the
 pull request will be rejected.
 
@@ -433,8 +431,8 @@ Output: As described in IM1, the system pre-processed the image for the
 classification task in the specified manner.
 
 Test Case Derivation: Based on R2, the program must pre-process images for
-classification. The system will compare the output from the test with a known
-correct output to ensure that the pre-processing is correct.
+classification. The test will verify that the image is pre-processed according
+to R2 in the SRS document \citep{SRS}.
 
 How test will be performed: This automatic test will be run on GHA.
 
@@ -464,8 +462,8 @@ The predicted character corresponds to the character with the highest
 probability in the probability vector.
 
 Test Case Derivation: Based on R3, the program should correctly predict single
-characters from prepared images. We will use a dataset of known images and their
-correct label to verify the correctness of the prediction.
+characters from prepared images. The prediction produced by the model will be
+compared to the image's true label.
 
 How test will be performed: The automatic test will be run on GHA.
 
@@ -583,8 +581,9 @@ performed better.
 How test will be performed: To support NFR1, the test will be run on GHA. The
 system will predict the characters in the test images and compare the
 predictions to the known correct labels. The accuracy will be calculated using
-the formula dictated in Section \ref{sec:AccuracyCalculation}. The overall accuracy percentage from
-this test is compared against the OAR predecessor's overall accuracy percentage.
+the formula dictated in Section \ref{sec:AccuracyCalculation}. The overall
+accuracy percentage from this test is compared against the OAR predecessor's
+overall accuracy percentage.
 
 \end{enumerate}
 
@@ -601,8 +600,9 @@ Type: Dynamic, Manual
 Initial State: The codebase and user manual are available.
 					
 Input/Condition: All members of the VnV team, which are assumed to have basic
-command line skills.
-					
+command line skills. At a minimum, the members of the team have the equivalent
+knowledge contained in the \href{https://missing.csail.mit.edu/}{MIT Missing Semester}.
+
 Output/Result: Feedback on ease of use, clarity of instructions, and any
 difficulties encountered by the users.
 					
