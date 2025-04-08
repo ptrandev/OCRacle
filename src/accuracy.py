@@ -61,3 +61,13 @@ def evaluate():
         "confusionMatrix": confusionMatrix,
         "classAccuracy": classAccuracy,
     }
+
+if __name__ == "__main__":
+    # Evaluate the model
+    results = evaluate()
+
+    # Print the results
+    print("Loss: ", results["loss"])
+    print("Accuracy: ", results["accuracy"])
+    print("Confusion Matrix: \n", results["confusionMatrix"])
+    print("Class Accuracy: ", results["classAccuracy"])
