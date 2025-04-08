@@ -291,9 +291,9 @@ allow input of files other than images.}
 \begin{itemize}
   \item A DimensionsError exception is thrown if the input image
   exceeds the bounds of the $n_{min}$, $n_{max}$, $m_{min}$, and $m_{max}$
-  parameters as specified by Table 4 in the SRS \cite[4.2.6]{SRS}.
+  parameters as specified by Table 4 in the SRS \citep[4.2.6]{SRS}.
   \item A FormatError exception is thrown if the input image is not one of the supported formats
-  specified by R1 in the SRS \cite[5.1.1]{SRS}.
+  specified by R1 in the SRS \citep[5.1.1]{SRS}.
   \item A FileNotFound exception is thrown if the input file does not exist.
 \end{itemize}
 \end{itemize}
@@ -393,7 +393,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-train & - & model: $\mathbb{R}^{m \times n}$ & - \\
+train & - & $\mathbb{R}^{m \times n}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -433,8 +433,8 @@ N/A
 \item transition: The model is trained on the dataset using the hyperparameters
 $\alpha$, $\beta_1$, $\beta_2$, $\epsilon$, $m_{t}$, $v_{t}$, $g_{t}$,
 $\theta_{t}$, epochs, batchSize, and timeStep. The ADAM optimizer is used to
-minimize the cross-entropy loss as specified by TM:ADAM \cite[4.2.2]{SRS} and
-IM1 in the SRS \cite[4.2.4]{SRS}. For each step, theta is updated using the
+minimize the cross-entropy loss as specified by TM:ADAM \citep[4.2.2]{SRS} and
+IM1 in the SRS \citep[4.2.4]{SRS}. For each step, theta is updated using the
 gradient of the model.
 \item output: $\theta$. Once the model has been trained and loss has been
 minimized, the weights of the model are returned.
@@ -470,7 +470,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-predict & imageMatrix: $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$ & - \\
+predict & imageMatrix: $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -501,7 +501,7 @@ before being passed to the prediction model.
 \item output: confidenceMatrix. Where each element in the confidence matrix
 represents the model's confidence in the corresponding character. The model is
 used to generate a confidence matrix for the input image using a CNN as
-specified by GD3 in the SRS \cite[4.2.3]{SRS}. GD3 provides a high-level
+specified by GD3 in the SRS \citep[4.2.3]{SRS}. GD3 provides a high-level
 description of the model's architecture, but the implemented model may differ.
 \end{itemize}
 
@@ -534,7 +534,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-preprocessing & file : string & imageMatrix: $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & - \\
+preprocessing & file : string & $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -560,7 +560,7 @@ processed by the Image Preprocessing Module.
 \begin{itemize} 
 \item output: imageMatrix := normalization(bicubicInterpolation(file)). The
 input file has been transformed such that it conforms to the preprocessing
-requirements as specified by A3 in the SRS \cite[4.2.1]{SRS}.
+requirements as specified by A3 in the SRS \citep[4.2.1]{SRS}.
 \end{itemize}
 
 \subsubsection{Local Functions}
@@ -568,13 +568,13 @@ requirements as specified by A3 in the SRS \cite[4.2.1]{SRS}.
 \noindent bicubicInterpolation(imageMatrix):
 \begin{itemize}
 \item output: Perform bicubic interpolation such that the imageMatrix is
-transformed to a 28x28 matrix. as specified by TM:BI in the SRS \cite[4.2.2]{SRS}.
+transformed to a ${w times w}$ matrix. as specified by TM:BI in the SRS \citep[4.2.2]{SRS}.
 \end{itemize}
 \noindent normalization(imageMatrix):
 \begin{itemize}
 \item output: Perform normalization such that the image is turned into a
 greyscale image with pixel values in the range [0, 255]. as specified by TM:N in
-the SRS \cite[4.2.2]{SRS}.
+the SRS \citep[4.2.2]{SRS}.
 \end{itemize}
 
 \newpage
