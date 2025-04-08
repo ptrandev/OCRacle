@@ -52,5 +52,6 @@ def train():
     print("Saving model...")
     model.save(MODEL_PATH)
 
+
 if __name__ == "__main__":
     train()
