@@ -149,7 +149,7 @@ Input Format Module\\
 & Prediction Model Module\\
 & Application Module\\
 & Image Preprocessing Module\\
-& Accuracy Metrics Module\\
+& Model Evaluation Module\\
 & Data Loading Module\\
 \midrule
 
@@ -578,7 +578,7 @@ the SRS \citep[4.2.2]{SRS}.
 \end{itemize}
 
 \newpage
-\section{MIS of Accuracy Metrics Module} \label{mAccuracy}
+\section{MIS of Model Evaluation Module} \label{mAccuracy}
 
 \subsection{Module}
 
@@ -629,28 +629,21 @@ performed on the test dataset extracted from the Data Loading Module
 
 \subsubsection{Access Routine Semantics}
 
-\noindent crossEntropyLoss(prediction, target):
+\noindent evaluate():
 \begin{itemize}
-\item output: loss := $- \sum_{i=1}^{n} target_i \log(prediction_i)$. The cross
-entropy loss is calculated for the model's predictions and the target values
-as specified by TM:CELF in the SRS \cite[4.2.2]{SRS}.
-\item exceptions:
-\begin{itemize}
-  \item A DimensionsError exception is thrown if the dimensions of the prediction
-  and target matrices do not match.
-\end{itemize}
-\end{itemize}
-
-\noindent confusionMatrix(prediction, target):
-\begin{itemize}
-\item output: confusionMatrix := $\text{confusionMatrix}_{i,j} = \sum_{k=1}^{n} \text{target}_{k,i} \times \text{prediction}_{k,j}$. A confusion matrix is generated for the
-model's predictions and the target values to fulfill NFR1 in the SRS
-\cite[5.2]{SRS}.
-\item exceptions:
-\begin{itemize}
-  \item A DimensionsError exception is thrown if the dimensions of the prediction
-  and target matrices do not match.
-\end{itemize}
+\item output:
+  \begin{itemize}
+    \item loss := $- \sum_{i=1}^{n} target_i \log(prediction_i)$. The cross
+    entropy loss is calculated for the model's predictions and the target values
+    as specified by TM:CELF in the SRS \cite[4.2.2]{SRS}.
+    \item accuracy := $\frac{1}{n} \sum_{i=1}^{n} \text{target}_i \times
+    \text{prediction}_i$. The accuracy is calculated for the model's predictions
+    as described in the VnV Plan \citep{VnV}. This fulfills NFR1 in the SRS \citep{SRS}.
+    \item confusionMatrix := $\text{confusionMatrix}_{i,j} = \sum_{k=1}^{n} \text{target}_{k,i} \times \text{prediction}_{k,j}$. A confusion matrix is generated for the model's predictions and the target values.
+    \item classAccuracy := $\frac{1}{n} \sum_{i=1}^{n} \text{target}_i \times
+    \text{prediction}_i$. The class accuracy is calculated for each class in the
+    confusion matrix and sorted by accuracy descending.
+  \end{itemize}
 \end{itemize}
 
 \subsubsection{Local Functions}
