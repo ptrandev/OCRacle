@@ -8,6 +8,8 @@
 from PIL import Image
 import numpy as np
 
+WIDTH = 28
+HEIGHT = 28
 
 def preprocessing(image: Image.Image) -> np.ndarray:
     """
@@ -20,39 +22,10 @@ def preprocessing(image: Image.Image) -> np.ndarray:
     np.ndarray: The processed image
     """
 
-    return normalization(bicubicInterpolation(image))
+    # Resize the image to 28x28 pixels using bicubic interpolation
+    image = image.resize((WIDTH, HEIGHT), Image.Resampling.BICUBIC)
 
-
-def bicubicInterpolation(
-    image: Image.Image, width: int = 28, height: int = 28
-) -> Image.Image:
-    """
-    Resize the input image using bicubic interpolation.
-
-    Parameters:
-    image (Image.Image): The input image
-    width (int): The width of the output image
-    height (int): The height of the output image
-
-    Returns:
-    Image.Image: The resized image
-    """
-
-    # resize the image using bicubic interpolation
-    return image.resize((width, height), Image.Resampling.BICUBIC)
-
-
-def normalization(image: Image.Image) -> np.ndarray:
-    """
-    Normalize the input image to have pixel values between 0 and 1.
-
-    Parameters:
-    image (Image.Image): The input image
-
-    Returns:
-    np.ndarray: The normalized image
-    """
-
+    # Convert image to grayscale
     image = image.convert("L")
 
     # Convert image to a numpy array

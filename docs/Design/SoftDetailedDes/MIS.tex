@@ -558,24 +558,17 @@ processed by the Image Preprocessing Module.
 
 \noindent preprocessing(file):
 \begin{itemize} 
-\item output: imageMatrix := normalization(bicubicInterpolation(file)). The
-input file has been transformed such that it conforms to the preprocessing
-requirements as specified by A3 in the SRS \citep[4.2.1]{SRS}.
+\item output: imageMatrix. The input file has been transformed such that it
+conforms to the preprocessing requirements as specified by A3 in the SRS
+\citep[4.2.1]{SRS}. First bicubic interpolation is used to resize the image to
+the required dimensions as specified by TM:BI in the SRS document \citep[4.2.2]{SRS}.
+Then the image is converted to grayscale and the pixel values are normalized to be
+between 0 and 1 inclusive as specified by TM:N in the SRS document \citep[4.2.2]{SRS}.
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent bicubicInterpolation(imageMatrix):
-\begin{itemize}
-\item output: Perform bicubic interpolation such that the imageMatrix is
-transformed to a ${w \times w}$ matrix. as specified by TM:BI in the SRS \citep[4.2.2]{SRS}.
-\end{itemize}
-\noindent normalization(imageMatrix):
-\begin{itemize}
-\item output: Perform normalization such that the image is turned into a
-greyscale image with pixel values in the range [0, 1]. as specified by TM:N in
-the SRS \citep[4.2.2]{SRS}.
-\end{itemize}
+N/A
 
 \newpage
 \section{MIS of Model Evaluation Module} \label{mAccuracy}
