@@ -65,7 +65,7 @@ def evaluate():
 
 if __name__ == "__main__":
     # Evaluate the model
-    evaluation = evaluate() #
+    evaluation = evaluate()  #
 
     # Print the evaluation results
     print("Loss:", evaluation["loss"])
