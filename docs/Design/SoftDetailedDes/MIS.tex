@@ -144,6 +144,7 @@ Input Format Module\\
 & Application Module\\
 & Image Preprocessing Module\\
 & Accuracy Metrics Module\\
+& Data Loading Module\\
 \midrule
 
 \multirow{1}{0.3\textwidth}{Software Decision Module}&
@@ -222,6 +223,7 @@ with the GUI to input images and view the model's predictions.
 
 N/A
 
+\newpage
 \section{MIS of Input Format Module} \label{MInput}
 
 \subsection{Module}
@@ -290,6 +292,7 @@ perform the necessary transformations on the input image.
 
 N/A
 
+\newpage
 \section{MIS of Model Output Module} \label{MOutput}
 
 \subsection{Module}
@@ -350,6 +353,7 @@ Module \ref{MInput} before being passed to the Model Output Module.
 \end{itemize}
 \end{itemize}
 
+\newpage
 \section{MIS of Model Training Module} \label{MTraining}
 
 \subsection{Module}
@@ -430,6 +434,7 @@ minimized, the weights of the model are returned.
 N/A
 
 
+\newpage
 \section{MIS of Prediction Model Module} \label{MModel}
 
 \subsection{Module}
@@ -494,6 +499,7 @@ description of the model's architecture, but the implemented model may differ.
 
 N/A
 
+\newpage
 \section{MIS of Image Preprocessing Module} \label{mPreprocessing}
 
 \subsection{Module}
@@ -560,6 +566,7 @@ greyscale image with pixel values in the range [0, 255]. as specified by TM:N in
 the SRS \cite[4.2.2]{SRS}.
 \end{itemize}
 
+\newpage
 \section{MIS of Accuracy Metrics Module} \label{mAccuracy}
 
 \subsection{Module}
@@ -634,6 +641,78 @@ model's predictions and the target values to fulfill NFR1 in the SRS
 
 N/A
 
+\newpage
+\section{MIS of Data Loading Module} \label{MDataLoading}
+
+\subsection{Module}
+
+data
+\subsection{Uses}
+
+N/A
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+
+\begin{center}
+\begin{tabular}{p{5cm} p{2cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+extractTestSamples & - & ${\mathbb{R}^{28 \times 28}_{0 \ge x \ge 1}[]}$, ${\mathbb{Z}[]}$ & - \\
+extractTrainingSamples & - & ${\mathbb{R}^{28 \times 28}_{0 \ge x \ge 1}[]}$, ${\mathbb{Z}[]}$ & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+N/A
+
+\subsubsection{Access Routine Semantics}
+
+\noindent extractTestSamples():
+\begin{itemize}
+\item output: (images, labels) := processSamples(testImages, testLabels). A
+tuple containing the test images and their corresponding labels. The test
+samples are extracted from the EMNIST letters dataset.
+\end{itemize}
+
+\noindent extractTrainingSamples():
+\begin{itemize}
+\item output: (images, labels) := processSamples(trainingImages, trainingLabels).
+A tuple containing the training images and their corresponding labels. The
+training samples are extracted from the EMNIST letters dataset.
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+\noindent processSamples():
+\begin{itemize}
+\item output: (images, labels). The images are normalized to have a pixel range
+between 0 and 1 inclusive, as specified by the SRS document \citep{SRS}. The
+labels are scaled to start at 0 instead of 1 to align with the model
+architecture's output as specified by the SRS document \citep{SRS}.
+\end{itemize}
+
+
+\newpage
 \section{MIS of Graphical User Interface Module} \label{MGUI}
 
 \subsection{Module}
@@ -696,10 +775,27 @@ routines.
 \item transition: The output of the model is displayed to the user in the GUI.
 \end{itemize}
 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{displayOutput.jpeg}
+\caption{Example of the displayOutput() function. It will display the
+  model's prediction and the confidence matrix to the user in a graphical
+  format.}
+\label{fig:displayOutput}
+\end{figure}
+
 \noindent acceptInput():
 \begin{itemize}
 \item transition: The user is able to input images to the model in the GUI.
 \end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\textwidth]{acceptInput.jpeg}
+  \caption{Example of the acceptInput() function. It allows users to input a
+  file path and run the model on the input image.}
+  \label{fig:acceptInput}
+  \end{figure}
 
 \subsubsection{Local Functions}
 
