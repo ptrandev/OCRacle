@@ -1,5 +1,5 @@
 #
-# Accuracy Metrics Module
+# Model Evaluation Module
 #
 # This module is responsible for evaluating the accuracy of the trained model
 # using the test dataset.
