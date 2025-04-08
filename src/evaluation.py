@@ -65,10 +65,10 @@ def evaluate():
 
 if __name__ == "__main__":
     # Evaluate the model
-    results = evaluate()
+    evaluation = evaluate()
 
-    # Print the results
-    print("Loss: ", results["loss"])
-    print("Accuracy: ", results["accuracy"])
-    print("Confusion Matrix: \n", results["confusionMatrix"])
-    print("Class Accuracy: ", results["classAccuracy"])
+    # Print the evaluation results
+    print("Loss:", evaluation["loss"])
+    print("Accuracy:", evaluation["accuracy"])
+    print("Confusion Matrix:\n", evaluation["confusionMatrix"])
+    print("Class Accuracy:\n", evaluation["classAccuracy"])
