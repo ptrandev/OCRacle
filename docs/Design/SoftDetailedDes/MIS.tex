@@ -175,6 +175,7 @@ main
 \begin{itemize}
   \item Input Format Module \ref{MInput}
   \item Model Output Module \ref{MOutput}
+  \item Model Training Module \ref{MTraining}
   \item Graphical User Interface Module \ref{MGUI}
 \end{itemize}
 
@@ -374,10 +375,8 @@ train
 \subsection{Uses}
 
 \begin{itemize}
-  \item Input Format Module \ref{MInput}
-  \item Model Output Module \ref{MOutput}
   \item Prediction Model Module \ref{MModel}
-  \item Accuracy Metrics Module \ref{mAccuracy}
+  \item Data Loading Module \ref{MDataLoading}
 \end{itemize}
 
 \subsection{Syntax}
@@ -568,7 +567,7 @@ requirements as specified by A3 in the SRS \citep[4.2.1]{SRS}.
 \noindent bicubicInterpolation(imageMatrix):
 \begin{itemize}
 \item output: Perform bicubic interpolation such that the imageMatrix is
-transformed to a ${w times w}$ matrix. as specified by TM:BI in the SRS \citep[4.2.2]{SRS}.
+transformed to a ${w \times w}$ matrix. as specified by TM:BI in the SRS \citep[4.2.2]{SRS}.
 \end{itemize}
 \noindent normalization(imageMatrix):
 \begin{itemize}
@@ -582,12 +581,15 @@ the SRS \citep[4.2.2]{SRS}.
 
 \subsection{Module}
 
-performance
+accuracy
 
 \subsection{Uses}
 
-N/A
-
+\begin{itemize}
+  \item Model Output Module \ref{MOutput}
+  \item Prediction Model Module \ref{MModel}
+  \item Data Loading Module \ref{MDataLoading}
+\end{itemize}
 
 \subsection{Syntax}
 
