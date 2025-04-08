@@ -62,6 +62,7 @@ def evaluate():
         "classAccuracy": classAccuracy,
     }
 
+
 if __name__ == "__main__":
     # Evaluate the model
     results = evaluate()
