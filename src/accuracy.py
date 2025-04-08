@@ -15,6 +15,7 @@ from src.data import extractTestSamples
 from src.model import MODEL
 
 
+
 # get the accuracy, loss, and confusion matrix
 def evaluate():
     """
