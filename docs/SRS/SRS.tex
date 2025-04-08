@@ -151,6 +151,7 @@
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 January 27, 2025 & 1.0 & Initial document creation \\
+April 6, 2025 & 2.0 & Addressed feedback from Dr. Spencer Smith and Hussein Saad\\
 \bottomrule
 \end{tabularx}
 
@@ -179,17 +180,17 @@ unit system because the problem domain is not a physical system.
 % description of the unit and the SI name.
 % ~\newline
 
-\renewcommand{\arraystretch}{1.2}
-%\begin{table}[ht]
-  \noindent \begin{tabular}{l l l} 
-    \toprule		
-    \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
-    \midrule 
-    px & pixel & N/A \\
-    \bottomrule
-  \end{tabular}
-  %	\caption{Provide a caption}
-%\end{table}
+% \renewcommand{\arraystretch}{1.2}
+% %\begin{table}[ht]
+%   \noindent \begin{tabular}{l l l} 
+%     \toprule		
+%     \textbf{symbol} & \textbf{unit} & \textbf{SI}\\
+%     \midrule 
+%     px & pixel & N/A \\
+%     \bottomrule
+%   \end{tabular}
+%   %	\caption{Provide a caption}
+% %\end{table}
 
 % \plt{Only include the units that your SRS actually uses.}
 
@@ -219,37 +220,41 @@ their units. The symbols are listed in alphabetical order.
 \noindent \begin{longtable*}{l l p{12cm}} \toprule
 \textbf{symbol} & \textbf{unit} & \textbf{description}\\
 \midrule
-$I_{n \times m}$ & ${pixel^2}$ & Matrix representing an input image of n rows
+$I_{n \times m}$ & N/A & Matrix representing an input image of n rows
 and m columns provided by the end user
 \\
+${L}$ & N/A & The number of distinct labels that the model can predict
+\\
 $P_{1 \times 26}$ & N/A & Probability vector representing the output of the
-model, with 26 columns representing the probability of each character
+model, with ${L}$ columns representing the probability of each character
 \\
 $P_{pred}$ & N/A & The character predicted by the model.
 \\ 
-$T_{28 \times 28}$ & ${pixel^2}$ & Matrix representing a 28x28 pixel image from
+$T_{w \times w}$ & N/A & Matrix representing a ${w \times w}$ pixel image from
 the training data provided by the technical user
-\\
-$\alpha$ & N/A & Learning rate for the model
-\\
-$\theta$ & N/A & Vector representing the weights of the model
-\\
-$t$ & N/A & In the context of the Adam optimization algorithm, the time step
 \\
 $g_t$ & N/A & The gradient of the cost function with respect to the weights at
 time t
 \\
-$\hat{y}_i$ & N/A & The predicted probability of character i
-\\
-$y_i$ & N/A & The actual probability of character i
-\\
-$\epsilon$ & N/A & Small value to prevent division by zero
-\\
 $m_t$ & N/A & In the context of the Adam optimization algorithm, the first
 moment estimate at time t
 \\
+$t$ & N/A & In the context of the Adam optimization algorithm, the time step
+\\
 $v_t$ & N/A & In the context of the Adam optimization algorithm, the second
 moment estimate at time t
+\\
+$w$ & N/A & The number of rows/columns in the training dataset image
+\\
+$\alpha$ & N/A & Learning rate for the model
+\\
+$\epsilon$ & N/A & Small value to prevent division by zero
+\\
+$\theta$ & N/A & Vector representing the weights of the model
+\\
+$\hat{y}_i$ & N/A & The predicted probability of character i
+\\
+$y_i$ & N/A & The actual probability of character i
 \\
 \bottomrule
 \end{longtable*}
@@ -377,6 +382,9 @@ formats where text may be present. This digitalization process enables
 researchers to use computer programs to find trends and patterns in the
 digitized text.
 
+The \progname{} project aims to develop a program that can recognize and
+classify a single Latin alphabet character in an image.
+
 The following section describes the purpose of the document, the scope of
 requirements, characteristics of the intended reader, and the organizational
 roadmap of the document.
@@ -389,7 +397,7 @@ roadmap of the document.
 
 \subsection{Purpose of Document}
 
-This document serves as a software requirements specification for the OCRacle
+This document serves as a software requirements specification for the \progname{}
 project. This includes the general system description, problem description,
 solution characteristics, and requirements. This document will be used a
 reference for building the solution.
@@ -406,10 +414,9 @@ reference for building the solution.
 
 \subsection{Scope of Requirements} 
 
-This program is intended for classifying a single handwritten uppercase Latin
-alphabet character in an image. Handwritten cursive characters are not an
-expected input of this program. The handwritten character are assumed to be in
-an upright position when input into the system.
+This program is intended for classifying a single handwritten Latin alphabet
+character in an image. Handwritten cursive characters are not an expected input
+of this program.
 
 % \textsc{\plt{Modelling the real world requires simplification.  The full complexity of
 %   the actual physics, chemistry, biology is too much for existing models, and
@@ -430,8 +437,13 @@ an upright position when input into the system.
 % }
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 
-The intended reader of this document should have an undergraduate level
-understanding of data science, machine learning, and linear algebra.
+The intended reader of this document should have knowledge equivalent to the
+following coursework:
+
+\begin{itemize}
+  \item MATH 1B03: Linear Algebra
+  \item COMPSCI 4ML3: Introduction to Machine Learning
+\end{itemize}
 
 % \plt{This section summarizes the skills and knowledge of the readers of the
 %   SRS.  It does NOT have the same purpose as the ``User Characteristics''
@@ -484,9 +496,9 @@ characteristics and lists the system constraints.
 %   the system constraint.}
 
 We can take two perspectives on the system context. The first is the technical
-user, who interfaces with the OCRacle program to produce a model that can
+user, who interfaces with the \progname{} program to produce a model that can
 predict the character in an image. The second is the end user, who uses the
-OCRacle model to predict the character in an input image.
+\progname{} model to predict the character in an input image.
 
 \begin{figure}[h!]
   \begin{center}
@@ -500,9 +512,7 @@ OCRacle model to predict the character in an input image.
 \begin{itemize}
   \item Technical User Responsibilities:
   \begin{itemize}
-  \item Provide an image dataset to train the model following A\ref{A_EMNIST}, A\ref{A_Uppercase}, A\ref{A_Character}, A\ref{A_Labels}, and A\ref{A_Preprocessing}.
-  \item Run the program on a compatible platform.
-  \item Interface with the program.
+  \item Provide an image dataset to train the model following A\ref{A_EMNIST}, A\ref{A_Latin}, and A\ref{A_Preprocessing}.
   \end{itemize}
   \item \progname{} Responsibilities:
   \begin{itemize}
@@ -557,10 +567,12 @@ OCRacle model to predict the character in an input image.
 \subsection{User Characteristics} \label{SecUserCharacteristics}
 
 Both the technical user and the end user of \progname{} should have an a basic
-understanding of the command line to setup the program. The provided
-user manual should be approachable for users of this skill level and allow them
-to train and use the model effectively, even if they are not familiar with the
-technical details of the program.
+understanding of the command line to setup the program. At a minimum, the users
+should have the knowledge contained within the \href{https://missing.csail.mit.edu/}{MIT Missing Semester} course.
+
+The provided user manual should be approachable for users of this skill level
+and allow them to train and use the model effectively, even if they are not
+familiar with the technical details of the program.
 
 % \plt{This section summarizes the knowledge/skills expected of the user.
 %   Measuring usability, which is often a required non-function requirement,
@@ -573,9 +585,9 @@ technical details of the program.
 
 \subsection{System Constraints}
 
-The system will operate solely on greyscale images of Latin uppercase characters
-and will not be able to predict characters in images containing multiple
-characters.
+The input image must contain a single Latin alphabet character. The system
+will be unable to identify multiple characters in a single image. It will also
+be unable to determine if there are no identifiable characters in the image.
 
 \section{Specific System Description}
 
@@ -619,6 +631,7 @@ easier to correctly understand the requirements:
 \item \textbf{Label:} The correct character associated with an image
 \item \textbf{Training:} The process of teaching the model to predict characters
 \item \textbf{Training Data:} The dataset used to train the model
+\item \textbf{Downsampling:} The process of reducing the dimensions of an image by removing pixels while preserving the important features of the image
 
 \end{itemize}
 
@@ -692,10 +705,8 @@ end user, the goal statements are:
 
 \begin{itemize}
 
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_predict}:] Given an image
-containing a single Latin alphabet character, predict the character.
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_probability}:] Given an
-image containing a single Latin alphabet character, produce a probability vector
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_predict}:] Predict the character.
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_probability}:] Produce a probability vector
 representing the likelihood of each character.
 
 \end{itemize}
@@ -775,8 +786,8 @@ change [LC], in which the respective assumption is used.
 
 \begin{itemize}
 
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_EMNIST}:] The model will be trained on the EMNIST dataset where each image is 28x28 pixels as required by IM\ref{IM_Training}.
-\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_LatinUppercase}:] The input images and training images will contain only uppercase Latin alphabet characters as required by IM\ref{IM_Training} and IM\ref{IM_CharacterPrediction}.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_EMNIST}:] The model will be trained on the EMNIST letters dataset where each image is 28x28 pixels as required by IM\ref{IM_Training}. The dataset also treats uppercase and lowercase letters as the same character, so the model will be trained on both uppercase and lowercase letters.
+\item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Latin}:] The input images and training images will contain only a single Latin alphabet character per image, as required by IM\ref{IM_Training} and IM\ref{IM_CharacterPrediction}.
 \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_Preprocessing}:] All
 input images from the user undergo preprocessing such that they are in the same
 format as the training data, where TM\ref{TM:BI} and TM\ref{TM:N} are applied in
@@ -805,6 +816,7 @@ on.
 
 ~\newline
 
+\refstepcounter{theorynum}\label{TM:BI}
 \noindent
 \deftheory
 % #2 refname of theory
@@ -841,6 +853,7 @@ None
 % #1 derivation - not applicable by default
 {}
 
+\refstepcounter{theorynum}\label{TM:N}
 \noindent
 \deftheory
 % #2 refname of theory
@@ -877,6 +890,7 @@ None
 % #1 derivation - not applicable by default
 {}
 
+\refstepcounter{theorynum}\label{TM:ADAM}
 \noindent
 \deftheory
 % #2 refname of theory
@@ -923,6 +937,7 @@ None
 % #1 derivation - not applicable by default
 {}
 
+\refstepcounter{theorynum}\label{TM:CELF}
 \noindent
 \deftheory
 % #2 refname of theory
@@ -939,7 +954,8 @@ None
   predicted probability distribution $\hat{y}$ and the true probability
   distribution $y$. A greater loss is incurred when the predicted probability
   distribution is further from the true distribution. Heavier penalties occur
-  when it is nearly equally likely for the true label to be more than one class.
+  when the prediction dictates there to be a near-equal likelihood that the true
+  label could belong to multiple classes.
 }
 % #6 Notes
 {
@@ -1418,7 +1434,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Sources& \cite{KigmaAndBa2014}, \cite{Mao2023} \\
   \hline
-  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_LatinUppercase}, R\ref{R_Output}\\
+  Ref.\ By & A\ref{A_EMNIST}, A\ref{A_Latin}, R\ref{R_Output}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1472,7 +1488,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Sources& N/A\\
   \hline
-  Ref.\ By & A\ref{A_LatinUppercase}, R\ref{R_VerifyOutput}, R\ref{R_Calculate}\\
+  Ref.\ By & A\ref{A_Latin}, R\ref{R_VerifyOutput}, R\ref{R_Calculate}\\
   \hline
 \end{tabular}
 \end{minipage}\\
@@ -1549,7 +1565,7 @@ must exhibit the following properties:
 
 \begin{itemize}
   \item The resulting probability vector must sum to 1.
-  \item The predicted character must be one of the uppercase Latin alphabet
+  \item The predicted character must be one of the Latin alphabet
   characters from A to Z. 
 \end{itemize}
 
@@ -1655,8 +1671,10 @@ IM\ref{IM_CharacterPrediction}.
 
 \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Accuracy}:]
   \textbf{Accuracy} The accuracy of the the software shall exceed the previous
-  OAR project. Since the OAR project provides a confusion matrix, the accuracy
-  of OCRacle shall be measured by the same metric. \cite{Ceranic2024}
+  OAR project. Since the OAR project provides an overall accuracy measurement,
+  the overall accuracy of the \progname{} software shall be measured using the
+  same method as the OAR project as described in section 6.2 of the VnV Plan
+  \citep{VnV}.
   
   % \plt{Characterize the accuracy by giving the context/use for
   %   the software.  Maybe something like, ``The accuracy of the computed
@@ -1665,9 +1683,7 @@ IM\ref{IM_CharacterPrediction}.
   %   described following the procedure given in Section~X of the Verification and
   %   Validation Plan.''  A link to the VnV plan would be a nice extra.}
 
-\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability}
-  A user with a basic understand of the command line should be able to setup and
-  run the program exclusively using the included user manual.
+\item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_Usability}:] \textbf{Usability} A user with the skills specified in Section 4.2.2 of the VnV Plan should be capable of executing all the tasks described in that same section. \citep{VnV}
 
   % \plt{Characterize the usability by giving the context/use for the software.
   %   You should likely reference the user characteristics section.  The level of
@@ -1709,12 +1725,16 @@ IM\ref{IM_CharacterPrediction}.
 % should be provided for scope decisions, modelling decisions, assumptions and
 % typical values.}
 
-A\ref{A_EMNIST} is necessary to provide a dataset for training the model. To
-constrain the scope of the project, A\ref{A_LatinUppercase} restricts which
-characters the program will focus on recognizing. This also makes comparing the 
-accuracy of OCRacle to the OAR project more meaningful as NRF\ref{NFR_Accuracy}
-outlines. Lastly, A\ref{A_Preprocessing} is necessary to ensure that the input
-image is in a format that the model can use for classification.
+A\ref{A_EMNIST} is necessary to provide a dataset for training the model. EMNIST
+provides a large dataset of pre-labeled handwritten Latin alphabet characters in
+both uppercase and lowercase, making it a suitable choice for this project.
+
+A\ref{A_Latin} restricts which characters the program will focus on
+recognizing. This also makes comparing the accuracy of \progname{} to the OAR project
+more meaningful as NRF\ref{NFR_Accuracy} outlines.
+
+Lastly, A\ref{A_Preprocessing} is necessary to ensure that the input image is in
+a format that the model can use for classification.
 
 
 \section{Likely Changes}    
@@ -1724,10 +1744,8 @@ image is in a format that the model can use for classification.
 \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Language}:] The program may be
 modified to work non-Latin alphabet characters instead. For instance, Chinese
 character recognition may become the focus of the program.
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Lowercase}:] The program may be
-extended to recognize lowercase Latin alphabet characters
-\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Punctuation}:] The program may be
-extended to recognize Latin alphabet punctuation characters.
+\item[LC\refstepcounter{lcnum}\thelcnum\label{LC_Punctuation}:] The program may
+be extended to recognize Latin alphabet punctuation characters.
 
 \end{itemize}
 
@@ -1770,7 +1788,7 @@ the assumptions.
   \hline
   & TM\ref{TM:BI} & TM\ref{TM:N} & TM\ref{TM:ADAM} & TM\ref{TM:CELF} & GD\ref{GD_ReLU} & GD\ref{GD_SM} & GD\ref{GD_CNN} & IM\ref{IM_Training} & IM\ref{IM_PreProcessing} \\ \hline
   A\ref{A_EMNIST} &       &      &         &         &         &       &        & X           &                  \\ \hline
-  A\ref{A_LatinUppercase} &       &      &         &         &         &       &        & X           &                  \\ \hline
+  A\ref{A_Latin} &       &      &         &         &         &       &        & X           &                  \\ \hline
   A\ref{A_Preprocessing} & X     & X    &         &         &         &       &        &             & X                \\ \hline
   \end{tabular}
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
