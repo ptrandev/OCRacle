@@ -605,8 +605,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-crossEntropyLoss & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$ & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & DimensionsError \\
-confusionMatrix & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$ & confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & DimensionsError \\
+evaluate & -  &  & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -623,7 +622,10 @@ N/A
 
 \subsubsection{Assumptions}
 
-N/A
+We assume that the Prediction Model Module \ref{MModel} has been trained
+before being used to evaluate the model's performance. The evaluation is
+performed on the test dataset extracted from the Data Loading Module
+\ref{MDataLoading}.
 
 \subsubsection{Access Routine Semantics}
 
