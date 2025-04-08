@@ -11,6 +11,7 @@ import numpy as np
 WIDTH = 28
 HEIGHT = 28
 
+
 def preprocessing(image: Image.Image) -> np.ndarray:
     """
     Preprocesses the input image and returns the processed image.
