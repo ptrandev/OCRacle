@@ -359,7 +359,8 @@ Module \ref{MInput} before being passed to the Model Output Module.
   \item confidenceMatrix := predict(imageMatrix). Call the prediction model
   module \ref{MModel} to generate a confidence matrix for the input image.
   \item prediction := LABELS[argmax(confidenceMatrix)]. Return the character
-  representing the highest confidence value in the confidence matrix.
+  representing the highest confidence value in the confidence matrix. When there
+  is a tie, the first most confident character is returned.
 \end{itemize}
 \end{itemize}
 
