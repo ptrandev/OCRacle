@@ -11,7 +11,7 @@ from src.input import input
 from src.preprocessing import preprocessing
 from src.model import MODEL, MODEL_PATH
 from src.output import output
-from src.accuracy import evaluate
+from src.evaluation import evaluate
 from src.data import extractTestSamples, extractTrainingSamples
 from src.train import train
 

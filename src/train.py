@@ -17,6 +17,9 @@ from src.model import MODEL_PATH
 EPOCHS = 5
 BATCH_SIZE = 32
 
+WIDTH = 28
+HEIGHT = 28
+
 
 def train():
     """
@@ -34,7 +37,7 @@ def train():
     # Define the model
     model = keras.models.Sequential(
         [
-            keras.layers.Flatten(input_shape=(28, 28)),
+            keras.layers.Flatten(input_shape=(WIDTH, HEIGHT)),
             keras.layers.Dense(512, activation="relu"),
             keras.layers.Dropout(0.1),  # prevent overfitting
             keras.layers.Dense(26, activation="softmax"),

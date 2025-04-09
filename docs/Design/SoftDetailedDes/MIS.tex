@@ -54,6 +54,7 @@ urlcolor=cyan          % color of external links
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 March 13, 2025 & 1.0 & Initial Document Creation\\
+April 7, 2025 & 2.0 & Addressed comments from Dr. Spencer Smith and Hussein Saad, updated document to reflect implementation\\
 \bottomrule
 \end{tabularx}
 
@@ -122,6 +123,11 @@ different types. In addition, \progname \ uses functions, which
 are defined by the data types of their inputs and outputs. Local functions are
 described by giving their type signature followed by their specification.
 
+To describe matrices, the dimensions of the matrix will be described in
+superscript (i.e. ${\mathbb{Z}^{w \times w}}$). For all additional notation,
+reference Section 1.2 of the SRS Document.
+\citep{SRS}.
+
 \section{Module Decomposition}
 
 The following table is taken directly from the Module Guide document for this project.
@@ -143,7 +149,8 @@ Input Format Module\\
 & Prediction Model Module\\
 & Application Module\\
 & Image Preprocessing Module\\
-& Accuracy Metrics Module\\
+& Model Evaluation Module\\
+& Data Loading Module\\
 \midrule
 
 \multirow{1}{0.3\textwidth}{Software Decision Module}&
@@ -169,6 +176,7 @@ main
 \begin{itemize}
   \item Input Format Module \ref{MInput}
   \item Model Output Module \ref{MOutput}
+  \item Model Training Module \ref{MTraining}
   \item Graphical User Interface Module \ref{MGUI}
 \end{itemize}
 
@@ -222,6 +230,7 @@ with the GUI to input images and view the model's predictions.
 
 N/A
 
+\newpage
 \section{MIS of Input Format Module} \label{MInput}
 
 \subsection{Module}
@@ -247,7 +256,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-input & filePath: string & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & DimensionsError, FormatError, FileNotFound \\
+input & filePath: string & $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & DimensionsError, FormatError, FileNotFound \\
 \hline
 \end{tabular}
 \end{center}
@@ -261,7 +270,7 @@ N/A
 \subsubsection{Environment Variables}
 
 \begin{itemize}
-  \item filePath: string. The path to the input image file from the user.
+  \item Image: The input image file to be processed by \progname{}.
 \end{itemize}
 
 \subsubsection{Assumptions}
@@ -274,14 +283,19 @@ N/A
 \begin{itemize} 
 \item output: imageMatrix := preprocessing(filePath). After ensuring that all
 exceptions are handled, call the preprocessing module \ref{mPreprocessing} to
-perform the necessary transformations on the input image.
+perform the necessary transformations on the input image. \footnote{By splitting
+up the file handling concerns with the preprocessing concerns, we are able to
+ensure that AC3 and AC5 from the MG \citep{MG} are met. This separation of
+concerns allows for better modularity and maintainability of the code. For
+instance, if we wanted to be able to support multiple preprocessing methods or
+allow input of files other than images.}
 \item exceptions:
 \begin{itemize}
   \item A DimensionsError exception is thrown if the input image
   exceeds the bounds of the $n_{min}$, $n_{max}$, $m_{min}$, and $m_{max}$
-  parameters as specified by Table 4 in the SRS \cite[4.2.6]{SRS}.
+  parameters as specified by Table 4 in the SRS \citep[4.2.6]{SRS}.
   \item A FormatError exception is thrown if the input image is not one of the supported formats
-  specified by R1 in the SRS \cite[5.1.1]{SRS}.
+  specified by R1 in the SRS \citep[5.1.1]{SRS}.
   \item A FileNotFound exception is thrown if the input file does not exist.
 \end{itemize}
 \end{itemize}
@@ -290,6 +304,7 @@ perform the necessary transformations on the input image.
 
 N/A
 
+\newpage
 \section{MIS of Model Output Module} \label{MOutput}
 
 \subsection{Module}
@@ -307,7 +322,7 @@ output
 \subsubsection{Exported Constants}
 
 \begin{itemize}
-  \item LABELS: \{'A',...,'Z'\}
+  \item LABELS: ${['A'...'Z']}$
 \end{itemize}
 
 \subsubsection{Exported Access Programs}
@@ -317,7 +332,7 @@ output
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-output & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & prediction: char, confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
+output & imageMatrix: $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & char, $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -346,10 +361,12 @@ Module \ref{MInput} before being passed to the Model Output Module.
   \item confidenceMatrix := predict(imageMatrix). Call the prediction model
   module \ref{MModel} to generate a confidence matrix for the input image.
   \item prediction := LABELS[argmax(confidenceMatrix)]. Return the character
-  representing the highest confidence value in the confidence matrix.
+  representing the highest confidence value in the confidence matrix. When there
+  is a tie, the first most confident character is returned.
 \end{itemize}
 \end{itemize}
 
+\newpage
 \section{MIS of Model Training Module} \label{MTraining}
 
 \subsection{Module}
@@ -359,10 +376,8 @@ train
 \subsection{Uses}
 
 \begin{itemize}
-  \item Input Format Module \ref{MInput}
-  \item Model Output Module \ref{MOutput}
   \item Prediction Model Module \ref{MModel}
-  \item Accuracy Metrics Module \ref{mAccuracy}
+  \item Data Loading Module \ref{MDataLoading}
 \end{itemize}
 
 \subsection{Syntax}
@@ -378,7 +393,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-train & - & model: $\mathbb{R}^{m \times n}$ & - \\
+train & - & $\mathbb{R}^{m \times n}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -388,7 +403,7 @@ train & - & model: $\mathbb{R}^{m \times n}$ & - \\
 \subsubsection{State Variables}
 
 \begin{itemize}
-  \item dataset: ($\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$, char)[]. The
+  \item dataset: ($\mathbb{Z}^{w \times w}_{0 \le x \le 255}$, char)[]. The
   dataset of images and their corresponding labels used for training the model.
   \item epochs: $\mathbb{N}$. The number of epochs to train the model.
   \item batchSize: $\mathbb{N}$. The number of images to train on in each batch.
@@ -418,8 +433,8 @@ N/A
 \item transition: The model is trained on the dataset using the hyperparameters
 $\alpha$, $\beta_1$, $\beta_2$, $\epsilon$, $m_{t}$, $v_{t}$, $g_{t}$,
 $\theta_{t}$, epochs, batchSize, and timeStep. The ADAM optimizer is used to
-minimize the cross-entropy loss as specified by TM:ADAM \cite[4.2.2]{SRS} and
-IM1 in the SRS \cite[4.2.4]{SRS}. For each step, theta is updated using the
+minimize the cross-entropy loss as specified by TM:ADAM \citep[4.2.2]{SRS} and
+IM1 in the SRS \citep[4.2.4]{SRS}. For each step, theta is updated using the
 gradient of the model.
 \item output: $\theta$. Once the model has been trained and loss has been
 minimized, the weights of the model are returned.
@@ -430,6 +445,7 @@ minimized, the weights of the model are returned.
 N/A
 
 
+\newpage
 \section{MIS of Prediction Model Module} \label{MModel}
 
 \subsection{Module}
@@ -454,7 +470,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-predict & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & confidenceMatrix: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & - \\
+predict & imageMatrix: $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{1 \times L}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -485,7 +501,7 @@ before being passed to the prediction model.
 \item output: confidenceMatrix. Where each element in the confidence matrix
 represents the model's confidence in the corresponding character. The model is
 used to generate a confidence matrix for the input image using a CNN as
-specified by GD3 in the SRS \cite[4.2.3]{SRS}. GD3 provides a high-level
+specified by GD3 in the SRS \citep[4.2.3]{SRS}. GD3 provides a high-level
 description of the model's architecture, but the implemented model may differ.
 \end{itemize}
 
@@ -494,6 +510,7 @@ description of the model's architecture, but the implemented model may differ.
 
 N/A
 
+\newpage
 \section{MIS of Image Preprocessing Module} \label{mPreprocessing}
 
 \subsection{Module}
@@ -517,7 +534,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-preprocessing & file : string & imageMatrix: $\mathbb{Z}^{28 \times 28}_{0 \le x \le 255}$ & - \\
+preprocessing & file : string & $\mathbb{Z}^{w \times w}_{0 \le x \le 255}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -541,35 +558,32 @@ processed by the Image Preprocessing Module.
 
 \noindent preprocessing(file):
 \begin{itemize} 
-\item output: imageMatrix := normalization(bicubicInterpolation(file)). The
-input file has been transformed such that it conforms to the preprocessing
-requirements as specified by A3 in the SRS \cite[4.2.1]{SRS}.
+\item output: imageMatrix. The input file has been transformed such that it
+conforms to the preprocessing requirements as specified by A3 in the SRS
+\citep[4.2.1]{SRS}. First bicubic interpolation is used to resize the image to
+the required dimensions as specified by TM:BI in the SRS document \citep[4.2.2]{SRS}.
+Then the image is converted to grayscale and the pixel values are normalized to be
+between 0 and 1 inclusive as specified by TM:N in the SRS document \citep[4.2.2]{SRS}.
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-\noindent bicubicInterpolation(imageMatrix):
-\begin{itemize}
-\item output: Perform bicubic interpolation such that the imageMatrix is
-transformed to a 28x28 matrix. as specified by TM:BI in the SRS \cite[4.2.2]{SRS}.
-\end{itemize}
-\noindent normalization(imageMatrix):
-\begin{itemize}
-\item output: Perform normalization such that the image is turned into a
-greyscale image with pixel values in the range [0, 255]. as specified by TM:N in
-the SRS \cite[4.2.2]{SRS}.
-\end{itemize}
+N/A
 
-\section{MIS of Accuracy Metrics Module} \label{mAccuracy}
+\newpage
+\section{MIS of Model Evaluation Module} \label{mAccuracy}
 
 \subsection{Module}
 
-performance
+accuracy
 
 \subsection{Uses}
 
-N/A
-
+\begin{itemize}
+  \item Model Output Module \ref{MOutput}
+  \item Prediction Model Module \ref{MModel}
+  \item Data Loading Module \ref{MDataLoading}
+\end{itemize}
 
 \subsection{Syntax}
 
@@ -584,8 +598,77 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-crossEntropyLoss & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & loss: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}$ & DimensionsError \\
-confusionMatrix & prediction: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$, target: $\mathbb{R}_{\text{0} \leq \text{x} \leq \text{1}}^{26}$ & confusionMatrix: $\mathbb{R_{\text{0} \leq \text{x} \leq \text{1}}}^{26 \times 26}$ & DimensionsError \\
+evaluate & -  &  & - \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Semantics}
+
+\subsubsection{State Variables}
+
+N/A
+
+\subsubsection{Environment Variables}
+
+N/A
+
+\subsubsection{Assumptions}
+
+We assume that the Prediction Model Module \ref{MModel} has been trained
+before being used to evaluate the model's performance. The evaluation is
+performed on the test dataset extracted from the Data Loading Module
+\ref{MDataLoading}.
+
+\subsubsection{Access Routine Semantics}
+
+\noindent evaluate():
+\begin{itemize}
+\item output:
+  \begin{itemize}
+    \item loss := $- \sum_{i=1}^{n} target_i \log(prediction_i)$. The cross
+    entropy loss is calculated for the model's predictions and the target values
+    as specified by TM:CELF in the SRS \cite[4.2.2]{SRS}.
+    \item accuracy := $\frac{1}{n} \sum_{i=1}^{n} \text{target}_i \times
+    \text{prediction}_i$. The accuracy is calculated for the model's predictions
+    as described in the VnV Plan \citep{VnV}. This fulfills NFR1 in the SRS \citep{SRS}.
+    \item confusionMatrix := $\text{confusionMatrix}_{i,j} = \sum_{k=1}^{n} \text{target}_{k,i} \times \text{prediction}_{k,j}$. A confusion matrix is generated for the model's predictions and the target values.
+    \item classAccuracy := $\frac{1}{n} \sum_{i=1}^{n} \text{target}_i \times
+    \text{prediction}_i$. The class accuracy is calculated for each class in the
+    confusion matrix and sorted by accuracy descending.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Local Functions}
+
+N/A
+
+\newpage
+\section{MIS of Data Loading Module} \label{MDataLoading}
+
+\subsection{Module}
+
+data
+\subsection{Uses}
+
+N/A
+
+\subsection{Syntax}
+
+\subsubsection{Exported Constants}
+
+N/A
+
+\subsubsection{Exported Access Programs}
+
+
+\begin{center}
+\begin{tabular}{p{5cm} p{2cm} p{4cm} p{2cm}}
+\hline
+\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
+\hline
+extractTestSamples & - & ${\mathbb{R}^{w \times w}_{0 \ge x \ge 1}[]}$, ${\mathbb{Z}[]}$ & - \\
+extractTrainingSamples & - & ${\mathbb{R}^{w \times w}_{0 \ge x \ge 1}[]}$, ${\mathbb{Z}[]}$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -606,34 +689,32 @@ N/A
 
 \subsubsection{Access Routine Semantics}
 
-\noindent crossEntropyLoss(prediction, target):
+\noindent extractTestSamples():
 \begin{itemize}
-\item output: loss := $- \sum_{i=1}^{n} target_i \log(prediction_i)$. The cross
-entropy loss is calculated for the model's predictions and the target values
-as specified by TM:CELF in the SRS \cite[4.2.2]{SRS}.
-\item exceptions:
-\begin{itemize}
-  \item A DimensionsError exception is thrown if the dimensions of the prediction
-  and target matrices do not match.
-\end{itemize}
+\item output: (images, labels) := processSamples(testImages, testLabels). A
+tuple containing the test images and their corresponding labels. The test
+samples are extracted from the EMNIST letters dataset.
 \end{itemize}
 
-\noindent confusionMatrix(prediction, target):
+\noindent extractTrainingSamples():
 \begin{itemize}
-\item output: confusionMatrix := $\text{confusionMatrix}_{i,j} = \sum_{k=1}^{n} \text{target}_{k,i} \times \text{prediction}_{k,j}$. A confusion matrix is generated for the
-model's predictions and the target values to fulfill NFR1 in the SRS
-\cite[5.2]{SRS}.
-\item exceptions:
-\begin{itemize}
-  \item A DimensionsError exception is thrown if the dimensions of the prediction
-  and target matrices do not match.
-\end{itemize}
+\item output: (images, labels) := processSamples(trainingImages, trainingLabels).
+A tuple containing the training images and their corresponding labels. The
+training samples are extracted from the EMNIST letters dataset.
 \end{itemize}
 
 \subsubsection{Local Functions}
 
-N/A
+\noindent processSamples():
+\begin{itemize}
+\item output: (images, labels). The images are normalized to have a pixel range
+between 0 and 1 inclusive, as specified by the SRS document \citep{SRS}. The
+labels are scaled to start at 0 instead of 1 to align with the model
+architecture's output as specified by the SRS document \citep{SRS}.
+\end{itemize}
 
+
+\newpage
 \section{MIS of Graphical User Interface Module} \label{MGUI}
 
 \subsection{Module}
@@ -696,10 +777,27 @@ routines.
 \item transition: The output of the model is displayed to the user in the GUI.
 \end{itemize}
 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{displayOutput.jpeg}
+\caption{Example of the displayOutput() function. It will display the
+  model's prediction and the confidence matrix to the user in a graphical
+  format.}
+\label{fig:displayOutput}
+\end{figure}
+
 \noindent acceptInput():
 \begin{itemize}
 \item transition: The user is able to input images to the model in the GUI.
 \end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\textwidth]{acceptInput.jpeg}
+  \caption{Example of the acceptInput() function. It allows users to input a
+  file path and run the model on the input image.}
+  \label{fig:acceptInput}
+  \end{figure}
 
 \subsubsection{Local Functions}
 
