@@ -164,4 +164,18 @@ system.
 Open the `src/main.ipynb` file in an editor with support for Python Notebooks,
 such as VS Code.
 
-Ensure that the 
+Before starting to use the Python Notebook, please ensure that the Python
+virtual environment is activated.
+
+To choose an image file to test, modify the `FILE_PATH` variable to the path of
+the image file you want to test. The image file should be in JPEG or PNG format.
+
+For testing purposes, you can use images from the `test/testImages` folder.
+
+To run the model, execute all the cells in the notebook using the "Run All"
+button. This will load the model, preprocess the image, and run the model on the
+image. The model will output the probability distribution of the characters in
+the image, as well as the predicted character. The predicted character will be
+displayed in the output of the last cell:
+
+[![Application Output](screenshots/applicationOutput.png)](screenshots/applicationOutput.png)
