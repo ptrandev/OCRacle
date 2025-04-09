@@ -551,7 +551,7 @@ predict the character in an image. The second is the end user, who uses the
 \begin{itemize}
 \item Detect incompatible input.
 \item Provide an interface to view the predicted character.
-\item Provide an interface to view the probability vector.
+\item Provide an interface to view the probability distribution.
 \end{itemize}
 \end{itemize}
 
@@ -706,7 +706,7 @@ end user, the goal statements are:
 \begin{itemize}
 
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_predict}:] Predict the character.
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_probability}:] Produce a probability vector
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_probability}:] Produce a probability distribution
 representing the likelihood of each character.
 
 \end{itemize}
@@ -1487,7 +1487,7 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Output& $P_{1 \times 26}$, $P_{pred}$\\
   \hline
-  Description&$P$ is the probability vector output by the model, where $P_i$
+  Description&$P$ is the probability distribution output by the model, where $P_i$
   represents the likelihood of character $i$. $P_{pred}$ is the character with
   the highest probability in $P$.
   \\
@@ -1570,7 +1570,7 @@ As reflected in Table~\ref{TblOutputVar}, the correct solution from the model
 must exhibit the following properties:
 
 \begin{itemize}
-  \item The resulting probability vector must sum to 1.
+  \item The resulting probability distribution must sum to 1.
   \item The predicted character must be one of the Latin alphabet
   characters from A to Z. 
 \end{itemize}
@@ -1637,7 +1637,7 @@ IM\ref{IM_CharacterPrediction}.
 %     related requirements.}
 
 \item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] The model
-produced by the program outputs a probability vector to verify the prediction in
+produced by the program outputs a probability distribution to verify the prediction in
 a human readable-format as per IM\ref{IM_CharacterPrediction}.
 
   % \plt{Verification related requirements.}

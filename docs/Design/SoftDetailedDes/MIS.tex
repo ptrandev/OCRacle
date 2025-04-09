@@ -358,10 +358,10 @@ Module \ref{MInput} before being passed to the Model Output Module.
 \begin{itemize}
 \item output:
 \begin{itemize}
-  \item confidenceMatrix := predict(imageMatrix). Call the prediction model
-  module \ref{MModel} to generate a confidence matrix for the input image.
-  \item prediction := LABELS[argmax(confidenceMatrix)]. Return the character
-  representing the highest confidence value in the confidence matrix. When there
+  \item probabilityDistribution := predict(imageMatrix). Call the prediction model
+  module \ref{MModel} to generate a probability distribution for the input image.
+  \item prediction := LABELS[argmax(probabilityDistribution)]. Return the character
+  representing the highest confidence value in the probability distribution. When there
   is a tie, the first most confident character is returned.
 \end{itemize}
 \end{itemize}
@@ -498,9 +498,9 @@ before being passed to the prediction model.
 
 \noindent predict(imageMatrix):
 \begin{itemize}
-\item output: confidenceMatrix. Where each element in the confidence matrix
+\item output: probabilityDistribution. Where each element in the probability distribution
 represents the model's confidence in the corresponding character. The model is
-used to generate a confidence matrix for the input image using a CNN as
+used to generate a probability distribution for the input image using a CNN as
 specified by GD3 in the SRS \citep[4.2.3]{SRS}. GD3 provides a high-level
 description of the model's architecture, but the implemented model may differ.
 \end{itemize}
@@ -781,7 +781,7 @@ routines.
 \centering
 \includegraphics[width=0.5\textwidth]{displayOutput.jpeg}
 \caption{Example of the displayOutput() function. It will display the
-  model's prediction and the confidence matrix to the user in a graphical
+  model's prediction and the probability distribution to the user in a graphical
   format.}
 \label{fig:displayOutput}
 \end{figure}

@@ -462,7 +462,7 @@ image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character, which should match the character in the image.
 The predicted character corresponds to the character with the highest
-probability in the probability vector.
+probability in the probability distribution.
 
 Test Case Derivation: Based on R3, the program should correctly predict single
 characters from prepared images. The prediction produced by the model will be
@@ -475,7 +475,7 @@ How test will be performed: The automatic test will be run on GHA.
 \subsubsection{Probability Vector Output Tests}
 
 These tests ensure that the program outputs a correctly formatted probability
-vector. The probability vector should contain the probability of each character
+vector. The probability distribution should contain the probability of each character
 in the alphabet, and the sum of the probabilities should be 1, since the
 input is assumed to always be a valid character as specified in the SRS
 under Assumption 2 \citep{SRS}. These tests cover R4.
@@ -493,9 +493,9 @@ Initial State: The \progname{} system is ready for input.
 Input: An image containing a single uppercase Latin alphabet character. This
 image should come from the "test" subset of the EMNIST letter dataset.
 
-Output: A probability vector where the sum of the probabilities is 1.
+Output: A probability distribution where the sum of the probabilities is 1.
 
-Test Case Derivation: Based on R4, the program must output a probability vector
+Test Case Derivation: Based on R4, the program must output a probability distribution
 that sums to 1.
 
 How test will be performed: The automatic test will be run on GHA.
@@ -508,10 +508,10 @@ Initial State: The \progname{} system is ready for input.
 Input: An image containing a single uppercase Latin alphabet character. This
 image should come from the "test" subset of the EMNIST letter dataset.
 
-Output: A probability vector where the length is equal to the number of
+Output: A probability distribution where the length is equal to the number of
 characters in the alphabet, which is 26.
 
-Test Case Derivation: Based on R4, the program must output a probability vector
+Test Case Derivation: Based on R4, the program must output a probability distribution
 where the length is the number of possible classification labels.
 
 How test will be performed: The automatic test will be run on GHA.
@@ -538,7 +538,7 @@ image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character is displayed in a human-readable format.
 A human-readable format is defined as displaying $P_{pred}$, which is the
-character with the highest probability in the confidence matrix $P$.
+character with the highest probability in the probability distribution $P$.
 
 Test Case Derivation: Based on R5, the program must display character
 predictions in a readable format. To validate this, this test will ensure
