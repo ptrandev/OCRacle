@@ -20,7 +20,6 @@ BATCH_SIZE = 32
 WIDTH = 28
 HEIGHT = 28
 
-
 def train():
     """
     Train the model using the EMNIST dataset.
@@ -37,7 +36,8 @@ def train():
     # Define the model
     model = keras.models.Sequential(
         [
-            keras.layers.Flatten(input_shape=(WIDTH, HEIGHT)),
+            keras.layers.Input(shape=(WIDTH, HEIGHT)),
+            keras.layers.Flatten(),
             keras.layers.Dense(512, activation="relu"),
             keras.layers.Dropout(0.1),  # prevent overfitting
             keras.layers.Dense(26, activation="softmax"),
