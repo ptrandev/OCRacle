@@ -862,14 +862,20 @@ None
 {Normalization}
 % #4 equation
 {
-  $f(x) = \frac{x - \min(x)}{\max(x) - \min(x)}$
+  $f(x) = 
+  \begin{cases} 
+  0, & \text{if } \max(X) = \min(X) \\
+  \frac{x- \min(X)}{\max(X) - \min(X)}, & \text{otherwise}
+  \end{cases}$
 }
 % #5 description
 {
   Normalization is a method of scaling data to a fixed range. This is useful for
   ensuring that the input data to a machine learning model is within a certain
   range. For instance, the pixel values of an image are typically normalized to
-  the range [0, 1], where 0 represents black and 1 represents white.
+  the range [0, 1], where 0 represents black and 1 represents white. We prevent
+  a divide by zero case by checking if the minimum and maximum values are the
+  same before performing the normalization.
 }
 % #6 Notes
 {
