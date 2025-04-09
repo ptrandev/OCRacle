@@ -102,35 +102,35 @@ def testCharacterPrediction():
     # ensure predicted label is correct
     assert prediction["predictedLabel"] == "Y"
 
-    assert prediction["confidenceMatrix"] is not None
+    assert prediction["probabilityDistribution"] is not None
 
-    # Ensure that the confidence matrix is 1x26
-    assert prediction["confidenceMatrix"].shape == (1, 26)
+    # Ensure that the probability distribution is 1x26
+    assert prediction["probabilityDistribution"].shape == (1, 26)
 
 
 def testProbabilityVectorSum():
     """
-    T6: Test probability vector sum
+    T6: Test probability distribution sum
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
 
     image = input(filePath)
     prediction = MODEL.predict(image, verbose="0")
 
-    # Ensure the sum of the probability vector is 1, with some tolerance
+    # Ensure the sum of the probability distribution is 1, with some tolerance
     assert np.sum(prediction) == pytest.approx(1.0, abs=1e-3)
 
 
 def testProbabilityVectorLength():
     """
-    T7: Test probability vector length
+    T7: Test probability distribution length
     """
     filePath = os.path.join(TEST_IMAGES_PATH, "Y.png")
 
     image = input(filePath)
     prediction = MODEL.predict(image, verbose="0")
 
-    # Ensure the shape of the probability vector is 1x26
+    # Ensure the shape of the probability distribution is 1x26
     assert prediction.shape == (1, 26)
 
 
