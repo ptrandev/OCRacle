@@ -8,10 +8,11 @@ This project is an optical character recognition tool for detecting Latin alphab
 
 The folders and files for this project are as follows:
 
-docs - Documentation for the project
-refs - Reference material used for the project, including papers
-src - Source code
-test - Test cases
+- docs - Documentation for the project
+- refs - Reference material used for the project, including papers
+- src - Source code
+- test - Test cases
+- screenshots - Screenshots of the application
 
 ## Installation
 
