@@ -63,7 +63,7 @@ def evaluate():
     }
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     # Evaluate the model
     evaluation = evaluate()
 

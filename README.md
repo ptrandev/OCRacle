@@ -119,22 +119,36 @@ Class Accuracy:
 
 To run the test suite, you can use the following command:
 ```bash
-pytest test/test.py
+pytest test/test.py -v
 ```
 
 This will produce a test report in the terminal:
 
 ```
-======================================================================================= test session starts ========================================================================================
-platform darwin -- Python 3.9.6, pytest-8.3.5, pluggy-1.5.0
+======================================================================================= test session starts =======================================================================================
+platform darwin -- Python 3.9.6, pytest-8.3.5, pluggy-1.5.0 -- /Users/phillip/Git/OCRacle/env/bin/python
+cachedir: .pytest_cache
 rootdir: /Users/phillip/Git/OCRacle
 configfile: pyproject.toml
-plugins: emoji-0.2.0, md-0.2.0
-collected 12 items                                                                                                                                                                                 
+plugins: emoji-0.2.0, md-0.2.0, cov-6.1.1
+collected 14 items                                                                                                                                                                                
 
-test/test.py ............                                                                                                                                                                    [100%]
+test/test.py::testJpegAcceptance PASSED                                                                                                                                                     [  7%]
+test/test.py::testPngAcceptance PASSED                                                                                                                                                      [ 14%]
+test/test.py::testNonSupportedFormatRejection PASSED                                                                                                                                        [ 21%]
+test/test.py::testImagePreProcessing PASSED                                                                                                                                                 [ 28%]
+test/test.py::testCharacterPrediction PASSED                                                                                                                                                [ 35%]
+test/test.py::testProbabilityVectorSum PASSED                                                                                                                                               [ 42%]
+test/test.py::testProbabilityVectorLength PASSED                                                                                                                                            [ 50%]
+test/test.py::testHumanReadableOutput PASSED                                                                                                                                                [ 57%]
+test/test.py::testAccuracyMeasurement PASSED                                                                                                                                                [ 64%]
+test/test.py::testModelTraining PASSED                                                                                                                                                      [ 71%]
+test/test.py::testLoadTrainSubset PASSED                                                                                                                                                    [ 78%]
+test/test.py::testLoadTestSubset PASSED                                                                                                                                                     [ 85%]
+test/test.py::testFileNotFound PASSED                                                                                                                                                       [ 92%]
+test/test.py::testInvalidDimensions PASSED                                                                                                                                                  [100%]
 
-========================================================================================= warnings summary =========================================================================================
+======================================================================================== warnings summary =========================================================================================
 env/lib/python3.9/site-packages/urllib3/__init__.py:35
   /Users/phillip/Git/OCRacle/env/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
     warnings.warn(
@@ -143,12 +157,8 @@ test/test.py: 16 warnings
   /Users/phillip/Git/OCRacle/test/../src/libraries/emnist.py:226: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
     dim_size = int(numpy.frombuffer(data[offset : offset + 4], dtype=">u4"))
 
-test/test.py::testModelTraining
-  /Users/phillip/Git/OCRacle/env/lib/python3.9/site-packages/keras/src/layers/reshaping/flatten.py:37: UserWarning: Do not pass an `input_shape`/`input_dim` argument to a layer. When using Sequential models, prefer using an `Input(shape)` object as the first layer in the model instead.
-    super().__init__(**kwargs)
-
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================================================================================= 12 passed, 18 warnings in 58.20s =================================================================================
+================================================================================ 14 passed, 17 warnings in 59.12s =================================================================================
 ```
 
 This will run all the test cases in the `test/test.py` file. You can also run individual test cases by specifying their names.

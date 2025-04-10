@@ -56,5 +56,5 @@ def train():
     model.save(MODEL_PATH)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     train()
