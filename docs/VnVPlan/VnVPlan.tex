@@ -868,6 +868,48 @@ letters A-Z.
 
 \end{enumerate}
 
+\subsection{Input Format Module (M3)}
+
+These tests ensure that the input module adequately handles the DimensionsError
+and FileNotFound exceptions identified in the MIS document \citep{MIS}.
+
+\begin{enumerate}
+
+\item{T17: File Not Found\\}
+
+Type: Dynamic, Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input/Condition: A file path to a file that does not exist.
+
+Output/Result: The system raises a FileNotFoundError exception.
+
+Test Case Derivation: This test case is derived from the MIS document \citep{MIS}, which
+states that the system should raise a FileNotFoundError exception if the file
+does not exist.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\item{T18: Invalid Dimensions\\}
+
+Type: Dynamic, Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input/Condition: A file with dimensions outside of the boundaries identified by
+the MIS document \citep{MIS}.
+
+Output/Result: The system raises a DimensionsError exception.
+
+Test Case Derivation: This test case is derived from the MIS document
+\citep{MIS}, which states that the system should raise a DimensionsError
+exception if the file does not have the correct dimensions.
+
+How test will be performed: This automatic test will be run on GHA. 
+
+\end{enumerate}
+
 \subsection{Tests for Nonfunctional Requirements}
 
 These unit tests validate the behavior of supporting modules to ensure that the
@@ -944,6 +986,8 @@ T14 & X & X & X & X & X & X & X & X & X \\ \hline
 T15 &  &  &  & X &  &  &  &  &  \\ \hline
 T16 &  &  &  &  &  &  &  &  & X \\ \hline
 T17 &  &  &  &  &  &  &  &  & X \\ \hline
+T18 &  &  & X &  &  &  &  &  &  \\ \hline
+T19 &  &  & X &  &  &  &  &  &  \\ \hline
 \end{tabular}
 \caption{Traceability Matrix of Test Cases to Modules}
 \label{tab:traceability-matrix}

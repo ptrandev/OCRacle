@@ -65,6 +65,13 @@ def testNonSupportedFormatRejection():
         input(filePath)
     assert str(excinfo.value) == f"File {filePath} is not a valid image file"
 
+    filePath = os.path.join(TEST_IMAGES_PATH, "Y.heic")
+
+    # Test reading an invalid image file, this should raise an exception
+    with pytest.raises(Exception) as excinfo:
+        input(filePath)
+    assert str(excinfo.value) == f"File {filePath} is not a valid image file"
+
 
 def testImagePreProcessing():
     """
@@ -230,3 +237,27 @@ def testLoadTestSubset():
     # ensure label values are 0-25 inclusive
     assert np.min(labels) == 0
     assert np.max(labels) == 25
+
+def testFileNotFound():
+    """
+    T17: Test file not found
+    """
+
+    filePath = os.path.join(TEST_IMAGES_PATH, "nonExistentFile.png")
+
+    # Test reading a non-existent file
+    with pytest.raises(Exception) as excinfo:
+        input(filePath)
+    assert str(excinfo.value) == f"File {filePath} not found"
+
+def testInvalidDimensions():
+    """
+    T18: Test invalid dimensions
+    """
+
+    filePath = os.path.join(TEST_IMAGES_PATH, "invalidDimensions.png")
+
+    # Test reading a file with invalid dimensions
+    with pytest.raises(Exception) as excinfo:
+        input(filePath)
+    assert str(excinfo.value) == "Image dimensions are not valid"
