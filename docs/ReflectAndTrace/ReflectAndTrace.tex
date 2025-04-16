@@ -26,59 +26,168 @@
 
 \section{Changes in Response to Feedback}
 
-\plt{Summarize the changes made over the course of the project in response to
-feedback from TAs, the instructor, teammates, other teams, the project
-supervisor (if present), and from user testers.}
+% \plt{Summarize the changes made over the course of the project in response to
+% feedback from TAs, the instructor, teammates, other teams, the project
+% supervisor (if present), and from user testers.}
 
-\plt{For those teams with an external supervisor, please highlight how the feedback 
-from the supervisor shaped your project.  In particular, you should highlight the 
-supervisor's response to your Rev 0 demonstration to them.}
+% \plt{For those teams with an external supervisor, please highlight how the feedback 
+% from the supervisor shaped your project.  In particular, you should highlight the 
+% supervisor's response to your Rev 0 demonstration to them.}
 
-\plt{Version control can make the summary relatively easy, if you used issues
-and meaningful commits.  If you feedback is in an issue, and you responded in
-the issue tracker, you can point to the issue as part of explaining your
-changes.  If addressing the issue required changes to code or documentation, you
-can point to the specific commit that made the changes.  Although the links are
-helpful for the details, you should include a label for each item of feedback so
-that the reader has an idea of what each item is about without the need to click
-on everything to find out.}
+% \plt{Version control can make the summary relatively easy, if you used issues
+% and meaningful commits.  If you feedback is in an issue, and you responded in
+% the issue tracker, you can point to the issue as part of explaining your
+% changes.  If addressing the issue required changes to code or documentation, you
+% can point to the specific commit that made the changes.  Although the links are
+% helpful for the details, you should include a label for each item of feedback so
+% that the reader has an idea of what each item is about without the need to click
+% on everything to find out.}
 
-\plt{If you were not organized with your commits, traceability between feedback
-and commits will not be feasible to capture after the fact.  You will instead
-need to spend time writing down a summary of the changes made in response to
-each item of feedback.}
+% \plt{If you were not organized with your commits, traceability between feedback
+% and commits will not be feasible to capture after the fact.  You will instead
+% need to spend time writing down a summary of the changes made in response to
+% each item of feedback.}
 
-\plt{You should address EVERY item of feedback.  A table or itemized list is
-recommended.  You should record every item of feedback, along with the source of
-that feedback and the change you made in response to that feedback.  The
-response can be a change to your documentation, code, or development process.
-The response can also be the reason why no changes were made in response to the
-feedback.  To make this information manageable, you will record the feedback and
-response separately for each deliverable in the sections that follow.}
+% \plt{You should address EVERY item of feedback.  A table or itemized list is
+% recommended.  You should record every item of feedback, along with the source of
+% that feedback and the change you made in response to that feedback.  The
+% response can be a change to your documentation, code, or development process.
+% The response can also be the reason why no changes were made in response to the
+% feedback.  To make this information manageable, you will record the feedback and
+% response separately for each deliverable in the sections that follow.}
 
-\plt{If the feedback is general or incomplete, the TA (or instructor) will not
-be able to grade your response to feedback.  In that case your grade on this
-document, and likely the Revision 1 versions of the other documents will be
-low.} 
+% \plt{If the feedback is general or incomplete, the TA (or instructor) will not
+% be able to grade your response to feedback.  In that case your grade on this
+% document, and likely the Revision 1 versions of the other documents will be
+% low.} 
 
 \subsection{SRS and Hazard Analysis}
 
+\href{https://github.com/ptrandev/OCRacle/issues/3}{Instructor feedback} was addressed in
+a \href{https://github.com/ptrandev/OCRacle/pull/29}{pull request}. Changes include:
+
+\begin{itemize}
+  \item Removed units from unitless symbols.
+  \item Used symbolic constants to define the size of the input image and number of classification classes.
+  \item Introduced name of program in Introduction.
+  \item Added specific coursework necessary for intended reader to understand the document.
+  \item Removed irrelevant technical user responsibilities.
+  \item Clarified user characteristics.
+  \item Removed system constraints.
+  \item Defined all symbols used in the document.
+  \item Clarified confusing sentence in Cross-Entropy Loss Function description.
+  \item Added more specific for usability requirements.
+  \item Revised maintainability requirements.
+  \item Revised rationale to explain why the dataset was chosen.
+  \item Fixed references for Theoretical Models.
+  \item Clarified R2 to explain how the input image would be processed for classification.
+  \item Split functional requirements into Training and Prediction.
+\end{itemize}
+
+\noindent The following peer review feedback was addressed:
+
+\begin{itemize}
+  \item \href{https://github.com/ptrandev/OCRacle/issues/8}{Suggestions for the Model}:
+  Issue closed for being out of scope for the project.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/7}{Defining Accuracy}:
+  Explicit accuracy calculation was added to the documentation.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/6}{Assumptions and FRs}:
+  Issue closed for not being a concern brought up by the instructor.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/5}{SRS Minor Details}:
+  Addressed minor details pointed out by the reviewer.
+\end{itemize}
+
+
 \subsection{Design and Design Documentation}
 
+\href{https://github.com/ptrandev/OCRacle/issues/17}{Instructor feedback} was addressed in
+a \href{https://github.com/ptrandev/OCRacle/pull/31}{pull request}. Changes include:
+
+\begin{itemize}
+  \item MG: Update to the Uses Hierarchy to accurately reflect the architecture of the program.
+  \item MIS: Starting all modules on a new page.
+  \item MIS: Removing names from outputs.
+  \item MIS: Fixing the environment variable for the Input Format Module.
+  \item MIS: Added footnote to explain why the Input Format Module and Image Preprocessing Module are separate.
+  \item MIS: Defined notation used to describe matrices.
+  \item MIS: Changed LABEL from a set to a list to reflect the behavior of the program.
+  \item MIS: Removed local functions from Image Preprocessing Module.
+  \item MIS: Added GUI sketches to define the Graphical User Interface Module.
+\end{itemize}
+
+\noindent The following peer review feedback was addressed:
+
+\begin{itemize}
+  \item \href{https://github.com/ptrandev/OCRacle/issues/27}{Labels Sharing Confidence}:
+  The behavior of the argmax function was defined.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/26}{Clearer Control}:
+  The MG and MIS documents were updated to reflect how the Application Module
+  interacts with the other modules.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/25}{Bicubic Interpolation Exceptions}:
+  Issue was closed for being out of scope, since computational errors in bicubic
+  interpolation are not a concern for the project.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/24}{Validating Input Value}:
+  The behavior of the normalization function was clarified to show how the program
+  would avoid divide-by-zero errors.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/23}{Centralized Config File}:
+  Issue was closed for being out of scope, though it was a great suggestion.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/22}{Decoupling Optimizer and Training}:
+  Issue was closed since ADAM optimization and the training routine are too tightly
+  coupled to be separated.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/21}{Normalization Consistency}:
+  MIS document was corrected to correspond with the normalization behavior defined in the SRS.
+\end{itemize}
+
 \subsection{VnV Plan and Report}
+
+\href{https://github.com/ptrandev/OCRacle/issues/10}{Instructor feedback} was addressed in
+a \href{https://github.com/ptrandev/OCRacle/pull/29}{pull request}. Changes include:
+
+\begin{itemize}
+  \item Changed citation format from "cite" to "citep" in LaTeX.
+  \item Gave a greater number of citations to existing documentation, including the MG and MIS.
+  \item Added more detailed methods for code walkthroughs.
+  \item Gave more explicit expectations of inputs where a single uppercase Latin alphabet character is expected.
+  \item Defined the dataset to be used during testing.
+  \item Clarified why the sum of the probability vector is equal to 1.
+  \item Clarified T8 to define how the test would be automated.
+  \item Clarified T10 in terms of expected test users and tasks.
+  \item Clarified T13 in terms of what tests would be run to verify cross-platform compatibility.
+  \item Added query used for any ChatGPT table generation.
+\end{itemize}
+
+\noindent The following peer review feedback was addressed:
+
+\begin{itemize}
+  \item \href{https://github.com/ptrandev/OCRacle/issues/16}{Comparison with OAR}:
+  The accuracy metrics used to compare the \progname{} project to OAR have been defined.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/15}{Docker Config Details}:
+  Issue was closed since Docker was no longer being used for the project.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/14}{Evaliating Command Line Skills}:
+  The MIT Missing Semester was added as the baseline knowledge of "basic command line skills."
+  \item \href{https://github.com/ptrandev/OCRacle/issues/13}{PyTest in the Python Stlib?}:
+  PyTest is not included in the Python standard library, so this mention was removed.
+  \item \href{https://github.com/ptrandev/OCRacle/issues/12}{Specifying Known Correct Outputs}:
+  Clarified what the known correct outputs would be for T4 and T9.
+\end{itemize}
 
 \section{Challenge Level and Extras}
 
 \subsection{Challenge Level}
 
-\plt{State the challenge level (advanced, general, basic) for your project.  Your challenge level should exactly match what is included in your problem statement.  This should be the challenge level agreed on between you and the course instructor.}
+The challenge level of this project is considered to be general.
 
 \subsection{Extras}
 
-\plt{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.}
+The extra for this project was a video code walkthrough. The code walkthrough
+explained the purpose of each module, briefly ran through the code, and
+detailed how each component contributes to the overall functionality of the
+program.
+
+% \plt{Summarize the extras (if any) that were tackled by this project.  Extras
+% can include usability testing, code walkthroughs, user documentation, formal
+% proof, GenderMag personas, Design Thinking, etc.  Extras should have already
+% been approved by the course instructor as included in your problem statement.}
 
 % \section{Design Iteration (LO11 (PrototypeIterate))}
 
@@ -128,17 +237,17 @@ been approved by the course instructor as included in your problem statement.}
 
 % \plt{What will you do differently for your next project?}
 
-\section{Reflection on Capstone}
+% \section{Reflection on Capstone}
 
-\plt{This question focuses on what you learned during the course of the capstone project.}
+% \plt{This question focuses on what you learned during the course of the capstone project.}
 
-\subsection{Which Courses Were Relevant}
+% \subsection{Which Courses Were Relevant}
 
-\plt{Which of the courses you have taken were relevant for the capstone project?}
+% \plt{Which of the courses you have taken were relevant for the capstone project?}
 
-\subsection{Knowledge/Skills Outside of Courses}
+% \subsection{Knowledge/Skills Outside of Courses}
 
-\plt{What skills/knowledge did you need to acquire for your capstone project
-that was outside of the courses you took?}
+% \plt{What skills/knowledge did you need to acquire for your capstone project
+% that was outside of the courses you took?}
 
 \end{document}
