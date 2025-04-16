@@ -1613,14 +1613,14 @@ qualities that the software is expected to exhibit.
 
 \noindent \begin{itemize}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] The program accepts
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] (Prediction) The program accepts
 an image from the user in JPEG or PNG format.
 
 % \plt{Requirements
 %     for the inputs that are supplied by the user.  This information has to be
 %     explicit.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] The input
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] (Prediction) The input
 image is processed such that it can be used for classification by the program as
 described in IM\ref{IM_Training}.
 
@@ -1628,7 +1628,7 @@ described in IM\ref{IM_Training}.
 %     always required, but often echoing the inputs as part of the output is a
 %     good idea.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] The \progname{}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] (Training) The \progname{}
 project produces a model that predicts the character in an input image as per
 IM\ref{IM_CharacterPrediction}.
 
@@ -1636,13 +1636,13 @@ IM\ref{IM_CharacterPrediction}.
 % \plt{Calculation
 %     related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] The model
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] (Training) The model
 produced by the program outputs a probability distribution to verify the prediction in
 a human readable-format as per IM\ref{IM_CharacterPrediction}.
 
   % \plt{Verification related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] The program outputs
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] (Prediction) The program outputs
 the most likely character prediction in a human-readable format as per
 IM\ref{IM_CharacterPrediction}.
 
