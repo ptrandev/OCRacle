@@ -1,5 +1,6 @@
 \documentclass[12pt, titlepage]{article}
 
+\usepackage[round]{natbib}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
@@ -30,8 +31,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+April 9, 2025 & 1.0 & Initial document creation\\
 \bottomrule
 \end{tabularx}
 
@@ -45,10 +45,11 @@ Date 2 & 1.1 & Notes\\
   \textbf{symbol} & \textbf{description}\\
   \midrule 
   T & Test\\
+  GHA & GitHub Actions\\
   \bottomrule
 \end{tabular}\\
 
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
+% \wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
 
 \newpage
 
@@ -64,58 +65,295 @@ Date 2 & 1.1 & Notes\\
 
 \section{Functional Requirements Evaluation}
 
+All functional requirements were evaluated via automated tests using pytest.
+All tests in the test suite passed successfully. To view the output of the
+automated test suite, see Appendix \ref{sec:pytest-output}.
+
 \section{Nonfunctional Requirements Evaluation}
 
-\subsection{Usability}
-		
+
 \subsection{Performance}
 
-\subsection{etc.}
-	
-\section{Comparison to Existing Implementation}	
+T9 was supported by a test case in the automated test suite. The test case
+ensured that the overall accuracy of the program exceeded 67.4\%, which is the
+accuracy of the previous OAR project \citep{OARVnVReport}.
 
-This section will not be appropriate for every project.
+The \progname{} program achieved an accuracy of 90.55\% as indicated by the
+Model Evaluation Output in Appendix \ref{sec:model-eval-output}, which is
+a significant improvement over the previous OAR project.
+
+\subsection{Usability}
+
+T10 was not fully performed due to the time constraints of the project. However,
+the project author performed a manual usability test of the program and found
+that the documentation was accurate and complete.
+
+\subsection{Maintainability}
+
+To support T11, the code is run through the ruff linter, which checks for any
+problems with the code formatting and automatically fixes any problems that it
+can. In the final version of the code, there are no problems with the code.
+
+To support T12, the Pyright static type checker was used to check for any
+problems with the type annotations in the code. In the final version of the
+code, there are no problems with the type annotations.
+
+T13 was not fully performed due to the time constraints of the project. However,
+the project author did perform a manual code review of the code based upon
+the Source Code Checklist \citep{CodeChecklist} as specified by T13 and found
+no major problems with the code in the final version.
+
+\subsection{Portability}
+
+To support T14, the automated Pytest test suite was run in a Windows, MacOS, and
+Linux environment on GHA. All tests passed successfully in all environments,
+validating the program's cross-platform compatibility.
+
+% \section{Comparison to Existing Implementation}	
+
+% This section will not be appropriate for every project.
 
 \section{Unit Testing}
 
+All unit tests were evaluated via automated tests using pytest. All tests in the
+test suite passed successfully. To view the output of the automated test
+suite, see Appendix \ref{sec:pytest-output}.
+
 \section{Changes Due to Testing}
 
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
+The following major changes were made after a peer demonstration:
+
+\begin{itemize}
+  \item The Accuracy Metrics Module was renamed the Model Evaluation Module in
+  order to more clearly communicate the purpose of the module.
+  \item The confusion matrix was renamed to the probability distribution in
+  order to more clearly communicate the purpose of the model output.
+\end{itemize}
+
+% \wss{This section should highlight how feedback from the users and from 
+% the supervisor (when one exists) shaped the final product.  In particular 
+% the feedback from the Rev 0 demo to the supervisor (or to potential users) 
+% should be highlighted.}
 
 \section{Automated Testing}
-		
+
+The automated test suite was setup to run on GHA. The test suite is run
+automatically on every commit to the main branch and for every pull request. The
+automated tests are stored in the \href{https://github.com/ptrandev/OCRacle/tree/main/.github/workflows}{.github/workflows} directory.
+
 \section{Trace to Requirements}
-		
+
+The following table outlines the traceability between the test cases and the
+requirements outlined in the SRS document. Note: The table has been generated
+using ChatGPT 4o. The output has been manually validated to ensure that it is
+correct. \footnote{The following query was used: "Fill out the following traceability
+matrix given the following table template and the information from this document: [table template and information from this document]."}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Test Case} & \textbf{R1} & \textbf{R2} & \textbf{R3} & \textbf{R4} & \textbf{R5} & \textbf{NFR1} & \textbf{NFR2} & \textbf{NFR3} & \textbf{NFR4} \\ \hline
+T1 & X &   &   &   &   &   &   &   &   \\ \hline
+T2 & X &   &   &   &   &   &   &   &   \\ \hline
+T3 & X &   &   &   &   &   &   &   &   \\ \hline
+T4 &   & X &   &   &   &   &   &   &   \\ \hline
+T5 &   &   & X &   &   &   &   &   &   \\ \hline
+T6 &   &   &   & X &   &   &   &   &   \\ \hline
+T7 &   &   &   & X &   &   &   &   &   \\ \hline
+T8 &   &   &   &   & X &   &   &   &   \\ \hline
+T9 &   &   &   &   &   & X &   &   &   \\ \hline
+T10 &  &   &   &   &   &   & X &   &   \\ \hline
+T11 &  &   &   &   &   &   &   & X &   \\ \hline
+T12 &  &   &   &   &   &   &   & X &   \\ \hline
+T13 &  &   &   &   &   &   &   &   & X \\ \hline
+\end{tabular}
+\caption{Test Cases to Requirements Matrix}
+\label{tab:test-requirements-matrix}
+\end{table}
+
 \section{Trace to Modules}		
 
+The following table outlines the traceability between test cases and modules
+outlined in the MG \citep{MG}. Note: This table has been generated using ChatGPT
+4o. The output has been manually validated to ensure that it is correct.
+\footnote{The following query was used: "Here is an example of a table in LaTeX:
+[table template]. Please create a new table for tracking the tracability of test cases and modules in the same table format. Here is the information you'll need to complete this: [list of modules and the tests that validate each one]."}
+
+% \wss{Provide evidence that all of the modules have been considered.}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Test Case} & \textbf{M1} & \textbf{M2} & \textbf{M3} & \textbf{M4} & \textbf{M5} & \textbf{M6} & \textbf{M7} & \textbf{M9} & \textbf{M10} \\ \hline
+T1 &  &  & X &  &  &  &  &  &  \\ \hline
+T2 &  &  & X &  &  &  &  &  &  \\ \hline
+T3 &  &  & X &  &  &  &  &  &  \\ \hline
+T4 &  &  &   &  & X &  &  &  &  \\ \hline
+T5 &  &  & X &  &   &  & X &  &  \\ \hline
+T6 &  &  &  &  &  & X &  &  &  \\ \hline
+T7 &  &  &  &  &  & X &  &  &  \\ \hline
+T8 &  &  &  &  &  &  & X &  &  \\ \hline
+T9 &  &  &  &  &  &  &  & X &  \\ \hline
+T10 & X & X & X & X & X & X & X & X & X \\ \hline
+T11 & X & X & X & X & X & X & X & X & X \\ \hline
+T12 & X & X & X & X & X & X & X & X & X \\ \hline
+T13 & X & X & X & X & X & X & X & X & X \\ \hline
+T14 & X & X & X & X & X & X & X & X & X \\ \hline
+T15 &  &  &  & X &  &  &  &  &  \\ \hline
+T16 &  &  &  &  &  &  &  &  & X \\ \hline
+T17 &  &  &  &  &  &  &  &  & X \\ \hline
+T18 &  &  & X &  &  &  &  &  &  \\ \hline
+T19 &  &  & X &  &  &  &  &  &  \\ \hline
+\end{tabular}
+\caption{Traceability Matrix of Test Cases to Modules}
+\label{tab:traceability-matrix}
+\end{table}
+
 \section{Code Coverage Metrics}
+
+The following command was run to produce the code coverage metrics:
+\footnote{Third-party libraries from the \texttt{src/libraries} directory were
+omitted from the coverage report as this was considered out of scope for this
+project. Additionally, \texttt{if \_\_name\_\_ == '\_\_main\_\_'} blocks were
+also omitted since they are not executed when the module is imported.}
+
+\begin{verbatim}
+  coverage run -m pytest test/test.py && coverage report -m
+\end{verbatim}
+
+This produced the following output:
+
+\begin{verbatim}
+Name                   Stmts   Miss  Cover   Missing
+----------------------------------------------------
+src/data.py               14      0   100%
+src/evaluation.py         17      0   100%
+src/input.py              25      0   100%
+src/model.py               5      0   100%
+src/output.py              9      0   100%
+src/preprocessing.py      11      0   100%
+src/train.py              18      0   100%
+test/test.py             112      0   100%
+----------------------------------------------------
+TOTAL                    211      0   100%
+\end{verbatim}
 
 \bibliographystyle{plainnat}
 \bibliography{../../refs/References}
 
-\newpage{}
-\section*{Appendix --- Reflection}
+\section{Appendix}
 
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Reflection.
+\subsection{Pytest Test Suite Output}
+\label{sec:pytest-output}
 
-\begin{enumerate}
-  \item What went well while writing this deliverable? 
-  \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
-  \item Which parts of this document stemmed from speaking to your client(s) or
-  a proxy (e.g. your peers)? Which ones were not, and why?
-  \item In what ways was the Verification and Validation (VnV) Plan different
-  from the activities that were actually conducted for VnV?  If there were
-  differences, what changes required the modification in the plan?  Why did
-  these changes occur?  Would you be able to anticipate these changes in future
-  projects?  If there weren't any differences, how was your team able to clearly
-  predict a feasible amount of effort and the right tasks needed to build the
-  evidence that demonstrates the required quality?  (It is expected that most
-  teams will have had to deviate from their original VnV Plan.)
-\end{enumerate}
+\begin{verbatim}
+================== test session starts ==================
+platform darwin -- Python 3.9.6, pytest-8.3.5, pluggy-1.5.0
+-- /Users/phillip/Git/OCRacle/env/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/phillip/Git/OCRacle
+configfile: pyproject.toml
+plugins: emoji-0.2.0, md-0.2.0, cov-6.1.1
+collected 14 items                                                                                                                                                                                
+
+test/test.py::testJpegAcceptance PASSED [  7%]
+test/test.py::testPngAcceptance PASSED                                                                                                                                                      [ 14%]
+test/test.py::testNonSupportedFormatRejection PASSED                                                                                                                                        [ 21%]
+test/test.py::testImagePreProcessing PASSED                                                                                                                                                 [ 28%]
+test/test.py::testCharacterPrediction PASSED                                                                                                                                                [ 35%]
+test/test.py::testProbabilityVectorSum PASSED                                                                                                                                               [ 42%]
+test/test.py::testProbabilityVectorLength PASSED                                                                                                                                            [ 50%]
+test/test.py::testHumanReadableOutput PASSED                                                                                                                                                [ 57%]
+test/test.py::testAccuracyMeasurement PASSED                                                                                                                                                [ 64%]
+test/test.py::testModelTraining PASSED                                                                                                                                                      [ 71%]
+test/test.py::testLoadTrainSubset PASSED                                                                                                                                                    [ 78%]
+test/test.py::testLoadTestSubset PASSED                                                                                                                                                     [ 85%]
+test/test.py::testFileNotFound PASSED                                                                                                                                                       [ 92%]
+test/test.py::testInvalidDimensions PASSED                                                                                                                                                  [100%]
+
+==================
+warnings summary
+==================
+env/lib/python3.9/site-packages/urllib3/__init__.py:35
+  /Users/phillip/Git/OCRacle/env/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+    warnings.warn(
+
+test/test.py: 16 warnings
+  /Users/phillip/Git/OCRacle/test/../src/libraries/emnist.py:226: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+    dim_size = int(numpy.frombuffer(data[offset : offset + 4], dtype=">u4"))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 14 passed, 17 warnings in 59.12s ==================
+\end{verbatim}
+
+\subsection{Model Evaluation Output}
+\label{sec:model-eval-output}
+
+\begin{verbatim}
+Loss: 0.3176746666431427
+Accuracy: 0.9055288434028625
+Confusion Matrix:
+  tf.Tensor(
+[[735   3   3   6  10   1   5   6   0   1   0   0   1   2   7   6   9   0
+    0   0   2   0   0   1   0   2]
+  [  5 754   0   4   3   0   4  13   1   1   0   6   0   1   3   0   1   1
+    1   0   1   0   0   0   0   1]
+  [  0   1 744   3  35   1   1   0   1   0   0   4   0   0   2   0   0   2
+    2   1   2   0   1   0   0   0]
+  [ 11   7   0 720   0   1   1   1   0   5   0   1   0   2  39   4   4   2
+    0   0   0   0   0   0   0   2]
+  [  1   1  13   0 769   0   2   0   2   0   0   3   0   0   2   2   1   2
+    0   1   1   0   0   0   0   0]
+  [  0   0   0   1   5 731   2   0   2   1   0   1   0   0   0  24   1   5
+    4  23   0   0   0   0   0   0]
+  [ 25  19   7   2  15   3 588   1   0   6   0   1   0   1   2   2 120   1
+    4   1   0   0   0   0   2   0]
+  [  8   1   0   1   0   1   0 739   1   1   6  13   4  10   0   0   0   1
+    0   2   5   0   2   3   2   0]
+  [  0   0   2   0   2   3   1   1 551  16   1 210   0   0   0   0   1   1
+    1   0   0   1   1   2   0   6]
+  [  1   1   0   8   0   1   4   0  29 734   0   3   0   0   0   0   1   0
+    3  10   0   1   0   3   1   0]
+  [  2   4   2   1   3   3   0  15   0   0 723   5   2   1   0   0   0   9
+    0   6   4   2   0  16   1   1]
+  [  0   1  11   0   0   1   0   4 158   1   0 621   0   0   1   0   1   0
+    0   1   0   0   0   0   0   0]
+  [  1   1   0   0   0   0   0   5   0   0   1   0 780   3   0   1   0   0
+    0   1   3   0   2   2   0   0]
+  [ 26   0   0   8   0   0   0  17   0   2   2   1  23 682   0   6   0  12
+    0   2   5   2   8   4   0   0]
+  [  3   0   1  12   2   0   0   0   0   0   0   0   0   1 775   2   2   1
+    0   0   1   0   0   0   0   0]
+  [  0   0   0   3   1   8   1   0   0   0   0   0   0   0   1 783   0   1
+    0   1   0   0   0   1   0   0]
+  [ 34   4   3   2   6   1  69   0   2   1   0   0   0   1   7   4 654   5
+    0   1   2   0   1   0   3   0]
+  [  9   4   2   0   5   4   0   0   2   0   4   2   1   1   0   3   1 727
+    1   7   0  14   0   7   3   3]
+  [  5   4   0   2   2   4  13   1   1  11   0   0   0   1   0   0   0   0
+  756   0   0   0   0   0   0   0]
+  [  1   1   1   0   3   2   0   0   3   1   1   2   0   0   1   1   1   2
+    1 770   0   0   0   4   3   2]
+  [  5   0   1   3   0   0   0   4   0   3   1   1   2   3   8   0   1   1
+    1   0 737  25   2   1   1   0]
+  [  0   0   0   2   0   0   0   0   0   1   0   1   0   1   0   0   0   8
+    0   1  32 737   0   0  17   0]
+  [  1   0   0   3   0   0   0   3   0   0   2   0   3   7   0   0   0   0
+    0   1  12   1 765   2   0   0]
+  [  4   0   0   2   0   1   1   1   0   1  10   1   0   0   0   1   1   2
+    1   2   0   1   1 758  10   2]
+  [  0   2   0   1   0   0   6   3   1   8   0   2   0   0   0   2   1   6
+    1   4   2  14   0   8 739   0]
+  [  4   1   1   2  10   1   5   1   3   0   0   0   0   0   0   1   1   1
+    0   0   0   0   0   6   0 763]], shape=(26, 26), dtype=int32)
+Class Accuracy:
+  {'P': 0.97875, 'M': 0.975, 'O': 0.96875, 'T': 0.9625, 'E': 0.96125,
+  'W': 0.95625, 'Z': 0.95375, 'X': 0.9475, 'S': 0.945, 'B': 0.9425, 'C': 0.93,
+  'H': 0.92375, 'Y': 0.92375, 'U': 0.92125, 'V': 0.92125, 'A': 0.91875,
+  'J': 0.9175, 'F': 0.91375, 'R': 0.90875, 'K': 0.90375, 'D': 0.9, 'N': 0.8525,
+  'Q': 0.8175, 'L': 0.77625, 'G': 0.735, 'I': 0.68875}
+\end{verbatim}
 
 \end{document}

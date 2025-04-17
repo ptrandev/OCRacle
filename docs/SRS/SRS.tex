@@ -225,7 +225,7 @@ and m columns provided by the end user
 \\
 ${L}$ & N/A & The number of distinct labels that the model can predict
 \\
-$P_{1 \times 26}$ & N/A & Probability vector representing the output of the
+$P_{1 \times L}$ & N/A & Probability vector representing the output of the
 model, with ${L}$ columns representing the probability of each character
 \\
 $P_{pred}$ & N/A & The character predicted by the model.
@@ -551,7 +551,7 @@ predict the character in an image. The second is the end user, who uses the
 \begin{itemize}
 \item Detect incompatible input.
 \item Provide an interface to view the predicted character.
-\item Provide an interface to view the probability vector.
+\item Provide an interface to view the probability distribution.
 \end{itemize}
 \end{itemize}
 
@@ -706,7 +706,7 @@ end user, the goal statements are:
 \begin{itemize}
 
 \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_predict}:] Predict the character.
-\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_probability}:] Produce a probability vector
+\item[GS\refstepcounter{goalnum}\thegoalnum \label{G_probability}:] Produce a probability distribution
 representing the likelihood of each character.
 
 \end{itemize}
@@ -982,6 +982,79 @@ None
 % #1 derivation - not applicable by default
 {}
 
+\refstepcounter{theorynum}\label{TM:ReLU}
+\noindent
+\deftheory
+% #2 refname of theory
+{TM:ReLU}
+% #3 label
+{Rectified Linear Unit (ReLU)}
+% #4 equation
+{
+  $f(x) = \max(0, x)$
+}
+% #5 description
+{
+  The function returns 0 if $x$ is negative. Otherwise, the function will return
+  $x$. This function is used in neural networks as an activation function. An
+  activation function determines the output of a node in a neural network.
+}
+% #6 Notes
+{
+None.
+}
+% #7 Source
+{
+  \cite{Bai2022}
+}
+% #8 Referenced by
+{
+  GD\ref{GD_NN}
+}
+% #9 Preconditions
+{
+None
+}
+% #1 derivation - not applicable by default
+{}
+
+\refstepcounter{theorynum}\label{TM:SM}
+\noindent
+\deftheory
+% #2 refname of theory
+{TM:SM}
+% #3 label
+{Softmax}
+% #4 equation
+{
+  $f(x)_i = \frac{e^{x_i}}{\sum_{j=1}^{n} e^{x_j}}$
+}
+% #5 description
+{
+The softmax function takes in a vector of $n$ real numbers and returns a vector
+of the same length. The exponential function is applied to each element of the
+input vector, and the resulting vector is divided by the sum of the exponential
+values. This achieves a probability distribution over the input vector.
+}
+% #6 Notes
+{
+None.
+}
+% #7 Source
+{
+  \cite{GaoAndPavel2018}
+}
+% #8 Referenced by
+{
+  GD\ref{GD_NN}
+}
+% #9 Preconditions
+{
+None
+}
+% #1 derivation - not applicable by default
+{}
+
 % \plt{``Ref.\ By'' is used repeatedly with the different types of information.
 %   This stands for Referenced By.  It means that the models, definitions and
 %   assumptions listed reference the current model, definition or assumption.
@@ -1008,34 +1081,6 @@ instance models.
 %   heading should be kept.}  \plt{Modify the examples below for your problem, and
 %   add additional definitions as appropriate.}
 
-~\newline
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{GD_ReLU}\\
-\hline
-Label &\bf Rectified Linear Unit (ReLU)\\
-\hline
-SI Units& N/A\\
-\hline
-Equation&$f(x) = \max(0, x)$\\
-\hline
-Description &
-The function returns 0 if $x$ is negative. Otherwise, the function will return
-$x$. This function is used in neural networks as an activation function. An
-activation function determines the output of a node in a neural network.
-\\
-\hline
-Source & \cite{Bai2022}\\
-\hline
-Ref.\ By & GD\ref{GD_CNN} \\
-\hline
-\end{tabular}
-\end{minipage}
 
 ~\newline
 
@@ -1045,49 +1090,19 @@ Ref.\ By & GD\ref{GD_CNN} \\
 \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
 \hline
 \rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{GD_SM}\\
+Number& GD\refstepcounter{defnum}\thedefnum \label{GD_NN}\\
 \hline
-Label &\bf Softmax\\
-\hline
-SI Units& N/A\\
-\hline
-Equation& $f(x)_i = \frac{e^{x_i}}{\sum_{j=1}^{n} e^{x_j}}$\\
-\hline
-Description &
-The softmax function takes in a vector of $n$ real numbers and returns a vector
-of the same length. The exponential function is applied to each element of the
-input vector, and the resulting vector is divided by the sum of the exponential
-values. This achieves a probability distribution over the input vector.
-\\
-\hline
-Source & \cite{GaoAndPavel2018}\\
-\hline
-Ref.\ By & GD\ref{GD_CNN} \\
-\hline
-\end{tabular}
-\end{minipage}\\
-
-
-\noindent
-\begin{minipage}{\textwidth}
-\renewcommand*{\arraystretch}{1.5}
-\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-\hline
-\rowcolor[gray]{0.9}
-Number& GD\refstepcounter{defnum}\thedefnum \label{GD_CNN}\\
-\hline
-Label &\bf Convolutional Neural Network (CNN)\\
+Label &\bf Neural Network\\
 \hline
 SI Units& N/A\\
 \hline
 Equation&
 \begin{equation*}
 \begin{aligned}
-&\text{Convolutional Layer:} \\
-&z = w \ast x + b \\
-&a = \text{ReLU}(z) \\
-&\text{Pooling Layer:} \\
-&\text{Max Pooling: } a = \max(a) \\
+&\text{Input Layer:} \\
+&x = I_{n \times m} \\
+&\text{Hidden Layer:} \\
+&h = \text{ReLU}(W_1 x + b_1) \\
 &\text{Softmax Layer:} \\
 &\hat{y} = \text{Softmax}(a)
 \end{aligned}
@@ -1095,12 +1110,12 @@ Equation&
 \\
 \hline
 Description &
-A Convolutional Neural Network (CNN) is a type of neural network that is
-typically used for image classification tasks such as OCR. The network consists
-of convolutional layers, pooling layers, and softmax layers. The convolutional
-layer applies a filter to the input image, the pooling layer reduces the
-dimensionality of the image, and the softmax layer produces a probability
-distribution over the classes.
+A neural network consists of multiple layers of nodes. The input layer takes in the
+image data $I_{n \times m}$. The hidden layer applies a linear transformation
+$W_1 x + b_1$ to the input data, followed by a non-linear activation function
+(ReLU). The output layer applies the softmax function to the output of the
+hidden layer to produce a probability distribution $\hat{y}$ over the
+characters. The weights $W_1$ and biases $b_1$ are learned during training.
 \\
 \hline
 Source & \cite{GuoEtAl2017}\\
@@ -1423,14 +1438,15 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   hyperparameters $\beta_1$, $\beta_2$, $\epsilon$, true labels $y_i$, predicted
   probability distribution $\hat{y}_i$\\
   \hline
-  Output & Trained parameters $\theta_t$\\
+  Output & Trained parameters $\theta_t$\footnote{Such that, at time $t$, the
+  cross-entropy loss function is minimized.}\\
   \hline
   Description &
   Given the training dataset, the parameters, the gradients,
   and the moments from the previous time step, the ADAM optimization algorithm
-  updates the parameters to minimize the loss function. The hyperparameters
-  $\beta_1$, $\beta_2$, $\alpha$, and $\epsilon$ control the behavior of the
-  algorithm.
+  updates the parameters to minimize the cross-loss entropy function. The
+  hyperparameters $\beta_1$, $\beta_2$, $\alpha$, and $\epsilon$ control the
+  behavior of the algorithm.
 
   The cross-entropy loss function is integrated into ADAM optimization to
   measure the difference between the predicted probability distribution and the
@@ -1444,6 +1460,8 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
 \end{tabular}
 \end{minipage}\\
+
+~\newline
 
 \noindent
 \begin{minipage}{\textwidth}
@@ -1485,11 +1503,12 @@ IM\ref{IM_PreProcessing} and IM\ref{IM_CharacterPrediction}.
   \hline
   Input&  $T_{28 \times 28}$ from IM\ref{IM_PreProcessing}\\
   \hline
-  Output& $P_{1 \times 26}$, $P_{pred}$\\
+  Output& $P_{1 \times L}$, $P_{pred}$\\
   \hline
-  Description&$P$ is the probability vector output by the model, where $P_i$
+  Description&$P$ is the probability distribution output by the model, where $P_i$
   represents the likelihood of character $i$. $P_{pred}$ is the character with
-  the highest probability in $P$.
+  the highest probability in $P$, where ties are broken by choosing the first
+  character in the Latin alphabet.
   \\
   \hline
   Sources& N/A\\
@@ -1570,7 +1589,7 @@ As reflected in Table~\ref{TblOutputVar}, the correct solution from the model
 must exhibit the following properties:
 
 \begin{itemize}
-  \item The resulting probability vector must sum to 1.
+  \item The resulting probability distribution must sum to 1.
   \item The predicted character must be one of the Latin alphabet
   characters from A to Z. 
 \end{itemize}
@@ -1589,7 +1608,7 @@ must exhibit the following properties:
   \toprule
   \textbf{Var} & \textbf{Physical Constraints} \\
   \midrule 
-  $P_{1 \times 26}$ & $0 \leq P_i \leq 1$ \\
+  $P_{1 \times L}$ & $0 \leq P_i \leq 1$ \\
   \\
   $P_{pred}$ & $P_{pred} \in \{A, B, C, ..., Z\}$ \\
   \bottomrule
@@ -1613,14 +1632,14 @@ qualities that the software is expected to exhibit.
 
 \noindent \begin{itemize}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] The program accepts
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Inputs}:] (Prediction) The program accepts
 an image from the user in JPEG or PNG format.
 
 % \plt{Requirements
 %     for the inputs that are supplied by the user.  This information has to be
 %     explicit.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] The input
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_OutputInputs}:] (Prediction) The input
 image is processed such that it can be used for classification by the program as
 described in IM\ref{IM_Training}.
 
@@ -1628,7 +1647,7 @@ described in IM\ref{IM_Training}.
 %     always required, but often echoing the inputs as part of the output is a
 %     good idea.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] The \progname{}
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Calculate}:] (Training) The \progname{}
 project produces a model that predicts the character in an input image as per
 IM\ref{IM_CharacterPrediction}.
 
@@ -1636,13 +1655,13 @@ IM\ref{IM_CharacterPrediction}.
 % \plt{Calculation
 %     related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] The model
-produced by the program outputs a probability vector to verify the prediction in
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:] (Training) The model
+produced by the program outputs a probability distribution to verify the prediction in
 a human readable-format as per IM\ref{IM_CharacterPrediction}.
 
   % \plt{Verification related requirements.}
 
-\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] The program outputs
+\item[R\refstepcounter{reqnum}\thereqnum \label{R_Output}:] (Prediction) The program outputs
 the most likely character prediction in a human-readable format as per
 IM\ref{IM_CharacterPrediction}.
 
@@ -1792,7 +1811,7 @@ the assumptions.
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
   \hline
-  & TM\ref{TM:BI} & TM\ref{TM:N} & TM\ref{TM:ADAM} & TM\ref{TM:CELF} & GD\ref{GD_ReLU} & GD\ref{GD_SM} & GD\ref{GD_CNN} & IM\ref{IM_Training} & IM\ref{IM_PreProcessing} \\ \hline
+  & TM\ref{TM:BI} & TM\ref{TM:N} & TM\ref{TM:ADAM} & TM\ref{TM:CELF} & TM\ref{TM:ReLU} & TM\ref{TM:SM} & GD\ref{GD_NN} & IM\ref{IM_Training} & IM\ref{IM_PreProcessing} \\ \hline
   A\ref{A_EMNIST} &       &      &         &         &         &       &        & X           &                  \\ \hline
   A\ref{A_Latin} &       &      &         &         &         &       &        & X           &                  \\ \hline
   A\ref{A_Preprocessing} & X     & X    &         &         &         &       &        &             & X                \\ \hline
@@ -1807,14 +1826,14 @@ the assumptions.
 \centering
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
   \hline
-  & TM\ref{TM:BI} & TM\ref{TM:N} & TM\ref{TM:ADAM} & TM\ref{TM:CELF} & GD\ref{GD_ReLU} & GD\ref{GD_SM} & GD\ref{GD_CNN} & IM\ref{IM_Training} & IM\ref{IM_PreProcessing} \\ \hline
+  & TM\ref{TM:BI} & TM\ref{TM:N} & TM\ref{TM:ADAM} & TM\ref{TM:CELF} & TM\ref{TM:ReLU} & TM\ref{TM:SM} & GD\ref{GD_NN} & IM\ref{IM_Training} & IM\ref{IM_PreProcessing} \\ \hline
   TM\ref{TM:BI} &     &     &         &         &        &      &       &             & X                \\ \hline
   TM\ref{TM:N} &     &     &         &         &        &      &       &             & X                \\ \hline
   TM\ref{TM:ADAM} &     &     &         &         &        &      &       & X           &                  \\ \hline
   TM\ref{TM:CELF} &     &     &         &         &        &      &       & X           &                  \\ \hline
-  GD\ref{GD_ReLU} &     &     &         &         &        &      & X     &             &                  \\ \hline
-  GD\ref{GD_SM} &     &     &         &         &        &      & X     &             &                  \\ \hline
-  GD\ref{GD_CNN} &     &     &         &         &        &      &       & X           &                  \\ \hline
+  TM\ref{TM:ReLU} &     &     &         &         &        &      & X     &             &                  \\ \hline
+  TM\ref{TM:SM} &     &     &         &         &        &      & X     &             &                  \\ \hline
+  GD\ref{GD_NN} &     &     &         &         &        &      &       & X           &                  \\ \hline
   IM\ref{IM_Training} &     &     & X       & X       &        &      & X     &             &                  \\ \hline
   IM\ref{IM_PreProcessing} & X   & X   &         &         &        &      &       &             &                  \\ \hline
   IM\ref{IM_CharacterPrediction} &     &     &         &         &        & X    & X     & X           &                  \\ \hline

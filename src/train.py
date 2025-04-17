@@ -37,7 +37,8 @@ def train():
     # Define the model
     model = keras.models.Sequential(
         [
-            keras.layers.Flatten(input_shape=(WIDTH, HEIGHT)),
+            keras.layers.Input(shape=(WIDTH, HEIGHT)),
+            keras.layers.Flatten(),
             keras.layers.Dense(512, activation="relu"),
             keras.layers.Dropout(0.1),  # prevent overfitting
             keras.layers.Dense(26, activation="softmax"),
@@ -56,5 +57,5 @@ def train():
     model.save(MODEL_PATH)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     train()

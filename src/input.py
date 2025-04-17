@@ -46,16 +46,12 @@ def input(filePath: str) -> np.ndarray:
     except Exception:
         raise FileFormatError(f"File {filePath} is not a valid image file")
 
-    # ensure that the image is a JPG, JPEG, or PNG file
-    if image.format not in ["JPEG", "JPG", "PNG"]:
-        raise FileFormatError(f"File {filePath} is not a valid image file")
-
     # get the dimensions of the image
     width, height = image.size
 
     # ensure that the image dimensions are valid
     if width < N_MIN or width > N_MAX or height < M_MIN or height > M_MAX:
-        raise DimensionsError(f"Image dimensions {width}x{height} are not valid")
+        raise DimensionsError("Image dimensions are not valid")
 
     # return the image content
     return preprocessing.preprocessing(image)

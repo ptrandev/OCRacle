@@ -275,7 +275,13 @@ VnV team will also review the code quality and static type checking results.
 Manual testing in the form of code walkthroughs will also be used to ensure that
 the code is achieving the desired functionality. This will be the primary
 responsibility of the author, with the domain expert and instructor providing
-feedback of the code walkthroughs to ensure that the code is correct.
+feedback of the code walkthroughs to ensure that the code is correct. In order
+to facilitate this, the author will be responsible for creating a video that
+explains the purpose of each module, briefly discusses the code, and details
+how each component contributes to the overall functionality of the program.
+This is also treated as the extra task for the project, as outlined in the
+Problem Statement \citep{ProblemStatement} and Reflection and Traceability
+Report \citep{ReflectAndTrace}.
 
 % \wss{You should at least point to the tests listed in this document and the unit
 %   testing plan.}
@@ -462,7 +468,7 @@ image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character, which should match the character in the image.
 The predicted character corresponds to the character with the highest
-probability in the probability vector.
+probability in the probability distribution.
 
 Test Case Derivation: Based on R3, the program should correctly predict single
 characters from prepared images. The prediction produced by the model will be
@@ -475,7 +481,7 @@ How test will be performed: The automatic test will be run on GHA.
 \subsubsection{Probability Vector Output Tests}
 
 These tests ensure that the program outputs a correctly formatted probability
-vector. The probability vector should contain the probability of each character
+vector. The probability distribution should contain the probability of each character
 in the alphabet, and the sum of the probabilities should be 1, since the
 input is assumed to always be a valid character as specified in the SRS
 under Assumption 2 \citep{SRS}. These tests cover R4.
@@ -493,9 +499,9 @@ Initial State: The \progname{} system is ready for input.
 Input: An image containing a single uppercase Latin alphabet character. This
 image should come from the "test" subset of the EMNIST letter dataset.
 
-Output: A probability vector where the sum of the probabilities is 1.
+Output: A probability distribution where the sum of the probabilities is 1.
 
-Test Case Derivation: Based on R4, the program must output a probability vector
+Test Case Derivation: Based on R4, the program must output a probability distribution
 that sums to 1.
 
 How test will be performed: The automatic test will be run on GHA.
@@ -508,10 +514,10 @@ Initial State: The \progname{} system is ready for input.
 Input: An image containing a single uppercase Latin alphabet character. This
 image should come from the "test" subset of the EMNIST letter dataset.
 
-Output: A probability vector where the length is equal to the number of
+Output: A probability distribution where the length is equal to the number of
 characters in the alphabet, which is 26.
 
-Test Case Derivation: Based on R4, the program must output a probability vector
+Test Case Derivation: Based on R4, the program must output a probability distribution
 where the length is the number of possible classification labels.
 
 How test will be performed: The automatic test will be run on GHA.
@@ -538,7 +544,7 @@ image should come from the "test" subset of the EMNIST letter dataset.
 
 Output: The predicted character is displayed in a human-readable format.
 A human-readable format is defined as displaying $P_{pred}$, which is the
-character with the highest probability in the confidence matrix $P$.
+character with the highest probability in the probability distribution $P$.
 
 Test Case Derivation: Based on R5, the program must display character
 predictions in a readable format. To validate this, this test will ensure
@@ -868,6 +874,48 @@ letters A-Z.
 
 \end{enumerate}
 
+\subsection{Input Format Module (M3)}
+
+These tests ensure that the input module adequately handles the DimensionsError
+and FileNotFound exceptions identified in the MIS document \citep{MIS}.
+
+\begin{enumerate}
+
+\item{T17: File Not Found\\}
+
+Type: Dynamic, Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input/Condition: A file path to a file that does not exist.
+
+Output/Result: The system raises a FileNotFoundError exception.
+
+Test Case Derivation: This test case is derived from the MIS document \citep{MIS}, which
+states that the system should raise a FileNotFoundError exception if the file
+does not exist.
+
+How test will be performed: This automatic test will be run on GHA.
+
+\item{T18: Invalid Dimensions\\}
+
+Type: Dynamic, Automatic
+
+Initial State: The \progname{} system is ready for input.
+
+Input/Condition: A file with dimensions outside of the boundaries identified by
+the MIS document \citep{MIS}.
+
+Output/Result: The system raises a DimensionsError exception.
+
+Test Case Derivation: This test case is derived from the MIS document
+\citep{MIS}, which states that the system should raise a DimensionsError
+exception if the file does not have the correct dimensions.
+
+How test will be performed: This automatic test will be run on GHA. 
+
+\end{enumerate}
+
 \subsection{Tests for Nonfunctional Requirements}
 
 These unit tests validate the behavior of supporting modules to ensure that the
@@ -944,6 +992,8 @@ T14 & X & X & X & X & X & X & X & X & X \\ \hline
 T15 &  &  &  & X &  &  &  &  &  \\ \hline
 T16 &  &  &  &  &  &  &  &  & X \\ \hline
 T17 &  &  &  &  &  &  &  &  & X \\ \hline
+T18 &  &  & X &  &  &  &  &  &  \\ \hline
+T19 &  &  & X &  &  &  &  &  &  \\ \hline
 \end{tabular}
 \caption{Traceability Matrix of Test Cases to Modules}
 \label{tab:traceability-matrix}

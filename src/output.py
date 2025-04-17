@@ -51,12 +51,12 @@ def output(imageMatrix: np.ndarray):
     imageMatrix (np.ndarray): The matrix representation of the image
 
     Returns:
-    Dict[str, Union[str, np.ndarray]]: A dictionary containing the predicted label and the confidence matrix
+    Dict[str, Union[str, np.ndarray]]: A dictionary containing the predicted label and the probability distribution
     """
 
     prediction = MODEL.predict(imageMatrix, verbose="0")
 
     return {
         "predictedLabel": LABELS[np.argmax(prediction)],
-        "confidenceMatrix": prediction,
+        "probabilityDistribution": prediction,
     }

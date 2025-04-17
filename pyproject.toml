@@ -1,2 +1,5 @@
 [tool.ruff]
 exclude = ["*.ipynb"]
+
+[tool.coverage.run]
+omit = ["src/libraries/*"]
