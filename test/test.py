@@ -238,6 +238,7 @@ def testLoadTestSubset():
     assert np.min(labels) == 0
     assert np.max(labels) == 25
 
+
 def testFileNotFound():
     """
     T17: Test file not found
@@ -249,6 +250,7 @@ def testFileNotFound():
     with pytest.raises(Exception) as excinfo:
         input(filePath)
     assert str(excinfo.value) == f"File {filePath} not found"
+
 
 def testInvalidDimensions():
     """

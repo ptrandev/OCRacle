@@ -20,6 +20,7 @@ BATCH_SIZE = 32
 WIDTH = 28
 HEIGHT = 28
 
+
 def train():
     """
     Train the model using the EMNIST dataset.
@@ -56,5 +57,5 @@ def train():
     model.save(MODEL_PATH)
 
 
-if __name__ == "__main__": # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     train()
