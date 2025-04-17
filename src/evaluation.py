@@ -20,9 +20,6 @@ def evaluate():
     """
     Evaluate the model using the test dataset.
 
-    Args:
-        model_path (str): The path to the trained model.
-
     Returns:
         loss (float): The cross-entropy loss of the model on the test dataset.
         accuracy (float): The accuracy of the model on the test dataset.
