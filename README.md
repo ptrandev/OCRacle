@@ -190,3 +190,8 @@ the image, as well as the predicted character. The predicted character will be
 displayed in the output of the last cell:
 
 [![Application Output](screenshots/applicationOutput.png)](screenshots/applicationOutput.png)
+
+## Extra Task
+
+The extra task was a code walkthrough of the project. This can be viewed at
+the following URL: [https://youtu.be/S81seRpfB1Q](https://youtu.be/S81seRpfB1Q)
